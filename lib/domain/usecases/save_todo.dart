@@ -5,7 +5,7 @@ import 'package:yandex_flutter_task/core/usecases/usecase.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/domain/repository/todos_repository.dart';
 
-class SaveTodoUseCaseImpl extends UseCase<void, Params> {
+class SaveTodoUseCaseImpl extends UseCase<void, SaveTodoParams> {
   final TodosRepository todosRepository;
 
   SaveTodoUseCaseImpl(this.todosRepository);
@@ -17,9 +17,9 @@ class SaveTodoUseCaseImpl extends UseCase<void, Params> {
   }
 }
 
-class Params extends Equatable {
+class SaveTodoParams extends Equatable {
   final Todo todo;
-  const Params({required this.todo});
+  const SaveTodoParams({required this.todo});
 
   @override
   List<Object?> get props => [todo];
