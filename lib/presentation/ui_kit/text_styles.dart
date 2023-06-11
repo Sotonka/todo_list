@@ -17,19 +17,19 @@ class AppTextStyle {
     height: 20 / 32,
   );
   static const TextStyle button = TextStyle(
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w500,
     fontFamily: _defaultFontFamily,
     fontSize: 14,
     height: 14 / 24,
   );
   static const TextStyle body = TextStyle(
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.w400,
     fontFamily: _defaultFontFamily,
     fontSize: 16,
     height: 16 / 20,
   );
   static const TextStyle subhead = TextStyle(
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.w400,
     fontFamily: _defaultFontFamily,
     fontSize: 14,
     height: 14 / 20,
