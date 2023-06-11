@@ -1,24 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yandex_flutter_task/domain/model/todo.dart';
-import 'package:yandex_flutter_task/presentation/providers/test_provider.dart';
+import 'package:yandex_flutter_task/presentation/widgets/sliver_title_delegate.dart';
 
 class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todos = ref.watch(todosListState);
-    final model = ref.read(todosListModel);
+    final theme = Theme.of(context);
+
     return Scaffold(
-      body: Column(
-        children: [
-          for (final todo in todos) Text(todo.body),
+      body: CustomScrollView(
+        slivers: [
+          SliverPersistentHeader(
+            pinned: true,
+            floating: true,
+            delegate: SliverTitleDelegate(
+                systemBarHeight: MediaQuery.of(context).padding.top,
+                bigTitleStyle: theme.primaryTextTheme.headlineLarge!,
+                smallTitleStyle: theme.primaryTextTheme.headlineMedium!,
+                context: context,
+                onHidePressed: () {}),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              height: 1000,
+              width: 200,
+              color: Colors.white,
+            ),
+          ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        model.saveTodo(Todo(id: 1, body: 'body'));
-      }),
     );
   }
 }

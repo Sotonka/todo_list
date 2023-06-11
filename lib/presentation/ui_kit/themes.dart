@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
 
@@ -8,10 +6,10 @@ class AppTheme {
     headlineLarge: AppTextStyle.largeTitle.copyWith(
       color: AppThemeColors.light.labelPrimary,
     ),
-    titleMedium: AppTextStyle.title.copyWith(
+    headlineMedium: AppTextStyle.title.copyWith(
       color: AppThemeColors.light.labelPrimary,
     ),
-    button: AppTextStyle.button.copyWith(
+    titleMedium: AppTextStyle.button.copyWith(
       color: AppThemeColors.light.labelPrimary,
     ),
     bodyMedium: AppTextStyle.body.copyWith(
@@ -26,10 +24,10 @@ class AppTheme {
     headlineLarge: AppTextStyle.largeTitle.copyWith(
       color: AppThemeColors.dark.labelPrimary,
     ),
-    titleMedium: AppTextStyle.title.copyWith(
+    headlineMedium: AppTextStyle.title.copyWith(
       color: AppThemeColors.dark.labelPrimary,
     ),
-    button: AppTextStyle.button.copyWith(
+    titleMedium: AppTextStyle.button.copyWith(
       color: AppThemeColors.dark.labelPrimary,
     ),
     bodyMedium: AppTextStyle.body.copyWith(
