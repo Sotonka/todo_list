@@ -93,7 +93,7 @@ class SliverTitleDelegate extends SliverPersistentHeaderDelegate {
         ),
         Positioned(
           bottom: lerpDouble(14, 30, k)!,
-          right: 16,
+          right: lerpDouble(16, 25, k)!,
           child: isHidden
               ? AppIcons.visibilityOff(
                   color: themeColors.blue,
