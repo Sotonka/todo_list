@@ -14,16 +14,16 @@ UseCase getTodos(GetTodosRef ref) {
 }
 
 @riverpod
-UseCase getTodo(GetTodoRef ref) {
+UseCaseWithParams getTodo(GetTodoRef ref) {
   return GetTodoUseCaseImpl(ref.read(todosRepositoryProvider));
 }
 
 @riverpod
-UseCase saveTodo(SaveTodoRef ref) {
+UseCaseWithParams saveTodo(SaveTodoRef ref) {
   return SaveTodoUseCaseImpl(ref.read(todosRepositoryProvider));
 }
 
 @riverpod
-UseCase deleteTodo(DeleteTodoRef ref) {
+UseCaseWithParams deleteTodo(DeleteTodoRef ref) {
   return DeleteTodoUseCaseImpl(ref.read(todosRepositoryProvider));
 }

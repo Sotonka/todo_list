@@ -11,7 +11,68 @@ abstract class MockDataSource {
 }
 
 class MockDataSourceImpl implements MockDataSource {
-  final _source = {};
+  final _source = {
+    1: const Todo(
+      id: 1,
+      body: 'qwewqe1',
+      completed: false,
+      importance: 'none',
+    ),
+    2: const Todo(
+      id: 2,
+      body: '2',
+      completed: false,
+      importance: 'none',
+    ),
+    3: const Todo(
+      id: 3,
+      body: '3',
+      completed: false,
+      importance: 'none',
+    ),
+    4: const Todo(
+      id: 4,
+      body: '4',
+      completed: false,
+      importance: 'none',
+    ),
+    5: const Todo(
+      id: 5,
+      body: '',
+      completed: false,
+      importance: 'none',
+    ),
+    6: const Todo(
+      id: 6,
+      body: '',
+      completed: false,
+      importance: 'none',
+    ),
+    7: const Todo(
+      id: 7,
+      body: '',
+      completed: false,
+      importance: 'none',
+    ),
+    8: const Todo(
+      id: 8,
+      body: '',
+      completed: false,
+      importance: 'none',
+    ),
+    9: const Todo(
+      id: 9,
+      body: '',
+      completed: false,
+      importance: 'none',
+    ),
+    10: const Todo(
+      id: 10,
+      body: '',
+      completed: false,
+      importance: 'none',
+    ),
+  };
 
   @override
   Future<void> deleteTodo(int id) async {
@@ -20,7 +81,7 @@ class MockDataSourceImpl implements MockDataSource {
 
   @override
   Future<Todo> getTodo(int id) async {
-    return _source[id];
+    return _source[id]!;
   }
 
   @override
@@ -37,7 +98,7 @@ class MockDataSourceImpl implements MockDataSource {
   @override
   Future<void> saveTodo(Todo todo) async {
     if (todo.id != null) {
-      _source[todo.id] = todo;
+      _source[todo.id!] = todo;
     } else {
       // TODO если id не указано - генерировать
     }

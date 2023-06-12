@@ -5,7 +5,7 @@ import 'package:yandex_flutter_task/core/usecases/usecase.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/domain/repository/todos_repository.dart';
 
-class SaveTodoUseCaseImpl extends UseCase<void, SaveTodoParams> {
+class SaveTodoUseCaseImpl extends UseCaseWithParams<void, SaveTodoParams> {
   final TodosRepository todosRepository;
 
   SaveTodoUseCaseImpl(this.todosRepository);

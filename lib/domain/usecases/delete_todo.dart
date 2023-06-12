@@ -4,7 +4,7 @@ import 'package:yandex_flutter_task/core/error/failure.dart';
 import 'package:yandex_flutter_task/core/usecases/usecase.dart';
 import 'package:yandex_flutter_task/domain/repository/todos_repository.dart';
 
-class DeleteTodoUseCaseImpl extends UseCase<void, Params> {
+class DeleteTodoUseCaseImpl extends UseCaseWithParams<void, Params> {
   final TodosRepository todosRepository;
 
   DeleteTodoUseCaseImpl(this.todosRepository);

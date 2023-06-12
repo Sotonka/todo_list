@@ -5,13 +5,13 @@ import 'package:yandex_flutter_task/core/usecases/usecase.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/domain/repository/todos_repository.dart';
 
-class GetTodosUseCaseImpl extends UseCase<List<Todo>, Params> {
+class GetTodosUseCaseImpl extends UseCase<List<Todo>> {
   final TodosRepository todosRepository;
 
   GetTodosUseCaseImpl(this.todosRepository);
 
   @override
-  Future<Either<Failure, List<Todo>>> call(Params params) async {
+  Future<Either<Failure, List<Todo>>> call() async {
     return await todosRepository.getTodos();
   }
 }

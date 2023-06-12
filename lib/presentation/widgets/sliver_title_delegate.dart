@@ -49,7 +49,7 @@ class SliverTitleDelegate extends SliverPersistentHeaderDelegate {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: themeColors.backPrimary,
             boxShadow: [
               BoxShadow(
                 color: Color.fromARGB(lerpDouble(20, 0, k)!.toInt(), 0, 0, 0),
@@ -77,7 +77,7 @@ class SliverTitleDelegate extends SliverPersistentHeaderDelegate {
                   ),
                 ),
               ),
-              if (shrinkOffset > 30)
+              if (shrinkOffset > 50)
                 const SizedBox.shrink()
               else
                 Column(
@@ -108,5 +108,5 @@ class SliverTitleDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
-      false;
+      true;
 }
