@@ -12,15 +12,18 @@ class TodosStateNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
 
   final Ref ref;
   late final getTodos = ref.read(getTodosProvider);
+  var _completedCount = 0;
+  int get completedCount => _completedCount;
 
   Future<void> loadTodos() async {
     state = const AsyncLoading();
     await Future.delayed(const Duration(seconds: 1));
     final stateOrFailure = await ref.read(getTodosProvider).call();
     stateOrFailure.fold((error) {
-      return 'ОШИБКА';
+      return '';
     }, (todos) {
       state = AsyncValue.data(todos);
+      _completedCount = state.value!.length;
     });
   }
 
