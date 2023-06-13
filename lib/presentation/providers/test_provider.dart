@@ -69,5 +69,5 @@ class TestStateNotifier extends StateNotifier<int> {
   }
 }
 
-final TestStateNotifierProvider =
+final testStateNotifierProvider =
     StateNotifierProvider<TestStateNotifier, int>((ref) => TestStateNotifier());

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:yandex_flutter_task/core/error/exception.dart';
 import 'package:yandex_flutter_task/core/error/failure.dart';
 import 'package:yandex_flutter_task/data/datasource/mock_datasource.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
@@ -10,11 +11,12 @@ class TodosRepositoryImpl implements TodosRepository {
   TodosRepositoryImpl(this.mockDataSource);
 
   @override
-  Future<Either<Failure, void>> deleteTodo(int id) async {
+  Future<Either<Failure, int>> deleteTodo(int id) async {
     try {
-      await mockDataSource.deleteTodo(id);
-      return const Right(null);
-    } on Exception {
+      final deletedId = await mockDataSource.deleteTodo(id);
+
+      return Right(deletedId);
+    } on DataException {
       return Left(DataFailure());
     }
   }
@@ -40,10 +42,11 @@ class TodosRepositoryImpl implements TodosRepository {
   }
 
   @override
-  Future<Either<Failure, void>> saveTodo(Todo todo) async {
+  Future<Either<Failure, int>> saveTodo(Todo todo) async {
     try {
-      await mockDataSource.saveTodo(todo);
-      return const Right(null);
+      final createdId = await mockDataSource.saveTodo(todo);
+
+      return Right(createdId);
     } on Exception {
       return Left(DataFailure());
     }

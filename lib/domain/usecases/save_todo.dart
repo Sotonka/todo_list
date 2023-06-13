@@ -1,26 +1,18 @@
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 import 'package:yandex_flutter_task/core/error/failure.dart';
-import 'package:yandex_flutter_task/core/usecases/usecase.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/domain/repository/todos_repository.dart';
 
-class SaveTodoUseCaseImpl extends UseCaseWithParams<void, SaveTodoParams> {
-  final TodosRepository todosRepository;
-
-  SaveTodoUseCaseImpl(this.todosRepository);
-
-  @override
-  Future<Either<Failure, dynamic>> call(params) async {
-    await todosRepository.saveTodo(params.todo);
-    return const Right(null);
-  }
+abstract class SaveTodoUseCase {
+  Future<Either<Failure, int>> call(Todo todo);
 }
 
-class SaveTodoParams extends Equatable {
-  final Todo todo;
-  const SaveTodoParams({required this.todo});
+class SaveTodoUseCaseImpl extends SaveTodoUseCase {
+  SaveTodoUseCaseImpl(this.todosRepository);
+  final TodosRepository todosRepository;
 
   @override
-  List<Object?> get props => [todo];
+  Future<Either<Failure, int>> call(Todo todo) async {
+    return todosRepository.saveTodo(todo);
+  }
 }

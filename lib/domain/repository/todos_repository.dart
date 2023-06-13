@@ -7,7 +7,7 @@ abstract class TodosRepository {
 
   Future<Either<Failure, Todo>> getTodo(int id);
 
-  Future<Either<Failure, void>> saveTodo(Todo todo);
+  Future<Either<Failure, int>> saveTodo(Todo todo);
 
-  Future<Either<Failure, void>> deleteTodo(int id);
+  Future<Either<Failure, int>> deleteTodo(int id);
 }

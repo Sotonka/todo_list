@@ -5,9 +5,9 @@ abstract class MockDataSource {
 
   Future<Todo> getTodo(int id);
 
-  Future<void> saveTodo(Todo todo);
+  Future<int> saveTodo(Todo todo);
 
-  Future<void> deleteTodo(int id);
+  Future<int> deleteTodo(int id);
 }
 
 class MockDataSourceImpl implements MockDataSource {
@@ -74,9 +74,17 @@ class MockDataSourceImpl implements MockDataSource {
     ),
   };
 
+  // TODO
+  /* if (response.statusCode == 200) {
+      --request--
+    } else {
+      throw DataException();
+    } */
+
   @override
-  Future<void> deleteTodo(int id) async {
+  Future<int> deleteTodo(int id) async {
     _source.remove(id);
+    return (id);
   }
 
   @override
@@ -96,11 +104,12 @@ class MockDataSourceImpl implements MockDataSource {
   }
 
   @override
-  Future<void> saveTodo(Todo todo) async {
+  Future<int> saveTodo(Todo todo) async {
     if (todo.id != null) {
       _source[todo.id!] = todo;
     } else {
       // TODO если id не указано - генерировать
     }
+    return (0);
   }
 }

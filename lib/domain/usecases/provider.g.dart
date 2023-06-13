@@ -6,11 +6,11 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getTodosHash() => r'bec05b8158d7f3405bb9efde82dc04b53aa032ed';
+String _$getTodosHash() => r'ea07ce1a7c278ae249a8588e02c1f53c274eb0ff';
 
 /// See also [getTodos].
 @ProviderFor(getTodos)
-final getTodosProvider = AutoDisposeProvider<UseCase<dynamic>>.internal(
+final getTodosProvider = AutoDisposeProvider<GetTodosUseCase>.internal(
   getTodos,
   name: r'getTodosProvider',
   debugGetCreateSourceHash:
@@ -19,13 +19,12 @@ final getTodosProvider = AutoDisposeProvider<UseCase<dynamic>>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef GetTodosRef = AutoDisposeProviderRef<UseCase<dynamic>>;
-String _$getTodoHash() => r'6849caff18f0e99628f9dcf58d396a04dfbdad9e';
+typedef GetTodosRef = AutoDisposeProviderRef<GetTodosUseCase>;
+String _$getTodoHash() => r'cd94937211b4ee9b0cb80dba33740572864437b0';
 
 /// See also [getTodo].
 @ProviderFor(getTodo)
-final getTodoProvider =
-    AutoDisposeProvider<UseCaseWithParams<dynamic, dynamic>>.internal(
+final getTodoProvider = AutoDisposeProvider<GetTodoUseCase>.internal(
   getTodo,
   name: r'getTodoProvider',
   debugGetCreateSourceHash:
@@ -34,14 +33,12 @@ final getTodoProvider =
   allTransitiveDependencies: null,
 );
 
-typedef GetTodoRef
-    = AutoDisposeProviderRef<UseCaseWithParams<dynamic, dynamic>>;
-String _$saveTodoHash() => r'6c55e45800b4c8d6e7b1cfc00d1a19d25e977042';
+typedef GetTodoRef = AutoDisposeProviderRef<GetTodoUseCase>;
+String _$saveTodoHash() => r'cbd837e2f2acd868d2ef27a6ce1ca655ffe8b280';
 
 /// See also [saveTodo].
 @ProviderFor(saveTodo)
-final saveTodoProvider =
-    AutoDisposeProvider<UseCaseWithParams<dynamic, dynamic>>.internal(
+final saveTodoProvider = AutoDisposeProvider<SaveTodoUseCase>.internal(
   saveTodo,
   name: r'saveTodoProvider',
   debugGetCreateSourceHash:
@@ -50,14 +47,12 @@ final saveTodoProvider =
   allTransitiveDependencies: null,
 );
 
-typedef SaveTodoRef
-    = AutoDisposeProviderRef<UseCaseWithParams<dynamic, dynamic>>;
-String _$deleteTodoHash() => r'c0e13933f192f718df9cbda3f9060327884be3f2';
+typedef SaveTodoRef = AutoDisposeProviderRef<SaveTodoUseCase>;
+String _$deleteTodoHash() => r'ad3d9c769ce890dd2aee7864937f4888e9f21acf';
 
 /// See also [deleteTodo].
 @ProviderFor(deleteTodo)
-final deleteTodoProvider =
-    AutoDisposeProvider<UseCaseWithParams<dynamic, dynamic>>.internal(
+final deleteTodoProvider = AutoDisposeProvider<DeleteTodoUseCase>.internal(
   deleteTodo,
   name: r'deleteTodoProvider',
   debugGetCreateSourceHash:
@@ -66,6 +61,5 @@ final deleteTodoProvider =
   allTransitiveDependencies: null,
 );
 
-typedef DeleteTodoRef
-    = AutoDisposeProviderRef<UseCaseWithParams<dynamic, dynamic>>;
+typedef DeleteTodoRef = AutoDisposeProviderRef<DeleteTodoUseCase>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

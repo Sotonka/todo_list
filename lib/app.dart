@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:yandex_flutter_task/app_router.dart';
 import 'package:yandex_flutter_task/presentation/screens/main_screen.dart';
-import 'package:yandex_flutter_task/presentation/screens/test_screen.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
 
 class App extends StatefulWidget {
@@ -16,6 +16,8 @@ class _AppState extends State<App> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Todos',
+      initialRoute: AppRouter.root,
+      onGenerateRoute: AppRouter.generateRoute,
       theme: AppTheme.lightTheme.copyWith(
         extensions: [
           AppThemeColors.light,

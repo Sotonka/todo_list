@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
-import 'package:yandex_flutter_task/domain/usecases/get_todos.dart';
 import 'package:yandex_flutter_task/domain/usecases/provider.dart';
-import 'package:yandex_flutter_task/domain/usecases/save_todo.dart';
 
 class TodosStateNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
   TodosStateNotifier(this.ref) : super(const AsyncLoading()) {
@@ -28,8 +25,7 @@ class TodosStateNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
   }
 
   Future<void> saveTodo(Todo todo) async {
-    final stateOrFailure =
-        await ref.read(saveTodoProvider).call(SaveTodoParams(todo: todo));
+    final stateOrFailure = await ref.read(saveTodoProvider).call(todo);
     stateOrFailure.fold((error) {}, (r) {});
     await loadTodos();
   }

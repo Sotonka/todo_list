@@ -84,24 +84,43 @@ class SliverTitleDelegate extends SliverPersistentHeaderDelegate {
                   children: [
                     const SizedBox(height: 6),
                     Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('Выполнено - $completedCount')),
+                      alignment: Alignment.centerLeft,
+                      child: completedCount != 0
+                          ? Text(
+                              'Выполнено - $completedCount',
+                              style:
+                                  theme.primaryTextTheme.bodyMedium!.copyWith(
+                                color: themeColors.labelTetriary,
+                              ),
+                            )
+                          : SizedBox(
+                              height: theme
+                                      .primaryTextTheme.bodyMedium!.fontSize! *
+                                  theme.primaryTextTheme.bodyMedium!.height!),
+                    ),
                   ],
                 ),
             ],
           ),
         ),
-        Positioned(
-          bottom: lerpDouble(14, 30, k)!,
-          right: lerpDouble(16, 25, k)!,
-          child: isHidden
-              ? AppIcons.visibilityOff(
-                  color: themeColors.blue,
-                )
-              : AppIcons.visibility(
-                  color: themeColors.blue,
+        completedCount != 0
+            ? Positioned(
+                bottom: lerpDouble(9, 25, k)!,
+                right: lerpDouble(16, 25, k)!,
+                child: InkWell(
+                  onTap: onHidePressed,
+                  child: isHidden
+                      ? Icon(
+                          Icons.visibility_off,
+                          color: themeColors.blue,
+                        )
+                      : Icon(
+                          Icons.visibility,
+                          color: themeColors.blue,
+                        ),
                 ),
-        ),
+              )
+            : const SizedBox.shrink(),
       ],
     );
   }

@@ -79,6 +79,7 @@ class TodoTile extends StatelessWidget {
                       Flexible(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Flexible(
                               child: Text(
@@ -94,13 +95,17 @@ class TodoTile extends StatelessWidget {
                                     .copyWith(color: themeColors.labelPrimary),
                               ),
                             ),
-                            // TODO IF условие
-                            const SizedBox(height: 4),
-                            Text(
-                              'дата',
-                              style: theme.primaryTextTheme.bodySmall!
-                                  .copyWith(color: themeColors.labelTetriary),
-                            )
+                            todo.deadline != null
+                                ? Padding(
+                                    padding: const EdgeInsets.only(top: 4),
+                                    child: Text(
+                                      'дата',
+                                      style: theme.primaryTextTheme.bodySmall!
+                                          .copyWith(
+                                              color: themeColors.labelTetriary),
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
                           ],
                         ),
                       ),
