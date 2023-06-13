@@ -42,14 +42,14 @@ class MainScreen extends ConsumerWidget {
           ),
           todosState.when(
             loading: () {
-              return ref.read(todosListState.notifier).isFirstload
-                  ? const SliverToBoxAdapter(
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  : _Core(
-                      data: ref.read(todosListState.notifier).previousState);
+              return const SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              );
             },
             data: (data) {
               return _Core(data: data);
@@ -69,7 +69,9 @@ class MainScreen extends ConsumerWidget {
           shape: const CircleBorder(),
           onPressed: () {
             // TODO
-            ref.read(todosListState.notifier).saveTodo(Todo(body: '1'));
+            ref
+                .read(todosListState.notifier)
+                .saveTodo(Todo(body: 'ADADsadsadasDDDSDSD'));
             /* Navigator.of(context).pushNamed(
               AppRouter.todoScreen,
             ); */

@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
+import 'package:yandex_flutter_task/presentation/providers/todos_provider.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TodoTile extends StatelessWidget {
+class TodoTile extends ConsumerWidget {
   final Todo todo;
-  final VoidCallback onDelete;
-  final VoidCallback onComplete;
+
   const TodoTile({
     super.key,
     required this.todo,
-    required this.onDelete,
-    required this.onComplete,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final themeColors = theme.extension<AppThemeColors>()!;
 
     return Dismissible(
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.startToEnd) {
+          ref
+              .read(todosListState.notifier)
+              .saveTodo(todo.copyWith(completed: true));
           return false;
         } else if (direction == DismissDirection.endToStart) {
           return true;
@@ -28,10 +30,8 @@ class TodoTile extends StatelessWidget {
         return null;
       },
       onDismissed: (direction) {
-        if (direction == DismissDirection.startToEnd) {
-          onComplete();
-        } else if (direction == DismissDirection.endToStart) {
-          onDelete();
+        if (direction == DismissDirection.endToStart) {
+          ref.read(todosListState.notifier).deleteTodo(todo.id!);
         }
       },
       background: Container(
@@ -58,7 +58,9 @@ class TodoTile extends StatelessWidget {
           ],
         ),
       ),
-      direction: DismissDirection.horizontal,
+      direction: todo.completed
+          ? DismissDirection.endToStart
+          : DismissDirection.horizontal,
       dismissThresholds: const {
         DismissDirection.endToStart: 0.2,
       },
@@ -110,8 +112,19 @@ class TodoTile extends StatelessWidget {
                                 softWrap: true,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: theme.primaryTextTheme.bodyMedium!
-                                    .copyWith(color: themeColors.labelPrimary),
+                                style: todo.completed
+                                    ? theme.primaryTextTheme.bodyMedium!
+                                        .copyWith(
+                                            color: themeColors.labelTetriary)
+                                        .copyWith(
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                          decorationColor:
+                                              themeColors.labelTetriary,
+                                        )
+                                    : theme.primaryTextTheme.bodyMedium!
+                                        .copyWith(
+                                            color: themeColors.labelPrimary),
                               ),
                             ),
                             todo.deadline != null

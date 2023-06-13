@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/domain/usecases/provider.dart';
+import 'package:yandex_flutter_task/presentation/providers/visibility_provider.dart';
 
 class TodosStateNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
   TodosStateNotifier(this.ref) : super(const AsyncLoading()) {
@@ -11,8 +12,6 @@ class TodosStateNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
   late final getTodos = ref.read(getTodosProvider);
   var _completedCount = 0;
   int get completedCount => _completedCount;
-  final List<Todo> previousState = [];
-  var isFirstload = true;
 
   Future<void> loadTodos() async {
     state = const AsyncLoading();
@@ -22,13 +21,16 @@ class TodosStateNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
       return 'error';
     }, (todos) {
       state = AsyncValue.data(todos);
-      _completedCount = state.value!.length;
-      previousState.clear();
+      _completedCount = 0;
       for (var element in state.value!) {
-        previousState.add(element);
+        if (element.completed == true) {
+          _completedCount++;
+        }
       }
 
-      isFirstload = false;
+      /*  ref.watch(visibilityStateNotifierProvider)
+          ? state.value!.removeWhere((element) => element.completed == true)
+          : null; */
     });
   }
 

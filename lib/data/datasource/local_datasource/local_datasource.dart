@@ -69,26 +69,31 @@ class LocalDataSourceImpl implements LocalDataSource {
   @override
   Future<int> saveTodo(Todo todo) async {
     final todos = await getTodos();
-    final ids = [];
-    var id = 0;
-    if (todos.isNotEmpty) {
-      for (var todo in todos) {
-        ids.add(todo.id);
+    if (todo.id == null) {
+      final ids = [];
+      var id = 0;
+      if (todos.isNotEmpty) {
+        for (var todo in todos) {
+          ids.add(todo.id);
+        }
+        ids.sort();
+        id = ids.last + 1;
       }
-      ids.sort();
-      id = ids.last + 1;
+      todos.add(
+        todo.copyWith(id: id),
+      );
+      // TODO
+      print('ELEMENT WITH ID $id HAS BEEN ADDED');
+      todosToCache(todos);
+      return (id);
+    } else {
+      todos.removeWhere((element) => element.id == todo.id);
+      todos.add(todo);
+      // TODO
+      print('ELEMENT WITH ID ${todo.id!} HAS BEEN CHANGED');
+      todosToCache(todos);
+      return (todo.id!);
     }
-
-    id = todo.id ?? id;
-
-    todos.add(
-      todo.copyWith(id: id),
-    );
-    todosToCache(todos);
-    // TODO
-    print('ELEMENT WITH ID $id HAS BEEN ADDED');
-
-    return (id);
   }
 
   @override
