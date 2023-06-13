@@ -105,11 +105,11 @@ class MockDataSourceImpl implements MockDataSource {
 
   @override
   Future<int> saveTodo(Todo todo) async {
-    if (todo.id != null) {
-      _source[todo.id!] = todo;
-    } else {
-      // TODO если id не указано - генерировать
-    }
-    return (0);
+    final ids = _source.keys.toList();
+    ids.sort();
+    final id = todo.id != null ? todo.id! : ids.last + 1;
+    _source[id] = todo;
+
+    return (id);
   }
 }
