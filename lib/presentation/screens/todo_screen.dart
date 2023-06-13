@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yandex_flutter_task/presentation/ui_kit/icons.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
-import 'package:yandex_flutter_task/presentation/widgets/small_app_bar.dart';
 
 class TodoScreen extends StatelessWidget {
   const TodoScreen({super.key});

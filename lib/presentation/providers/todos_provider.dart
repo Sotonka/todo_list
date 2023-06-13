@@ -16,7 +16,7 @@ class TodosStateNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
 
   Future<void> loadTodos() async {
     state = const AsyncLoading();
-    await Future.delayed(const Duration(seconds: 1));
+    // await Future.delayed(const Duration(seconds: 1));
     final stateOrFailure = await ref.read(getTodosProvider).call();
     stateOrFailure.fold((error) {
       return 'error';

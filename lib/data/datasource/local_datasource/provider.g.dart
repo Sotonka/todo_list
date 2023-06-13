@@ -6,19 +6,19 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$todosRepositoryHash() => r'c1c6d0716b484de77d31956b4e163c9d64b93e2b';
+String _$localDataSourceHash() => r'ae68f4b0e3fb9e27e6def9979b41d28a77e8b55f';
 
-/// See also [todosRepository].
-@ProviderFor(todosRepository)
-final todosRepositoryProvider = AutoDisposeProvider<TodosRepository>.internal(
-  todosRepository,
-  name: r'todosRepositoryProvider',
+/// See also [localDataSource].
+@ProviderFor(localDataSource)
+final localDataSourceProvider = AutoDisposeProvider<LocalDataSource>.internal(
+  localDataSource,
+  name: r'localDataSourceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$todosRepositoryHash,
+      : _$localDataSourceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef TodosRepositoryRef = AutoDisposeProviderRef<TodosRepository>;
+typedef LocalDataSourceRef = AutoDisposeProviderRef<LocalDataSource>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

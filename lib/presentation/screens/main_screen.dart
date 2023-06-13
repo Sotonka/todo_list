@@ -68,9 +68,11 @@ class MainScreen extends ConsumerWidget {
           backgroundColor: themeColors.blue,
           shape: const CircleBorder(),
           onPressed: () {
-            Navigator.of(context).pushNamed(
+            // TODO
+            ref.read(todosListState.notifier).saveTodo(Todo(body: '1'));
+            /* Navigator.of(context).pushNamed(
               AppRouter.todoScreen,
-            );
+            ); */
           },
           child: AppIcons.add(
             color: themeColors.white,
