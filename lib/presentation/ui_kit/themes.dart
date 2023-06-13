@@ -41,25 +41,21 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     fontFamily: 'Roboto',
-    // TODO
-    // scaffoldBackgroundColor: AppThemeColors.light.backPrimary,
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
     hoverColor: Colors.transparent,
     splashFactory: InkRipple.splashFactory,
-    useMaterial3: true,
+    useMaterial3: false,
     primaryTextTheme: _lightTextTheme,
   );
 
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     fontFamily: 'Roboto',
-    // TODO
-    // scaffoldBackgroundColor: AppThemeColors.dark.backPrimary,
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
     hoverColor: Colors.transparent,
-    useMaterial3: true,
+    useMaterial3: false,
     primaryTextTheme: _darkTextTheme,
   );
 

@@ -7,7 +7,7 @@ class AppTextStyle {
     fontWeight: FontWeight.w500,
     fontFamily: _defaultFontFamily,
     fontSize: 32,
-    height: 32 / 38,
+    height: 32 / 34,
   );
 
   static const TextStyle title = TextStyle(
@@ -20,19 +20,19 @@ class AppTextStyle {
     fontWeight: FontWeight.w500,
     fontFamily: _defaultFontFamily,
     fontSize: 14,
-    height: 14 / 24,
+    height: 24 / 14,
   );
   static const TextStyle body = TextStyle(
     fontWeight: FontWeight.w400,
     fontFamily: _defaultFontFamily,
     fontSize: 16,
-    height: 16 / 20,
+    height: 20 / 16,
   );
   static const TextStyle subhead = TextStyle(
     fontWeight: FontWeight.w400,
     fontFamily: _defaultFontFamily,
     fontSize: 14,
-    height: 14 / 20,
+    height: 20 / 14,
   );
 
   const AppTextStyle._();

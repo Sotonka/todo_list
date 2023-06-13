@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yandex_flutter_task/app_router.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
+import 'package:yandex_flutter_task/presentation/providers/todo_info_provider.dart';
 import 'package:yandex_flutter_task/presentation/providers/todos_provider.dart';
 import 'package:yandex_flutter_task/presentation/providers/visibility_provider.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
@@ -52,7 +53,25 @@ class MainScreen extends ConsumerWidget {
               );
             },
             data: (data) {
-              return _Core(data: data);
+              return data.isEmpty
+                  ? SliverToBoxAdapter(
+                      child: Column(
+                        children: [
+                          Text('EMPTY'),
+                          InkWell(
+                            onTap: () {
+                              ref.read(todosListState.notifier).fillMocks();
+                            },
+                            child: Container(
+                              color: Colors.blue,
+                              height: 50,
+                              width: 50,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : _Core(data: data);
             },
             // TODO
             error: (_, __) {
@@ -68,13 +87,11 @@ class MainScreen extends ConsumerWidget {
           backgroundColor: themeColors.blue,
           shape: const CircleBorder(),
           onPressed: () {
-            // TODO
-            ref
-                .read(todosListState.notifier)
-                .saveTodo(Todo(body: 'ADADsadsadasDDDSDSD'));
-            /* Navigator.of(context).pushNamed(
-              AppRouter.todoScreen,
-            ); */
+            ref.read(todoInfoNotifierProvider.notifier).initTodo(
+                  const Todo(body: ''),
+                );
+
+            Navigator.of(context).pushNamed(AppRouter.todoScreen);
           },
           child: AppIcons.add(
             color: themeColors.white,
@@ -86,8 +103,8 @@ class MainScreen extends ConsumerWidget {
 }
 
 class _Core extends StatelessWidget {
-  final List<Todo>? data;
-  const _Core({this.data});
+  final List<Todo> data;
+  const _Core({required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +126,7 @@ class _Core extends StatelessWidget {
             child: Container(
               color: themeColors.backSecondary,
               child: TodoList(
-                iterable: data!,
+                iterable: data,
               ),
             ),
           ),

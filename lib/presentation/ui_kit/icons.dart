@@ -5,7 +5,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class AppIcons extends StatelessWidget {
   static const _add = '${_defaultPath}add.svg';
+  static const _alert = '${_defaultPath}alert.svg';
   static const _arrowBack = '${_defaultPath}arrow_back.svg';
+  static const _arrowDown = '${_defaultPath}arrow_down.svg';
   static const _check = '${_defaultPath}check.svg';
   static const _close = '${_defaultPath}close.svg';
   static const _delete = '${_defaultPath}delete.svg';
@@ -41,6 +43,19 @@ class AppIcons extends StatelessWidget {
         height: height,
         width: width,
       );
+
+  factory AppIcons.alert({
+    final Color? color,
+    final double? height,
+    final double? width,
+  }) =>
+      AppIcons(
+        assetPath: _alert,
+        color: color,
+        height: height,
+        width: width,
+      );
+
   factory AppIcons.arrowBack({
     final Color? color,
     final double? height,
@@ -52,6 +67,19 @@ class AppIcons extends StatelessWidget {
         height: height,
         width: width,
       );
+
+  factory AppIcons.arrowDown({
+    final Color? color,
+    final double? height,
+    final double? width,
+  }) =>
+      AppIcons(
+        assetPath: _arrowDown,
+        color: color,
+        height: height,
+        width: width,
+      );
+
   factory AppIcons.check({
     final Color? color,
     final double? height,
@@ -63,6 +91,7 @@ class AppIcons extends StatelessWidget {
         height: height,
         width: width,
       );
+
   factory AppIcons.close({
     final Color? color,
     final double? height,
@@ -74,6 +103,7 @@ class AppIcons extends StatelessWidget {
         height: height,
         width: width,
       );
+
   factory AppIcons.delete({
     final Color? color,
     final double? height,
@@ -85,6 +115,7 @@ class AppIcons extends StatelessWidget {
         height: height,
         width: width,
       );
+
   factory AppIcons.infoOutline({
     final Color? color,
     final double? height,
@@ -96,6 +127,7 @@ class AppIcons extends StatelessWidget {
         height: height,
         width: width,
       );
+
   factory AppIcons.visibility({
     final Color? color,
     final double? height,
@@ -107,6 +139,7 @@ class AppIcons extends StatelessWidget {
         height: height,
         width: width,
       );
+
   factory AppIcons.visibilityOff({
     final Color? color,
     final double? height,

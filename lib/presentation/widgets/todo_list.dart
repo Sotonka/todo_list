@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
-import 'package:yandex_flutter_task/presentation/providers/todos_provider.dart';
 import 'package:yandex_flutter_task/presentation/providers/visibility_provider.dart';
 import 'package:yandex_flutter_task/presentation/widgets/todo_tile.dart';
 

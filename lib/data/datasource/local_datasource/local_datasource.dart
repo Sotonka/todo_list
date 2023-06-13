@@ -13,6 +13,7 @@ abstract class LocalDataSource {
   Future<int> deleteTodo(int id);
 
   Future<List<String>> todosToCache(List<Todo> todos);
+  Future<void> fillWithMocks();
 }
 
 // ignore: constant_identifier_names
@@ -50,17 +51,22 @@ class LocalDataSourceImpl implements LocalDataSource {
   @override
   Future<List<Todo>> getTodos() async {
     final sharedPreferences = await _sharedPreferences;
+    // TODO
     // await sharedPreferences.clear();
     var jsonTodoList = sharedPreferences.getStringList(TODOS_LIST);
 
     if (jsonTodoList == null) {
       sharedPreferences.setStringList(TODOS_LIST, []);
+      jsonTodoList = sharedPreferences.getStringList(TODOS_LIST);
     }
 
     if (jsonTodoList != null) {
-      return Future.value(jsonTodoList
-          .map((todo) => Todo.fromJson(json.decode(todo)))
-          .toList());
+      final todoList =
+          jsonTodoList.map((todo) => Todo.fromJson(json.decode(todo))).toList();
+      // TODO
+      // right now sort only by id ascending
+      todoList.sort((a, b) => a.id!.compareTo(b.id!));
+      return Future.value(todoList);
     } else {
       throw DataException();
     }
@@ -106,5 +112,115 @@ class LocalDataSourceImpl implements LocalDataSource {
     sharedPreferences.setStringList(TODOS_LIST, jsonTodosList);
 
     return Future.value(jsonTodosList);
+  }
+
+  @override
+  Future<void> fillWithMocks() async {
+    final List<Todo> list = [
+      Todo(
+        id: 1,
+        body: 'Cъешь',
+        completed: false,
+        deadline: DateTime.now(),
+        importance: 'no',
+      ),
+      Todo(
+        id: 2,
+        body: 'Cъешь ещё этих мягких французских булок, да выпей чаю',
+        completed: false,
+        deadline: DateTime.now(),
+        importance: 'no',
+      ),
+      Todo(
+        id: 3,
+        body:
+            'Cъешь ещё этих мягких французских булок, да выпей чаю Cъешь ещё этих мягких французских булок, да выпей чаю Cъешь ещё этих мягких французских булок, да выпей чаю',
+        completed: false,
+        deadline: DateTime.now(),
+        importance: 'no',
+      ),
+      const Todo(
+        id: 4,
+        body: 'Cъешь ещё этих мягких французских булок',
+        completed: true,
+        importance: 'no',
+      ),
+      Todo(
+        id: 5,
+        body: 'Cъешь ещё этих мягких французских булок, да выпей чаю',
+        completed: false,
+        deadline: DateTime.now(),
+        importance: 'high',
+      ),
+      Todo(
+        id: 6,
+        body: 'Cъешь ещё этих мягких французских булок, да выпей чаю',
+        completed: false,
+        deadline: DateTime.now(),
+        importance: 'low',
+      ),
+      const Todo(
+        id: 7,
+        body: 'Cъешь ещё этих мягких французских булок, да выпей чаю',
+        completed: false,
+        importance: 'no',
+      ),
+      const Todo(
+        id: 8,
+        body: 'Cъешь ещё этих мягких французских булок, да выпей чаю',
+        completed: true,
+        importance: 'no',
+      ),
+      const Todo(
+        id: 9,
+        body: 'Cъешь ещё этих мягких французских булок, да выпей чаю',
+        completed: false,
+        importance: 'no',
+      ),
+      const Todo(
+        id: 10,
+        body: 'Cъешь ещё этих мягких французских булок, да выпей чаю',
+        completed: true,
+        importance: 'no',
+      ),
+      const Todo(
+        id: 11,
+        body: 'Cъешь ещё этих мягких французских булок, да выпей чаю',
+        completed: false,
+        importance: 'no',
+      ),
+      const Todo(
+        id: 12,
+        body: 'Cъешь ещё этих мягких французских булок, да выпей чаю',
+        completed: true,
+        importance: 'no',
+      ),
+      const Todo(
+        id: 13,
+        body: 'Cъешь ещё этих мягких французских булок, да выпей чаю',
+        completed: false,
+        importance: 'no',
+      ),
+      const Todo(
+        id: 14,
+        body: 'Cъешь ещё этих мягких французских булок, да выпей чаю',
+        completed: true,
+        importance: 'no',
+      ),
+      const Todo(
+        id: 15,
+        body: 'Cъешь ещё этих мягких французских булок, да выпей чаю',
+        completed: false,
+        importance: 'no',
+      ),
+      const Todo(
+        id: 16,
+        body: 'Cъешь ещё этих мягких французских булок, да выпей чаю',
+        completed: true,
+        importance: 'no',
+      ),
+    ];
+
+    todosToCache(list);
   }
 }

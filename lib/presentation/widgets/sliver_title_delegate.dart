@@ -16,7 +16,7 @@ class SliverTitleDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   double get maxExtent =>
-      systemBarHeight + bigTitleOffset + bigTitleHeight * 2 + 30 + 32;
+      systemBarHeight + bigTitleOffset + bigTitleHeight * 2 + 32;
 
   @override
   double get minExtent => systemBarHeight + smallTitleHeight + 16 + 18;
@@ -40,7 +40,7 @@ class SliverTitleDelegate extends SliverPersistentHeaderDelegate {
   ) {
     final theme = Theme.of(context);
     final themeColors = theme.extension<AppThemeColors>()!;
-    final flexibleSpace = bigTitleOffset + bigTitleHeight + 44;
+    final flexibleSpace = bigTitleOffset + bigTitleHeight + 12;
     final k = shrinkOffset >= flexibleSpace
         ? 0.0
         : (flexibleSpace - shrinkOffset) / flexibleSpace;
@@ -70,7 +70,7 @@ class SliverTitleDelegate extends SliverPersistentHeaderDelegate {
               Align(
                 alignment: Alignment.centerLeft,
                 child: SizedBox(
-                  height: smallTitleHeight + bigTitleHeight * k + 4,
+                  height: smallTitleHeight + (bigTitleHeight - 16) * k + 4,
                   child: Text(
                     shrinkOffset > 0 ? 'Мои дела' : 'Мои дела',
                     style: TextStyle.lerp(smallTitleStyle, bigTitleStyle, k),
@@ -84,7 +84,7 @@ class SliverTitleDelegate extends SliverPersistentHeaderDelegate {
                   children: [
                     const SizedBox(height: 6),
                     Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: Alignment.topLeft,
                       child: completedCount != 0
                           ? Text(
                               'Выполнено - $completedCount',
@@ -105,7 +105,7 @@ class SliverTitleDelegate extends SliverPersistentHeaderDelegate {
         ),
         completedCount != 0
             ? Positioned(
-                bottom: lerpDouble(9, 25, k)!,
+                bottom: lerpDouble(9, 14, k)!,
                 right: lerpDouble(16, 25, k)!,
                 child: InkWell(
                   onTap: onHidePressed,
