@@ -4,9 +4,13 @@ import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
 
 class TodoTile extends StatelessWidget {
   final Todo todo;
+  final VoidCallback onDelete;
+  final VoidCallback onComplete;
   const TodoTile({
     super.key,
     required this.todo,
+    required this.onDelete,
+    required this.onComplete,
   });
 
   @override
@@ -15,6 +19,21 @@ class TodoTile extends StatelessWidget {
     final themeColors = theme.extension<AppThemeColors>()!;
 
     return Dismissible(
+      confirmDismiss: (direction) async {
+        if (direction == DismissDirection.startToEnd) {
+          return false;
+        } else if (direction == DismissDirection.endToStart) {
+          return true;
+        }
+        return null;
+      },
+      onDismissed: (direction) {
+        if (direction == DismissDirection.startToEnd) {
+          onComplete();
+        } else if (direction == DismissDirection.endToStart) {
+          onDelete();
+        }
+      },
       background: Container(
         padding: const EdgeInsets.symmetric(horizontal: 25),
         color: themeColors.green,

@@ -42,11 +42,14 @@ class MainScreen extends ConsumerWidget {
           ),
           todosState.when(
             loading: () {
-              return const SliverToBoxAdapter(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
+              return ref.read(todosListState.notifier).isFirstload
+                  ? const SliverToBoxAdapter(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : _Core(
+                      data: ref.read(todosListState.notifier).previousState);
             },
             data: (data) {
               return _Core(data: data);
@@ -94,11 +97,17 @@ class _Core extends StatelessWidget {
         bottom: 16,
       ),
       sliver: SliverToBoxAdapter(
-        child: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          color: themeColors.backSecondary,
-          child: TodoList(
-            iterable: data!,
+        child: Material(
+          elevation: 1,
+          borderRadius: BorderRadius.circular(8),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Container(
+              color: themeColors.backSecondary,
+              child: TodoList(
+                iterable: data!,
+              ),
+            ),
           ),
         ),
       ),

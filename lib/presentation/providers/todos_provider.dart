@@ -11,22 +11,44 @@ class TodosStateNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
   late final getTodos = ref.read(getTodosProvider);
   var _completedCount = 0;
   int get completedCount => _completedCount;
+  final List<Todo> previousState = [];
+  var isFirstload = true;
 
   Future<void> loadTodos() async {
     state = const AsyncLoading();
     await Future.delayed(const Duration(seconds: 1));
     final stateOrFailure = await ref.read(getTodosProvider).call();
     stateOrFailure.fold((error) {
-      return '';
+      return 'error';
     }, (todos) {
       state = AsyncValue.data(todos);
       _completedCount = state.value!.length;
+      previousState.clear();
+      for (var element in state.value!) {
+        previousState.add(element);
+      }
+
+      isFirstload = false;
     });
   }
 
   Future<void> saveTodo(Todo todo) async {
     final stateOrFailure = await ref.read(saveTodoProvider).call(todo);
-    stateOrFailure.fold((error) {}, (r) {});
+    stateOrFailure.fold((error) {
+      return 'error';
+    }, (id) {
+      return null;
+    });
+    await loadTodos();
+  }
+
+  Future<void> deleteTodo(int id) async {
+    final stateOrFailure = await ref.read(deleteTodoProvider).call(id);
+    stateOrFailure.fold((error) {
+      return 'error';
+    }, (id) {
+      return null;
+    });
     await loadTodos();
   }
 }

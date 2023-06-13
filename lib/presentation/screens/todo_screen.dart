@@ -42,22 +42,27 @@ class TodoScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Card(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        maxWidth: double.infinity,
-                        minWidth: double.infinity,
-                        maxHeight: double.infinity,
-                        minHeight: 104,
-                      ),
-                      child: TextFormField(
-                        maxLines: 1000,
-                        minLines: 1,
+                  Material(
+                    elevation: 1,
+                    borderRadius: BorderRadius.circular(8),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        color: themeColors.backSecondary,
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            maxWidth: double.infinity,
+                            minWidth: double.infinity,
+                            maxHeight: double.infinity,
+                            minHeight: 104,
+                          ),
+                          child: TextFormField(
+                            maxLines: 1000,
+                            minLines: 1,
+                          ),
+                        ),
                       ),
                     ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    color: themeColors.backSecondary,
                   ),
                   const SizedBox(height: 28),
                   Text('Важность'),
