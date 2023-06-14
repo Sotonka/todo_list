@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:yandex_flutter_task/core/error/exception.dart';
-import 'package:yandex_flutter_task/core/logger/logger.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,8 +30,6 @@ class LocalDataSourceImpl implements LocalDataSource {
     todos.removeWhere((element) => element.id == id);
     todosToCache(todos);
 
-    // TODO
-    print('ELEMENT WITH ID $id HAS BEEN DELETED');
     return (id);
   }
 
@@ -90,15 +87,11 @@ class LocalDataSourceImpl implements LocalDataSource {
       todos.add(
         todo.copyWith(id: id),
       );
-      // TODO
-      print('ELEMENT WITH ID $id HAS BEEN ADDED');
       todosToCache(todos);
       return (id);
     } else {
       todos.removeWhere((element) => element.id == todo.id);
       todos.add(todo);
-      // TODO
-      print('ELEMENT WITH ID ${todo.id!} HAS BEEN CHANGED');
       todosToCache(todos);
       return (todo.id!);
     }
