@@ -12,7 +12,7 @@ _$_Todo _$$_TodoFromJson(Map<String, dynamic> json) => _$_Todo(
       deadline: json['deadline'] == null
           ? null
           : DateTime.parse(json['deadline'] as String),
-      importance: json['importance'] as String? ?? 'default',
+      importance: json['importance'] as String? ?? 'no',
       completed: json['completed'] as bool? ?? false,
     );
 

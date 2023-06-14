@@ -1,5 +1,4 @@
 class AppStrings {
-  static const String cafe = 'кафе';
   static const String mainTitleTodos = 'Мои дела';
   static const String mainTitleDone = 'Выполнено';
   static const String mainListNew = 'Новое';

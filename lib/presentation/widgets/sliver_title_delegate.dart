@@ -72,7 +72,9 @@ class SliverTitleDelegate extends SliverPersistentHeaderDelegate {
                 child: SizedBox(
                   height: smallTitleHeight + (bigTitleHeight - 16) * k + 4,
                   child: Text(
-                    shrinkOffset > 0 ? 'Мои дела' : 'Мои дела',
+                    shrinkOffset > 0
+                        ? AppStrings.mainTitleTodos
+                        : AppStrings.mainTitleTodos,
                     style: TextStyle.lerp(smallTitleStyle, bigTitleStyle, k),
                   ),
                 ),
@@ -87,7 +89,7 @@ class SliverTitleDelegate extends SliverPersistentHeaderDelegate {
                       alignment: Alignment.topLeft,
                       child: completedCount != 0
                           ? Text(
-                              'Выполнено - $completedCount',
+                              '${AppStrings.mainTitleDone} - $completedCount',
                               style:
                                   theme.primaryTextTheme.bodyMedium!.copyWith(
                                 color: themeColors.labelTetriary,

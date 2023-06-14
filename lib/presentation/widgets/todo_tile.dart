@@ -1,5 +1,8 @@
+// ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
+import 'package:yandex_flutter_task/app_router.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
+import 'package:yandex_flutter_task/presentation/providers/todo_info_provider.dart';
 import 'package:yandex_flutter_task/presentation/providers/todos_provider.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -214,8 +217,15 @@ class TodoTile extends ConsumerWidget {
                     ],
                   ),
                 ),
-                AppIcons.infoOutline(
-                  color: themeColors.labelTetriary,
+                InkWell(
+                  onTap: () {
+                    ref.read(todoInfoNotifierProvider.notifier).initTodo(todo);
+
+                    Navigator.of(context).pushNamed(AppRouter.todoScreen);
+                  },
+                  child: AppIcons.infoOutline(
+                    color: themeColors.labelTetriary,
+                  ),
                 ),
               ],
             ),

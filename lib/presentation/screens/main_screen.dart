@@ -57,15 +57,16 @@ class MainScreen extends ConsumerWidget {
                   ? SliverToBoxAdapter(
                       child: Column(
                         children: [
-                          Text('EMPTY'),
+                          const Text('Пусто :('),
+                          const SizedBox(height: 16),
                           InkWell(
                             onTap: () {
                               ref.read(todosListState.notifier).fillMocks();
                             },
                             child: Container(
-                              color: Colors.blue,
-                              height: 50,
-                              width: 50,
+                              padding: const EdgeInsets.all(16),
+                              color: themeColors.blue,
+                              child: const Text('~заполнить данными~'),
                             ),
                           ),
                         ],
@@ -73,7 +74,6 @@ class MainScreen extends ConsumerWidget {
                     )
                   : _Core(data: data);
             },
-            // TODO
             error: (_, __) {
               return const SliverToBoxAdapter();
             },

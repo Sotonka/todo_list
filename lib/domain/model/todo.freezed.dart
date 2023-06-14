@@ -149,7 +149,7 @@ class _$_Todo implements _Todo {
       {this.id,
       required this.body,
       this.deadline,
-      this.importance = 'default',
+      this.importance = 'no',
       this.completed = false});
 
   factory _$_Todo.fromJson(Map<String, dynamic> json) => _$$_TodoFromJson(json);

@@ -1,3 +1,4 @@
+// ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yandex_flutter_task/presentation/providers/todo_info_provider.dart';
@@ -29,6 +30,7 @@ class TodoScreen extends ConsumerWidget {
             leading: InkWell(
               onTap: () {
                 FocusManager.instance.primaryFocus?.unfocus();
+                stateNotifier.formClear();
                 Navigator.pop(context);
               },
               child: Center(
@@ -41,6 +43,7 @@ class TodoScreen extends ConsumerWidget {
               InkWell(
                 onTap: () {
                   ref.read(todosListState.notifier).saveTodo(state);
+                  stateNotifier.formClear();
                   Navigator.pop(context);
                   FocusManager.instance.primaryFocus?.unfocus();
                 },
@@ -48,7 +51,7 @@ class TodoScreen extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Center(
                     child: Text(
-                      'СОХРАНИТЬ',
+                      AppStrings.todoSave.toUpperCase(),
                       style: theme.primaryTextTheme.titleMedium!
                           .copyWith(color: themeColors.blue),
                     ),
@@ -86,6 +89,7 @@ class TodoScreen extends ConsumerWidget {
                               onFieldSubmitted: (value) {
                                 stateNotifier.updateBody(value);
                               },
+                              controller: stateNotifier.bodyController,
                               style: theme.primaryTextTheme.bodyMedium!
                                   .copyWith(color: themeColors.labelPrimary),
                               decoration: InputDecoration.collapsed(
@@ -103,7 +107,7 @@ class TodoScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 28),
                   Text(
-                    'Важность',
+                    AppStrings.todoFormImportance,
                     style: theme.primaryTextTheme.bodyMedium!
                         .copyWith(color: themeColors.labelPrimary),
                   ),
@@ -116,12 +120,16 @@ class TodoScreen extends ConsumerWidget {
                         iconDisabledColor: Colors.transparent,
                         iconEnabledColor: Colors.transparent,
                         dropdownColor: themeColors.backElevated,
-                        value: items[0],
+                        value: state.importance == 'no'
+                            ? AppStrings.todoImportanceNo
+                            : state.importance == 'low'
+                                ? AppStrings.todoImportanceLow
+                                : AppStrings.todoImportanceHigh,
                         items: items
                             .map(
                               (item) => DropdownMenuItem(
                                 value: item,
-                                child: item == 'Высокий'
+                                child: item == AppStrings.todoImportanceHigh
                                     ? RichText(
                                         maxLines: 3,
                                         overflow: TextOverflow.ellipsis,
@@ -180,7 +188,7 @@ class TodoScreen extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Сделать до',
+                            AppStrings.todoFormDeadline,
                             style: theme.primaryTextTheme.bodyMedium!
                                 .copyWith(color: themeColors.labelPrimary),
                           ),
@@ -243,21 +251,34 @@ class TodoScreen extends ConsumerWidget {
                   const SizedBox(height: 40),
                   Divider(color: themeColors.supportSeparator),
                   const SizedBox(height: 16),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      AppIcons.delete(
-                        color: state.id == null
-                            ? themeColors.labelDisable
-                            : themeColors.red,
-                      ),
-                      const SizedBox(width: 17),
-                      Text(
-                        'Удалить',
-                        style: theme.primaryTextTheme.bodyMedium!
-                            .copyWith(color: themeColors.labelDisable),
-                      ),
-                    ],
+                  InkWell(
+                    onTap: () {
+                      if (state.id != null) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        stateNotifier.formClear();
+                        ref.read(todosListState.notifier).deleteTodo(state.id!);
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        AppIcons.delete(
+                          color: state.id == null
+                              ? themeColors.labelDisable
+                              : themeColors.red,
+                        ),
+                        const SizedBox(width: 17),
+                        Text(
+                          AppStrings.todoDelete,
+                          style: theme.primaryTextTheme.bodyMedium!.copyWith(
+                            color: state.id == null
+                                ? themeColors.labelDisable
+                                : themeColors.red,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 40),
                 ],

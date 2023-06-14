@@ -1,11 +1,21 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 
 class TodoInfoNotifier extends StateNotifier<Todo> {
   TodoInfoNotifier() : super(const Todo(body: ''));
 
+  final _bodyController = TextEditingController();
+  TextEditingController get bodyController => _bodyController;
+  set bodyControllerText(String text) {
+    _bodyController.text = text;
+  }
+
   void initTodo(Todo initial) {
     state = initial;
+    if (state.body.isNotEmpty) {
+      _bodyController.text = state.body;
+    }
   }
 
   void updateBody(String body) {
@@ -30,6 +40,16 @@ class TodoInfoNotifier extends StateNotifier<Todo> {
       default:
         state = state.copyWith(importance: 'no');
     }
+  }
+
+  void formClear() {
+    _bodyController.clear();
+  }
+
+  @override
+  void dispose() {
+    _bodyController.dispose();
+    super.dispose();
   }
 }
 

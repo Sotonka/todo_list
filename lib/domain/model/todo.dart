@@ -9,7 +9,7 @@ class Todo with _$Todo {
     int? id,
     required String body,
     DateTime? deadline,
-    @Default('default') String importance,
+    @Default('no') String importance,
     @Default(false) bool completed,
   }) = _Todo;
 
