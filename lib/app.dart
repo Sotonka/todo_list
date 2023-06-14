@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yandex_flutter_task/app_router.dart';
 import 'package:yandex_flutter_task/presentation/screens/main_screen.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -28,6 +29,13 @@ class _AppState extends State<App> {
           AppThemeColors.light,
         ],
       ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ru'),
+      ],
       themeMode: ThemeMode.system,
       home: const MainScreen(),
     );

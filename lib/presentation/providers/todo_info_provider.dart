@@ -17,7 +17,19 @@ class TodoInfoNotifier extends StateNotifier<Todo> {
   }
 
   void updateImportance(String importance) {
-    state = state.copyWith(importance: importance);
+    switch (importance.toLowerCase()) {
+      case 'нет':
+        state = state.copyWith(importance: 'no');
+
+      case 'низкий':
+        state = state.copyWith(importance: 'low');
+
+      case 'высокий':
+        state = state.copyWith(importance: 'high');
+
+      default:
+        state = state.copyWith(importance: 'no');
+    }
   }
 }
 

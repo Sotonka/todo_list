@@ -3,6 +3,7 @@ import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/presentation/providers/todos_provider.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 class TodoTile extends ConsumerWidget {
   final Todo todo;
@@ -196,32 +197,14 @@ class TodoTile extends ConsumerWidget {
                                   ],
                                 ),
                               ),
-
-                              /* Text(
-                                '${todo.id} - ${todo.body}',
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: todo.completed
-                                    ? theme.primaryTextTheme.bodyMedium!
-                                        .copyWith(
-                                            color: themeColors.labelTetriary)
-                                        .copyWith(
-                                          decoration:
-                                              TextDecoration.lineThrough,
-                                          decorationColor:
-                                              themeColors.labelTetriary,
-                                        )
-                                    : theme.primaryTextTheme.bodyMedium!
-                                        .copyWith(
-                                            color: themeColors.labelPrimary),
-                              ), */
                             ),
                             todo.deadline != null
                                 ? Text(
-                                    'дата',
+                                    DateFormat('dd MM yyy').format(
+                                      todo.deadline!,
+                                    ),
                                     style: theme.primaryTextTheme.bodySmall!
-                                        .copyWith(
-                                            color: themeColors.labelTetriary),
+                                        .copyWith(color: themeColors.blue),
                                   )
                                 : const SizedBox.shrink(),
                           ],

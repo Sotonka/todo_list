@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/presentation/providers/todo_info_provider.dart';
+import 'package:yandex_flutter_task/presentation/providers/todos_provider.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
+import 'package:intl/intl.dart';
 
 class TodoScreen extends ConsumerWidget {
   const TodoScreen({super.key});
@@ -26,16 +27,33 @@ class TodoScreen extends ConsumerWidget {
             pinned: true,
             floating: true,
             leading: InkWell(
-              onTap: () {},
-              child: AppIcons.close(
-                height: 14,
-                width: 14,
+              onTap: () {
+                FocusManager.instance.primaryFocus?.unfocus();
+                Navigator.pop(context);
+              },
+              child: Center(
+                child: AppIcons.close(
+                  color: themeColors.labelPrimary,
+                ),
               ),
             ),
             actions: [
               InkWell(
-                onTap: () {},
-                child: Text('СОХРАНИТЬ'),
+                onTap: () {
+                  ref.read(todosListState.notifier).saveTodo(state);
+                  Navigator.pop(context);
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Center(
+                    child: Text(
+                      'СОХРАНИТЬ',
+                      style: theme.primaryTextTheme.titleMedium!
+                          .copyWith(color: themeColors.blue),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -59,16 +77,36 @@ class TodoScreen extends ConsumerWidget {
                             maxHeight: double.infinity,
                             minHeight: 104,
                           ),
-                          child: TextFormField(
-                            maxLines: 1000,
-                            minLines: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                stateNotifier.updateBody(value);
+                              },
+                              onFieldSubmitted: (value) {
+                                stateNotifier.updateBody(value);
+                              },
+                              style: theme.primaryTextTheme.bodyMedium!
+                                  .copyWith(color: themeColors.labelPrimary),
+                              decoration: InputDecoration.collapsed(
+                                hintText: AppStrings.todoFormHint,
+                                hintStyle: theme.primaryTextTheme.bodyMedium!
+                                    .copyWith(color: themeColors.labelTetriary),
+                              ),
+                              maxLines: 1000,
+                              minLines: 1,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 28),
-                  Text('Важность'),
+                  Text(
+                    'Важность',
+                    style: theme.primaryTextTheme.bodyMedium!
+                        .copyWith(color: themeColors.labelPrimary),
+                  ),
                   const SizedBox(height: 4),
                   SizedBox(
                     width: 164,
@@ -77,16 +115,49 @@ class TodoScreen extends ConsumerWidget {
                       child: DropdownButtonFormField(
                         iconDisabledColor: Colors.transparent,
                         iconEnabledColor: Colors.transparent,
+                        dropdownColor: themeColors.backElevated,
                         value: items[0],
                         items: items
                             .map(
                               (item) => DropdownMenuItem(
                                 value: item,
-                                child: Text(item),
+                                child: item == 'Высокий'
+                                    ? RichText(
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 6),
+                                                child: AppIcons.alert(),
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: item,
+                                              style: theme
+                                                  .primaryTextTheme.bodyMedium!
+                                                  .copyWith(
+                                                      color: themeColors.red),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : Text(
+                                        item,
+                                        style: theme
+                                            .primaryTextTheme.bodyMedium!
+                                            .copyWith(
+                                                color:
+                                                    themeColors.labelPrimary),
+                                      ),
                               ),
                             )
                             .toList(),
-                        onChanged: (_) {},
+                        onChanged: (value) {
+                          stateNotifier.updateImportance(value ?? 'нет');
+                        },
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           isCollapsed: true,
@@ -98,18 +169,31 @@ class TodoScreen extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  const Divider(),
+                  const SizedBox(height: 16),
+                  Divider(color: themeColors.supportSeparator),
+                  const SizedBox(height: 16),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Сделать до'),
+                          Text(
+                            'Сделать до',
+                            style: theme.primaryTextTheme.bodyMedium!
+                                .copyWith(color: themeColors.labelPrimary),
+                          ),
                           state.deadline != null
-                              ? Text(state.deadline.toString())
+                              ? Padding(
+                                  padding: const EdgeInsets.only(top: 4),
+                                  child: Text(
+                                    DateFormat('dd MM yyy')
+                                        .format(state.deadline!),
+                                    style: theme.primaryTextTheme.bodySmall!
+                                        .copyWith(color: themeColors.blue),
+                                  ),
+                                )
                               : const SizedBox.shrink(),
                         ],
                       ),
@@ -124,6 +208,26 @@ class TodoScreen extends ConsumerWidget {
                               ? stateNotifier.updateDeadline(null)
                               : stateNotifier.updateDeadline(
                                   await showDatePicker(
+                                    locale: const Locale('ru', 'RU'),
+                                    builder: (context, child) {
+                                      return Theme(
+                                        data: theme.copyWith(
+                                          dialogBackgroundColor:
+                                              themeColors.backSecondary,
+                                          colorScheme: ColorScheme.light(
+                                            primary: themeColors.blue!,
+                                            onPrimary: themeColors.white!,
+                                            onSurface:
+                                                themeColors.labelPrimary!,
+                                          ),
+                                        ),
+                                        child: child!,
+                                      );
+                                    },
+                                    cancelText: AppStrings.todoCalendarCancel
+                                        .toUpperCase(),
+                                    confirmText: AppStrings.todoCalendarDone
+                                        .toUpperCase(),
                                     context: context,
                                     initialDate: DateTime.now(),
                                     firstDate: DateTime.now(),
@@ -137,9 +241,25 @@ class TodoScreen extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 40),
-                  const Divider(),
-                  const SizedBox(height: 22),
-                  Text('Удалить'),
+                  Divider(color: themeColors.supportSeparator),
+                  const SizedBox(height: 16),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      AppIcons.delete(
+                        color: state.id == null
+                            ? themeColors.labelDisable
+                            : themeColors.red,
+                      ),
+                      const SizedBox(width: 17),
+                      Text(
+                        'Удалить',
+                        style: theme.primaryTextTheme.bodyMedium!
+                            .copyWith(color: themeColors.labelDisable),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 40),
                 ],
               ),
             ),
