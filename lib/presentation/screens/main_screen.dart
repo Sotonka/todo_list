@@ -57,7 +57,10 @@ class MainScreen extends ConsumerWidget {
                   ? SliverToBoxAdapter(
                       child: Column(
                         children: [
-                          const Text('Пусто :('),
+                          Text(
+                            'Пусто :(',
+                            style: TextStyle(color: themeColors.labelPrimary),
+                          ),
                           const SizedBox(height: 16),
                           InkWell(
                             onTap: () {
