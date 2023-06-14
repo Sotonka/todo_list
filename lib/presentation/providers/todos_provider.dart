@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yandex_flutter_task/core/logger/logger.dart';
 import 'package:yandex_flutter_task/data/datasource/local_datasource/provider.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/domain/usecases/provider.dart';
@@ -18,8 +19,10 @@ class TodosStateNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
     // await Future.delayed(const Duration(seconds: 1));
     final stateOrFailure = await ref.read(getTodosProvider).call();
     stateOrFailure.fold((error) {
+      ref.read(appLoggerProvider).e('PROVIDER: error on loading todos: $error');
       return 'error';
     }, (todos) {
+      ref.read(appLoggerProvider).i('PROVIDER: loading todos');
       state = AsyncValue.data(todos);
       _completedCount = 0;
       for (var element in state.value!) {
@@ -33,8 +36,10 @@ class TodosStateNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
   Future<void> saveTodo(Todo todo) async {
     final stateOrFailure = await ref.read(saveTodoProvider).call(todo);
     stateOrFailure.fold((error) {
+      ref.read(appLoggerProvider).e('PROVIDER: error on save todo: $error');
       return 'error';
     }, (id) {
+      ref.read(appLoggerProvider).i('PROVIDER: save todo $id');
       return null;
     });
     await loadTodos();
@@ -43,8 +48,10 @@ class TodosStateNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
   Future<void> deleteTodo(int id) async {
     final stateOrFailure = await ref.read(deleteTodoProvider).call(id);
     stateOrFailure.fold((error) {
+      ref.read(appLoggerProvider).e('PROVIDER: error on delete todo: $error');
       return 'error';
     }, (id) {
+      ref.read(appLoggerProvider).i('PROVIDER: delete todo $id');
       return null;
     });
     await loadTodos();

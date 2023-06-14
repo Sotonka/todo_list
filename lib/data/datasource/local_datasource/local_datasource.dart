@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:yandex_flutter_task/core/error/exception.dart';
+import 'package:yandex_flutter_task/core/logger/logger.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,6 +30,7 @@ class LocalDataSourceImpl implements LocalDataSource {
 
     todos.removeWhere((element) => element.id == id);
     todosToCache(todos);
+
     // TODO
     print('ELEMENT WITH ID $id HAS BEEN DELETED');
     return (id);

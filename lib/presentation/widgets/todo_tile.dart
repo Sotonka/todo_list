@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
 import 'package:yandex_flutter_task/app_router.dart';
+import 'package:yandex_flutter_task/core/logger/logger.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/presentation/providers/todo_info_provider.dart';
 import 'package:yandex_flutter_task/presentation/providers/todos_provider.dart';
@@ -25,6 +26,9 @@ class TodoTile extends ConsumerWidget {
     return Dismissible(
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.startToEnd) {
+          ref
+              .read(appLoggerProvider)
+              .i('UI: <id: ${todo.id}> : complete draggable action');
           todosListStateNotifier.saveTodo(
             todo.copyWith(completed: true),
           );
@@ -36,6 +40,9 @@ class TodoTile extends ConsumerWidget {
       },
       onDismissed: (direction) {
         if (direction == DismissDirection.endToStart) {
+          ref
+              .read(appLoggerProvider)
+              .i('UI: <id: ${todo.id}> : delete draggable action');
           todosListStateNotifier.deleteTodo(todo.id!);
         }
       },
@@ -100,6 +107,9 @@ class TodoTile extends ConsumerWidget {
                         padding: const EdgeInsets.only(top: 2),
                         child: InkWell(
                           onTap: () {
+                            ref
+                                .read(appLoggerProvider)
+                                .i('UI: <id: ${todo.id}> : complete action');
                             todosListStateNotifier.saveTodo(
                               todo.copyWith(completed: !todo.completed),
                             );
@@ -220,6 +230,9 @@ class TodoTile extends ConsumerWidget {
                 InkWell(
                   onTap: () {
                     ref.read(todoInfoNotifierProvider.notifier).initTodo(todo);
+
+                    ref.read(appLoggerProvider).i(
+                        'UI: <id: ${todo.id}> : transition to todo info screen');
 
                     Navigator.of(context).pushNamed(AppRouter.todoScreen);
                   },
