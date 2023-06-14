@@ -26,7 +26,7 @@ class _AppState extends State<App> {
       ),
       darkTheme: AppTheme.darkTheme.copyWith(
         extensions: [
-          AppThemeColors.light,
+          AppThemeColors.dark,
         ],
       ),
       localizationsDelegates: const [
