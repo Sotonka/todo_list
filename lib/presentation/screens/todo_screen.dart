@@ -121,15 +121,15 @@ class TodoScreen extends ConsumerWidget {
                         iconEnabledColor: Colors.transparent,
                         dropdownColor: themeColors.backElevated,
                         value: state.importance == 'no'
-                            ? AppStrings.todoImportanceNo
+                            ? 'Нет'
                             : state.importance == 'low'
-                                ? AppStrings.todoImportanceLow
-                                : AppStrings.todoImportanceHigh,
+                                ? 'Низкий'
+                                : 'Высокий',
                         items: items
                             .map(
                               (item) => DropdownMenuItem(
                                 value: item,
-                                child: item == AppStrings.todoImportanceHigh
+                                child: item == 'Высокий'
                                     ? RichText(
                                         maxLines: 3,
                                         overflow: TextOverflow.ellipsis,
