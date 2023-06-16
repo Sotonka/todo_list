@@ -15,7 +15,7 @@ class TodoInfoNotifier extends StateNotifier<Todo> {
   }
 
   void initTodo(Todo initial) {
-    ref.read(appLoggerProvider).i('PROVIDER: initialize todo with ${initial}');
+    ref.read(appLoggerProvider).i('PROVIDER: initialize todo with $initial');
     state = initial;
     if (state.body.isNotEmpty) {
       _bodyController.text = state.body;

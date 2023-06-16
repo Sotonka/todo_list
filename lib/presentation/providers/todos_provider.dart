@@ -33,6 +33,19 @@ class TodosStateNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
     });
   }
 
+  /*  Future<Todo> loadTodo(int id) async {
+
+    final stateOrFailure = await ref.read(getTodoProvider).call(id);
+    stateOrFailure.fold((error) {
+      ref.read(appLoggerProvider).e('PROVIDER: error on loading todos: $error');
+      return 'error';
+    }, (todo) {
+      ref.read(appLoggerProvider).i('PROVIDER: loading todos');
+      state = AsyncValue.data(todo);
+      
+    });
+  } */
+
   Future<void> saveTodo(Todo todo) async {
     final stateOrFailure = await ref.read(saveTodoProvider).call(todo);
     stateOrFailure.fold((error) {
