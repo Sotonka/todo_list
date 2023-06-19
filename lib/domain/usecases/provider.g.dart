@@ -20,34 +20,48 @@ final getTodosProvider = AutoDisposeProvider<GetTodosUseCase>.internal(
 );
 
 typedef GetTodosRef = AutoDisposeProviderRef<GetTodosUseCase>;
-String _$getTodoHash() => r'cd94937211b4ee9b0cb80dba33740572864437b0';
+String _$patchTodosHash() => r'b102330e0f105fe54e5da2a3df6fa3e263b123c9';
 
-/// See also [getTodo].
-@ProviderFor(getTodo)
-final getTodoProvider = AutoDisposeProvider<GetTodoUseCase>.internal(
-  getTodo,
-  name: r'getTodoProvider',
+/// See also [patchTodos].
+@ProviderFor(patchTodos)
+final patchTodosProvider = AutoDisposeProvider<PatchTodosUseCase>.internal(
+  patchTodos,
+  name: r'patchTodosProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$getTodoHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$patchTodosHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef GetTodoRef = AutoDisposeProviderRef<GetTodoUseCase>;
-String _$saveTodoHash() => r'cbd837e2f2acd868d2ef27a6ce1ca655ffe8b280';
+typedef PatchTodosRef = AutoDisposeProviderRef<PatchTodosUseCase>;
+String _$createTodoHash() => r'78303ce54ec953c0e8aa72cc9ed21c558f7e797b';
 
-/// See also [saveTodo].
-@ProviderFor(saveTodo)
-final saveTodoProvider = AutoDisposeProvider<SaveTodoUseCase>.internal(
-  saveTodo,
-  name: r'saveTodoProvider',
+/// See also [createTodo].
+@ProviderFor(createTodo)
+final createTodoProvider = AutoDisposeProvider<CreateTodoUseCase>.internal(
+  createTodo,
+  name: r'createTodoProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$saveTodoHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$createTodoHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef SaveTodoRef = AutoDisposeProviderRef<SaveTodoUseCase>;
+typedef CreateTodoRef = AutoDisposeProviderRef<CreateTodoUseCase>;
+String _$updateTodoHash() => r'9a0bf5bc063341db96cbab3b3a78994aaa045c80';
+
+/// See also [updateTodo].
+@ProviderFor(updateTodo)
+final updateTodoProvider = AutoDisposeProvider<UpdateTodoUseCase>.internal(
+  updateTodo,
+  name: r'updateTodoProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$updateTodoHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef UpdateTodoRef = AutoDisposeProviderRef<UpdateTodoUseCase>;
 String _$deleteTodoHash() => r'ad3d9c769ce890dd2aee7864937f4888e9f21acf';
 
 /// See also [deleteTodo].

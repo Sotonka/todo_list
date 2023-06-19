@@ -20,11 +20,15 @@ Todo _$TodoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Todo {
-  int? get id => throw _privateConstructorUsedError;
-  String get body => throw _privateConstructorUsedError;
-  DateTime? get deadline => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get text => throw _privateConstructorUsedError;
   String get importance => throw _privateConstructorUsedError;
-  bool get completed => throw _privateConstructorUsedError;
+  int? get deadline => throw _privateConstructorUsedError;
+  bool get done => throw _privateConstructorUsedError;
+  String? get color => throw _privateConstructorUsedError;
+  int get created_at => throw _privateConstructorUsedError;
+  int get changed_at => throw _privateConstructorUsedError;
+  String get last_updated_by => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,11 +41,15 @@ abstract class $TodoCopyWith<$Res> {
       _$TodoCopyWithImpl<$Res, Todo>;
   @useResult
   $Res call(
-      {int? id,
-      String body,
-      DateTime? deadline,
+      {String id,
+      String text,
       String importance,
-      bool completed});
+      int? deadline,
+      bool done,
+      String? color,
+      int created_at,
+      int changed_at,
+      String last_updated_by});
 }
 
 /// @nodoc
@@ -57,33 +65,53 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? body = null,
-    Object? deadline = freezed,
+    Object? id = null,
+    Object? text = null,
     Object? importance = null,
-    Object? completed = null,
+    Object? deadline = freezed,
+    Object? done = null,
+    Object? color = freezed,
+    Object? created_at = null,
+    Object? changed_at = null,
+    Object? last_updated_by = null,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      body: null == body
-          ? _value.body
-          : body // ignore: cast_nullable_to_non_nullable
               as String,
-      deadline: freezed == deadline
-          ? _value.deadline
-          : deadline // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
       importance: null == importance
           ? _value.importance
           : importance // ignore: cast_nullable_to_non_nullable
               as String,
-      completed: null == completed
-          ? _value.completed
-          : completed // ignore: cast_nullable_to_non_nullable
+      deadline: freezed == deadline
+          ? _value.deadline
+          : deadline // ignore: cast_nullable_to_non_nullable
+              as int?,
+      done: null == done
+          ? _value.done
+          : done // ignore: cast_nullable_to_non_nullable
               as bool,
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
+      created_at: null == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as int,
+      changed_at: null == changed_at
+          ? _value.changed_at
+          : changed_at // ignore: cast_nullable_to_non_nullable
+              as int,
+      last_updated_by: null == last_updated_by
+          ? _value.last_updated_by
+          : last_updated_by // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -95,11 +123,15 @@ abstract class _$$_TodoCopyWith<$Res> implements $TodoCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int? id,
-      String body,
-      DateTime? deadline,
+      {String id,
+      String text,
       String importance,
-      bool completed});
+      int? deadline,
+      bool done,
+      String? color,
+      int created_at,
+      int changed_at,
+      String last_updated_by});
 }
 
 /// @nodoc
@@ -111,65 +143,99 @@ class __$$_TodoCopyWithImpl<$Res> extends _$TodoCopyWithImpl<$Res, _$_Todo>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? body = null,
-    Object? deadline = freezed,
+    Object? id = null,
+    Object? text = null,
     Object? importance = null,
-    Object? completed = null,
+    Object? deadline = freezed,
+    Object? done = null,
+    Object? color = freezed,
+    Object? created_at = null,
+    Object? changed_at = null,
+    Object? last_updated_by = null,
   }) {
     return _then(_$_Todo(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      body: null == body
-          ? _value.body
-          : body // ignore: cast_nullable_to_non_nullable
               as String,
-      deadline: freezed == deadline
-          ? _value.deadline
-          : deadline // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
       importance: null == importance
           ? _value.importance
           : importance // ignore: cast_nullable_to_non_nullable
               as String,
-      completed: null == completed
-          ? _value.completed
-          : completed // ignore: cast_nullable_to_non_nullable
+      deadline: freezed == deadline
+          ? _value.deadline
+          : deadline // ignore: cast_nullable_to_non_nullable
+              as int?,
+      done: null == done
+          ? _value.done
+          : done // ignore: cast_nullable_to_non_nullable
               as bool,
+      color: freezed == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
+      created_at: null == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as int,
+      changed_at: null == changed_at
+          ? _value.changed_at
+          : changed_at // ignore: cast_nullable_to_non_nullable
+              as int,
+      last_updated_by: null == last_updated_by
+          ? _value.last_updated_by
+          : last_updated_by // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_Todo implements _Todo {
+class _$_Todo extends _Todo {
   const _$_Todo(
-      {this.id,
-      required this.body,
+      {required this.id,
+      required this.text,
+      this.importance = 'basic',
       this.deadline,
-      this.importance = 'no',
-      this.completed = false});
+      this.done = false,
+      this.color = '#FFFFFF',
+      required this.created_at,
+      required this.changed_at,
+      required this.last_updated_by})
+      : super._();
 
   factory _$_Todo.fromJson(Map<String, dynamic> json) => _$$_TodoFromJson(json);
 
   @override
-  final int? id;
+  final String id;
   @override
-  final String body;
-  @override
-  final DateTime? deadline;
+  final String text;
   @override
   @JsonKey()
   final String importance;
   @override
+  final int? deadline;
+  @override
   @JsonKey()
-  final bool completed;
+  final bool done;
+  @override
+  @JsonKey()
+  final String? color;
+  @override
+  final int created_at;
+  @override
+  final int changed_at;
+  @override
+  final String last_updated_by;
 
   @override
   String toString() {
-    return 'Todo(id: $id, body: $body, deadline: $deadline, importance: $importance, completed: $completed)';
+    return 'Todo(id: $id, text: $text, importance: $importance, deadline: $deadline, done: $done, color: $color, created_at: $created_at, changed_at: $changed_at, last_updated_by: $last_updated_by)';
   }
 
   @override
@@ -178,19 +244,25 @@ class _$_Todo implements _Todo {
         (other.runtimeType == runtimeType &&
             other is _$_Todo &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.body, body) || other.body == body) &&
-            (identical(other.deadline, deadline) ||
-                other.deadline == deadline) &&
+            (identical(other.text, text) || other.text == text) &&
             (identical(other.importance, importance) ||
                 other.importance == importance) &&
-            (identical(other.completed, completed) ||
-                other.completed == completed));
+            (identical(other.deadline, deadline) ||
+                other.deadline == deadline) &&
+            (identical(other.done, done) || other.done == done) &&
+            (identical(other.color, color) || other.color == color) &&
+            (identical(other.created_at, created_at) ||
+                other.created_at == created_at) &&
+            (identical(other.changed_at, changed_at) ||
+                other.changed_at == changed_at) &&
+            (identical(other.last_updated_by, last_updated_by) ||
+                other.last_updated_by == last_updated_by));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, body, deadline, importance, completed);
+  int get hashCode => Object.hash(runtimeType, id, text, importance, deadline,
+      done, color, created_at, changed_at, last_updated_by);
 
   @JsonKey(ignore: true)
   @override
@@ -206,26 +278,39 @@ class _$_Todo implements _Todo {
   }
 }
 
-abstract class _Todo implements Todo {
+abstract class _Todo extends Todo {
   const factory _Todo(
-      {final int? id,
-      required final String body,
-      final DateTime? deadline,
+      {required final String id,
+      required final String text,
       final String importance,
-      final bool completed}) = _$_Todo;
+      final int? deadline,
+      final bool done,
+      final String? color,
+      required final int created_at,
+      required final int changed_at,
+      required final String last_updated_by}) = _$_Todo;
+  const _Todo._() : super._();
 
   factory _Todo.fromJson(Map<String, dynamic> json) = _$_Todo.fromJson;
 
   @override
-  int? get id;
+  String get id;
   @override
-  String get body;
-  @override
-  DateTime? get deadline;
+  String get text;
   @override
   String get importance;
   @override
-  bool get completed;
+  int? get deadline;
+  @override
+  bool get done;
+  @override
+  String? get color;
+  @override
+  int get created_at;
+  @override
+  int get changed_at;
+  @override
+  String get last_updated_by;
   @override
   @JsonKey(ignore: true)
   _$$_TodoCopyWith<_$_Todo> get copyWith => throw _privateConstructorUsedError;

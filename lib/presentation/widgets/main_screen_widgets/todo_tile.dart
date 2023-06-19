@@ -1,13 +1,11 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
 import 'package:yandex_flutter_task/app_router.dart';
-import 'package:yandex_flutter_task/core/logger/logger.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
-import 'package:yandex_flutter_task/presentation/providers/todo_info_provider.dart';
-import 'package:yandex_flutter_task/presentation/providers/todos_provider.dart';
+import 'package:yandex_flutter_task/presentation/providers/edit_todo_provider.dart';
+import 'package:yandex_flutter_task/presentation/providers/todo_list_provider.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 class TodoTile extends ConsumerWidget {
   final Todo todo;
@@ -21,17 +19,13 @@ class TodoTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final themeColors = theme.extension<AppThemeColors>()!;
-    final todosListStateNotifier = ref.read(todosListState.notifier);
+    final todoListNotifier = ref.read(todoListProvider.notifier);
 
     return Dismissible(
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.startToEnd) {
-          ref
-              .read(appLoggerProvider)
-              .i('UI: <id: ${todo.id}> : complete draggable action');
-          todosListStateNotifier.saveTodo(
-            todo.copyWith(completed: true),
-          );
+          todoListNotifier.completeToggleTodo(todo);
+
           return false;
         } else if (direction == DismissDirection.endToStart) {
           return true;
@@ -40,10 +34,7 @@ class TodoTile extends ConsumerWidget {
       },
       onDismissed: (direction) {
         if (direction == DismissDirection.endToStart) {
-          ref
-              .read(appLoggerProvider)
-              .i('UI: <id: ${todo.id}> : delete draggable action');
-          todosListStateNotifier.deleteTodo(todo.id!);
+          todoListNotifier.deleteTodo(todo.id);
         }
       },
       background: Container(
@@ -70,9 +61,8 @@ class TodoTile extends ConsumerWidget {
           ],
         ),
       ),
-      direction: todo.completed
-          ? DismissDirection.endToStart
-          : DismissDirection.horizontal,
+      direction:
+          todo.done ? DismissDirection.endToStart : DismissDirection.horizontal,
       dismissThresholds: const {
         DismissDirection.endToStart: 0.2,
       },
@@ -107,14 +97,9 @@ class TodoTile extends ConsumerWidget {
                         padding: const EdgeInsets.only(top: 2),
                         child: InkWell(
                           onTap: () {
-                            ref
-                                .read(appLoggerProvider)
-                                .i('UI: <id: ${todo.id}> : complete action');
-                            todosListStateNotifier.saveTodo(
-                              todo.copyWith(completed: !todo.completed),
-                            );
+                            todoListNotifier.completeToggleTodo(todo);
                           },
-                          child: todo.completed
+                          child: todo.done
                               ? Container(
                                   height: 18,
                                   width: 18,
@@ -169,7 +154,7 @@ class TodoTile extends ConsumerWidget {
                                 text: TextSpan(
                                   children: [
                                     todo.importance == 'high' &&
-                                            todo.completed == false
+                                            todo.done == false
                                         ? WidgetSpan(
                                             child: Padding(
                                               padding: const EdgeInsets.only(
@@ -178,7 +163,7 @@ class TodoTile extends ConsumerWidget {
                                             ),
                                           )
                                         : todo.importance == 'low' &&
-                                                todo.completed == false
+                                                todo.done == false
                                             ? WidgetSpan(
                                                 child: Padding(
                                                   padding:
@@ -190,8 +175,8 @@ class TodoTile extends ConsumerWidget {
                                             : const WidgetSpan(
                                                 child: SizedBox.shrink()),
                                     TextSpan(
-                                      text: todo.body,
-                                      style: todo.completed
+                                      text: todo.text,
+                                      style: todo.done
                                           ? theme.primaryTextTheme.bodyMedium!
                                               .copyWith(
                                                   color:
@@ -213,9 +198,11 @@ class TodoTile extends ConsumerWidget {
                             ),
                             todo.deadline != null
                                 ? Text(
-                                    DateFormat('dd MM yyy').format(
+                                    '111',
+                                    // TODO
+                                    /* DateFormat('dd MM yyy').format(
                                       todo.deadline!,
-                                    ),
+                                    ), */
                                     style: theme.primaryTextTheme.bodySmall!
                                         .copyWith(color: themeColors.blue),
                                   )
@@ -229,11 +216,7 @@ class TodoTile extends ConsumerWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    ref.read(todoInfoNotifierProvider.notifier).initTodo(todo);
-
-                    ref.read(appLoggerProvider).i(
-                        'UI: <id: ${todo.id}> : transition to todo info screen');
-
+                    ref.read(todoEditProvider.notifier).initTodo(todo);
                     Navigator.of(context).pushNamed(AppRouter.todoScreen);
                   },
                   child: AppIcons.infoOutline(

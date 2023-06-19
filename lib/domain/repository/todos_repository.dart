@@ -1,13 +1,15 @@
 import 'package:dartz/dartz.dart';
-import 'package:yandex_flutter_task/core/error/failure.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
+import 'package:yandex_flutter_task/domain/model/todo_list.dart';
 
 abstract class TodosRepository {
-  Future<Either<Failure, List<Todo>>> getTodos();
+  Future<Either<Exception, TodoList>> getTodos();
 
-  Future<Either<Failure, Todo>> getTodo(int id);
+  Future<Either<Exception, TodoList>> patchTodos(TodoList todos, int revision);
 
-  Future<Either<Failure, int>> saveTodo(Todo todo);
+  Future<Either<Exception, Todo>> createTodo(Todo todo, int revision);
 
-  Future<Either<Failure, int>> deleteTodo(int id);
+  Future<Either<Exception, Todo>> updateTodo(Todo todo, int revision);
+
+  Future<Either<Exception, Todo>> deleteTodo(String id, int revision);
 }

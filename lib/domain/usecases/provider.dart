@@ -1,9 +1,10 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yandex_flutter_task/data/repository/provider.dart';
 import 'package:yandex_flutter_task/domain/usecases/delete_todo.dart';
-import 'package:yandex_flutter_task/domain/usecases/get_todo.dart';
 import 'package:yandex_flutter_task/domain/usecases/get_todos.dart';
-import 'package:yandex_flutter_task/domain/usecases/save_todo.dart';
+import 'package:yandex_flutter_task/domain/usecases/create_todo.dart';
+import 'package:yandex_flutter_task/domain/usecases/patch_todos.dart';
+import 'package:yandex_flutter_task/domain/usecases/update_todo.dart';
 
 part 'provider.g.dart';
 
@@ -13,13 +14,18 @@ GetTodosUseCase getTodos(GetTodosRef ref) {
 }
 
 @riverpod
-GetTodoUseCase getTodo(GetTodoRef ref) {
-  return GetTodoUseCaseImpl(ref.read(todosRepositoryProvider));
+PatchTodosUseCase patchTodos(PatchTodosRef ref) {
+  return PatchTodosUseCaseImpl(ref.read(todosRepositoryProvider));
 }
 
 @riverpod
-SaveTodoUseCase saveTodo(SaveTodoRef ref) {
-  return SaveTodoUseCaseImpl(ref.read(todosRepositoryProvider));
+CreateTodoUseCase createTodo(CreateTodoRef ref) {
+  return CreateTodoUseCaseImpl(ref.read(todosRepositoryProvider));
+}
+
+@riverpod
+UpdateTodoUseCase updateTodo(UpdateTodoRef ref) {
+  return UpdateTodoUseCaseImpl(ref.read(todosRepositoryProvider));
 }
 
 @riverpod

@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:yandex_flutter_task/core/error/failure.dart';
 import 'package:yandex_flutter_task/domain/repository/todos_repository.dart';
 
 abstract class DeleteTodoUseCase {
-  Future<Either<Failure, dynamic>> call(int id);
+  Future<Either<Exception, dynamic>> call(String id, int revision);
 }
 
 class DeleteTodoUseCaseImpl extends DeleteTodoUseCase {
@@ -11,7 +10,7 @@ class DeleteTodoUseCaseImpl extends DeleteTodoUseCase {
   final TodosRepository todosRepository;
 
   @override
-  Future<Either<Failure, dynamic>> call(int id) async {
-    return todosRepository.deleteTodo(id);
+  Future<Either<Exception, dynamic>> call(String id, int revision) async {
+    return todosRepository.deleteTodo(id, revision);
   }
 }

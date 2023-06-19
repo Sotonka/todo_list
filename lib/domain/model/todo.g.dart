@@ -7,19 +7,25 @@ part of 'todo.dart';
 // **************************************************************************
 
 _$_Todo _$$_TodoFromJson(Map<String, dynamic> json) => _$_Todo(
-      id: json['id'] as int?,
-      body: json['body'] as String,
-      deadline: json['deadline'] == null
-          ? null
-          : DateTime.parse(json['deadline'] as String),
-      importance: json['importance'] as String? ?? 'no',
-      completed: json['completed'] as bool? ?? false,
+      id: json['id'] as String,
+      text: json['text'] as String,
+      importance: json['importance'] as String? ?? 'basic',
+      deadline: json['deadline'] as int?,
+      done: json['done'] as bool? ?? false,
+      color: json['color'] as String? ?? '#FFFFFF',
+      created_at: json['created_at'] as int,
+      changed_at: json['changed_at'] as int,
+      last_updated_by: json['last_updated_by'] as String,
     );
 
 Map<String, dynamic> _$$_TodoToJson(_$_Todo instance) => <String, dynamic>{
       'id': instance.id,
-      'body': instance.body,
-      'deadline': instance.deadline?.toIso8601String(),
+      'text': instance.text,
       'importance': instance.importance,
-      'completed': instance.completed,
+      'deadline': instance.deadline,
+      'done': instance.done,
+      'color': instance.color,
+      'created_at': instance.created_at,
+      'changed_at': instance.changed_at,
+      'last_updated_by': instance.last_updated_by,
     };
