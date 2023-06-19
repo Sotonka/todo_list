@@ -21,26 +21,33 @@ class TodoScreen extends ConsumerWidget {
       body: const CustomScrollView(
         slivers: [
           TodoAppBarWidget(),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            sliver: SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BodyFormWidget(),
-                  SizedBox(height: 28),
-                  ImportanceFormWidget(),
-                  SizedBox(height: 16),
-                  DividerWidget(),
-                  SizedBox(height: 16),
-                  DeadlineFormWidget(),
-                  SizedBox(height: 40),
-                  DividerWidget(),
-                  SizedBox(height: 16),
-                  DeleteButtonWidget(),
-                  SizedBox(height: 40),
-                ],
-              ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      BodyFormWidget(),
+                      SizedBox(height: 28),
+                      ImportanceFormWidget(),
+                      SizedBox(height: 16),
+                      DividerWidget(),
+                      SizedBox(height: 16),
+                      DeadlineFormWidget(),
+                      SizedBox(height: 40),
+                    ],
+                  ),
+                ),
+                DividerWidget(),
+                SizedBox(height: 16),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: DeleteButtonWidget(),
+                ),
+                SizedBox(height: 40),
+              ],
             ),
           ),
         ],

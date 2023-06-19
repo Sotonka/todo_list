@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/presentation/providers/todo_list_provider.dart';
+import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
 
 class TodoEditNotifier extends StateNotifier<Todo> {
   TodoEditNotifier(this.ref)
@@ -58,18 +59,18 @@ class TodoEditNotifier extends StateNotifier<Todo> {
   }
 
   void updateImportance(String importance) {
-    switch (importance.toLowerCase()) {
-      case 'нет':
-        state = state.copyWith(importance: 'no');
+    switch (importance) {
+      case AppStrings.todoImportanceNo:
+        state = state.copyWith(importance: 'basic');
 
-      case 'низкий':
+      case AppStrings.todoImportanceLow:
         state = state.copyWith(importance: 'low');
 
-      case 'высокий':
+      case AppStrings.todoImportanceHigh:
         state = state.copyWith(importance: 'high');
 
       default:
-        state = state.copyWith(importance: 'no');
+        state = state.copyWith(importance: 'basic');
     }
   }
 

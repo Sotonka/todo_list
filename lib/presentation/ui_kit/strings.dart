@@ -12,11 +12,6 @@ class AppStrings {
   static const String todoImportanceNo = 'Нет';
   static const String todoImportanceLow = 'Низкий';
   static const String todoImportanceHigh = 'Высокий';
-  static const Map<String, String> todoImportanceMap = {
-    'low': 'низкий',
-    'basic': 'нет',
-    'important': 'высокий',
-  };
 
   static const String api = '';
 

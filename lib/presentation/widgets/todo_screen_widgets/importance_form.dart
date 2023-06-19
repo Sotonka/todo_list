@@ -14,6 +14,7 @@ class ImportanceFormWidget extends ConsumerWidget {
     final stateNotifier = ref.read(todoEditProvider.notifier);
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           AppStrings.todoFormImportance,
@@ -26,19 +27,24 @@ class ImportanceFormWidget extends ConsumerWidget {
           child: ButtonTheme(
             alignedDropdown: true,
             child: DropdownButtonFormField(
+              elevation: 1,
               iconDisabledColor: Colors.transparent,
               iconEnabledColor: Colors.transparent,
               dropdownColor: themeColors.backElevated,
-              value: state.importance == 'no'
-                  ? 'Нет'
+              value: state.importance == 'basic'
+                  ? AppStrings.todoImportanceNo
                   : state.importance == 'low'
-                      ? 'Низкий'
-                      : 'Высокий',
-              items: ['Нет', 'Низкий', 'Высокий']
+                      ? AppStrings.todoImportanceLow
+                      : AppStrings.todoImportanceHigh,
+              items: [
+                AppStrings.todoImportanceNo,
+                AppStrings.todoImportanceLow,
+                AppStrings.todoImportanceHigh,
+              ]
                   .map(
                     (item) => DropdownMenuItem(
                       value: item,
-                      child: item == 'Высокий'
+                      child: item == AppStrings.todoImportanceHigh
                           ? RichText(
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
@@ -61,13 +67,14 @@ class ImportanceFormWidget extends ConsumerWidget {
                           : Text(
                               item,
                               style: theme.primaryTextTheme.bodyMedium!
-                                  .copyWith(color: themeColors.labelPrimary),
+                                  .copyWith(color: themeColors.labelTetriary),
                             ),
                     ),
                   )
                   .toList(),
               onChanged: (value) {
-                stateNotifier.updateImportance(value ?? 'нет');
+                stateNotifier
+                    .updateImportance(value ?? AppStrings.todoImportanceNo);
               },
               decoration: const InputDecoration(
                 border: InputBorder.none,
