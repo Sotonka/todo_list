@@ -13,6 +13,5 @@ class VisibilityStateNotifier extends StateNotifier<bool> {
   }
 }
 
-final visibilityStateNotifierProvider =
-    StateNotifierProvider<VisibilityStateNotifier, bool>(
-        (ref) => VisibilityStateNotifier(ref));
+final visibilityProvider = StateNotifierProvider<VisibilityStateNotifier, bool>(
+    (ref) => VisibilityStateNotifier(ref));

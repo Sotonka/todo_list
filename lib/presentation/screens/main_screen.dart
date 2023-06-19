@@ -18,9 +18,8 @@ class MainScreen extends ConsumerWidget {
     final themeColors = theme.extension<AppThemeColors>()!;
     final todosState = ref.watch(todosListState);
     final completedCount = ref.watch(todosListState.notifier).completedCount;
-    final visibilityState = ref.watch(visibilityStateNotifierProvider);
-    final visibilityProvider =
-        ref.watch(visibilityStateNotifierProvider.notifier);
+    final visibilityState = ref.watch(visibilityProvider);
+    final visibilityNotifier = ref.watch(visibilityProvider.notifier);
 
     return Scaffold(
       backgroundColor: themeColors.backPrimary,
@@ -36,7 +35,7 @@ class MainScreen extends ConsumerWidget {
               smallTitleStyle: theme.primaryTextTheme.headlineMedium!
                   .copyWith(color: themeColors.labelPrimary),
               context: context,
-              onHidePressed: visibilityProvider.toggle,
+              onHidePressed: visibilityNotifier.toggle,
               completedCount: completedCount,
               isHidden: visibilityState,
             ),
@@ -90,7 +89,7 @@ class MainScreen extends ConsumerWidget {
           backgroundColor: themeColors.blue,
           shape: const CircleBorder(),
           onPressed: () {
-            ref.read(todoInfoNotifierProvider.notifier).initTodo(
+            ref.read(todoInfoProvider.notifier).initTodo(
                   const Todo(body: ''),
                 );
 

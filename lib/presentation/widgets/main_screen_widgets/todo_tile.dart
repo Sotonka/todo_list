@@ -229,7 +229,7 @@ class TodoTile extends ConsumerWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    ref.read(todoInfoNotifierProvider.notifier).initTodo(todo);
+                    ref.read(todoInfoProvider.notifier).initTodo(todo);
 
                     ref.read(appLoggerProvider).i(
                         'UI: <id: ${todo.id}> : transition to todo info screen');

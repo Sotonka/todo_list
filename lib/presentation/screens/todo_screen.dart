@@ -14,8 +14,8 @@ class TodoScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final themeColors = theme.extension<AppThemeColors>()!;
     final items = ['Нет', 'Низкий', 'Высокий'];
-    final state = ref.watch(todoInfoNotifierProvider);
-    final stateNotifier = ref.read(todoInfoNotifierProvider.notifier);
+    final state = ref.watch(todoInfoProvider);
+    final stateNotifier = ref.read(todoInfoProvider.notifier);
 
     return Scaffold(
       backgroundColor: themeColors.backPrimary,

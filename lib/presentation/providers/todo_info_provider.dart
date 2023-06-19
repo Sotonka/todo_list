@@ -57,5 +57,5 @@ class TodoInfoNotifier extends StateNotifier<Todo> {
   }
 }
 
-final todoInfoNotifierProvider = StateNotifierProvider<TodoInfoNotifier, Todo>(
+final todoInfoProvider = StateNotifierProvider<TodoInfoNotifier, Todo>(
     (ref) => TodoInfoNotifier(ref));
