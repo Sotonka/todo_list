@@ -52,7 +52,7 @@ class SliverTitleDelegate extends SliverPersistentHeaderDelegate {
             color: themeColors.backPrimary,
             boxShadow: [
               BoxShadow(
-                color: Color.fromARGB(lerpDouble(20, 0, k)!.toInt(), 0, 0, 0),
+                color: Color.fromARGB(lerpDouble(80, 0, k)!.toInt(), 0, 0, 0),
                 spreadRadius: 3,
                 blurRadius: 7,
                 offset: const Offset(0, 3),

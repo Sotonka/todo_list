@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yandex_flutter_task/app_router.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
-import 'package:yandex_flutter_task/presentation/providers/todo_info_provider.dart';
 import 'package:yandex_flutter_task/presentation/providers/todos_provider.dart';
-import 'package:yandex_flutter_task/presentation/providers/visibility_provider.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
-import 'package:yandex_flutter_task/presentation/widgets/sliver_title_delegate.dart';
-import 'package:yandex_flutter_task/presentation/widgets/todo_list.dart';
+import 'package:yandex_flutter_task/presentation/widgets/main_screen_widgets/add_button.dart';
+import 'package:yandex_flutter_task/presentation/widgets/main_screen_widgets/app_bar_widget.dart';
+import 'package:yandex_flutter_task/presentation/widgets/main_screen_widgets/todo_list.dart';
 
 class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
@@ -17,29 +15,12 @@ class MainScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final themeColors = theme.extension<AppThemeColors>()!;
     final todosState = ref.watch(todosListState);
-    final completedCount = ref.watch(todosListState.notifier).completedCount;
-    final visibilityState = ref.watch(visibilityProvider);
-    final visibilityNotifier = ref.watch(visibilityProvider.notifier);
 
     return Scaffold(
       backgroundColor: themeColors.backPrimary,
       body: CustomScrollView(
         slivers: [
-          SliverPersistentHeader(
-            pinned: true,
-            floating: true,
-            delegate: SliverTitleDelegate(
-              systemBarHeight: MediaQuery.of(context).padding.top,
-              bigTitleStyle: theme.primaryTextTheme.headlineLarge!
-                  .copyWith(color: themeColors.labelPrimary),
-              smallTitleStyle: theme.primaryTextTheme.headlineMedium!
-                  .copyWith(color: themeColors.labelPrimary),
-              context: context,
-              onHidePressed: visibilityNotifier.toggle,
-              completedCount: completedCount,
-              isHidden: visibilityState,
-            ),
-          ),
+          const MainAppBarWidget(),
           todosState.when(
             loading: () {
               return const SliverToBoxAdapter(
@@ -82,24 +63,7 @@ class MainScreen extends ConsumerWidget {
           ),
         ],
       ),
-      floatingActionButton: SizedBox(
-        height: 56,
-        width: 56,
-        child: FloatingActionButton(
-          backgroundColor: themeColors.blue,
-          shape: const CircleBorder(),
-          onPressed: () {
-            ref.read(todoInfoProvider.notifier).initTodo(
-                  const Todo(body: ''),
-                );
-
-            Navigator.of(context).pushNamed(AppRouter.todoScreen);
-          },
-          child: AppIcons.add(
-            color: themeColors.white,
-          ),
-        ),
-      ),
+      floatingActionButton: const AddTodoButtonWidget(),
     );
   }
 }
