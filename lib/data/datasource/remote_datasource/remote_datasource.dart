@@ -41,7 +41,6 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
   @override
   Future<TodoList> getTodos() async {
-    _initInterceptors(_dio);
     _init(_dio);
 
     try {
@@ -58,7 +57,6 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
   @override
   Future<TodoList> patchTodos(TodoList todos, int revision) async {
-    _initInterceptors(_dio);
     _init(_dio);
     try {
       _dio.options.headers['X-Last-Known-Revision'] = '$revision';
@@ -82,7 +80,6 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
   @override
   Future<Todo> createTodo(Todo todo, int revision) async {
-    _initInterceptors(_dio);
     _init(_dio);
 
     try {
@@ -107,7 +104,6 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
   @override
   Future<Todo> updateTodo(Todo todo, int revision) async {
-    _initInterceptors(_dio);
     _init(_dio);
     try {
       _dio.options.headers['X-Last-Known-Revision'] = '$revision';
@@ -132,7 +128,6 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
   @override
   Future<Todo> deleteTodo(String id, int revision) async {
-    _initInterceptors(_dio);
     _init(_dio);
 
     try {
@@ -160,26 +155,4 @@ _init(Dio dio) {
         (X509Certificate cert, String host, int port) => true;
     return client;
   };
-}
-
-void _initInterceptors(Dio dio) {
-  dio.interceptors.add(
-    InterceptorsWrapper(
-      onError: (e, handler) {
-        return handler.next(e);
-      },
-      onRequest: (options, handler) {
-        // ignore: avoid_print
-        print('Запрос отправляется');
-
-        return handler.next(options);
-      },
-      onResponse: (e, handler) {
-        // ignore: avoid_print
-        print('Ответ получен');
-
-        return handler.next(e);
-      },
-    ),
-  );
 }

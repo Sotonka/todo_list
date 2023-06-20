@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yandex_flutter_task/core/logger/logger.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/domain/model/todo_list.dart';
 import 'package:yandex_flutter_task/domain/usecases/provider.dart';
@@ -44,8 +45,12 @@ class TodoListViewModel extends StateNotifier<State<TodoList>> {
     state = const State.loading();
     final stateOrException = await ref.read(getTodosProvider).call();
     stateOrException.fold((error) {
+      ref.read(appLoggerProvider).e('PROVIDER: $error');
       state = State.error(error);
     }, (todoList) {
+      ref
+          .read(appLoggerProvider)
+          .i('PROVIDER: todo Rev ${todoList.revision} loaded');
       state = State.success(todoList);
     });
   }
@@ -55,8 +60,12 @@ class TodoListViewModel extends StateNotifier<State<TodoList>> {
     final stateOrException =
         await ref.read(patchTodosProvider).call(todos, state.data!.revision);
     stateOrException.fold((error) {
+      ref.read(appLoggerProvider).e('PROVIDER: $error');
       state = State.error(error);
     }, (todoList) {
+      ref
+          .read(appLoggerProvider)
+          .i('PROVIDER: todo Rev ${todoList.revision} patched');
       state = State.success(todoList);
     });
   }
@@ -65,8 +74,12 @@ class TodoListViewModel extends StateNotifier<State<TodoList>> {
     final stateOrException =
         await ref.read(createTodoProvider).call(todo, state.data!.revision);
     stateOrException.fold((error) {
+      ref.read(appLoggerProvider).e('PROVIDER: $error');
       state = State.error(error);
     }, (newTodo) {
+      ref
+          .read(appLoggerProvider)
+          .i('PROVIDER: todo ${newTodo.id} has been saved');
       state = State.success(state.data!.addTodo(newTodo));
     });
   }
@@ -82,10 +95,12 @@ class TodoListViewModel extends StateNotifier<State<TodoList>> {
     final stateOrException =
         await ref.read(updateTodoProvider).call(todo, revision);
     stateOrException.fold((error) {
+      ref.read(appLoggerProvider).e('PROVIDER: $error');
       state = State.error(error);
     }, (newTodo) {
-      // TODO
-      // log
+      ref
+          .read(appLoggerProvider)
+          .i('PROVIDER: todo ${newTodo.id} has been updated');
     });
   }
 
@@ -96,16 +111,17 @@ class TodoListViewModel extends StateNotifier<State<TodoList>> {
 
   _deleteTodo(String id) async {
     final revision = state.data!.revision - 1;
-    // state = State.success(state.data!.deleteTodo(id));
     final stateOrException = await ref.read(deleteTodoProvider).call(
           id,
           revision,
         );
     stateOrException.fold((error) {
+      ref.read(appLoggerProvider).e('PROVIDER: $error');
       state = State.error(error);
     }, (newTodo) {
-      // TODO
-      // лог что туду рили удален
+      ref
+          .read(appLoggerProvider)
+          .i('PROVIDER: todo ${newTodo.id} has been deleted');
     });
   }
 
