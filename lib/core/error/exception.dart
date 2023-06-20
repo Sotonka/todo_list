@@ -8,7 +8,7 @@ class ServerException implements Exception {
   });
 
   @override
-  String toString() => 'Error: $message';
+  String toString() => message;
 }
 
 class CacheException implements Exception {
@@ -17,7 +17,4 @@ class CacheException implements Exception {
   CacheException({
     required this.message,
   });
-
-  @override
-  String toString() => 'Error: $message';
 }

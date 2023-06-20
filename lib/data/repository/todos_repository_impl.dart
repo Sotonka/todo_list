@@ -41,8 +41,12 @@ class TodosRepositoryImpl implements TodosRepository {
       return Right(
         await remoteDataSource.createTodo(todo, revision),
       );
-    } on Exception {
-      return Left(ServerException(message: 'ServerException'));
+    } on Exception catch (e) {
+      return Left(
+        ServerException(
+          message: e.toString(),
+        ),
+      );
     }
   }
 

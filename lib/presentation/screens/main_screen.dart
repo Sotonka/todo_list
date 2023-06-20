@@ -4,6 +4,7 @@ import 'package:yandex_flutter_task/presentation/providers/todo_list_provider.da
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
 import 'package:yandex_flutter_task/presentation/widgets/main_screen_widgets/add_button.dart';
 import 'package:yandex_flutter_task/presentation/widgets/main_screen_widgets/app_bar_widget.dart';
+import 'package:yandex_flutter_task/presentation/widgets/main_screen_widgets/error.dart';
 import 'package:yandex_flutter_task/presentation/widgets/main_screen_widgets/progress_indicator.dart';
 import 'package:yandex_flutter_task/presentation/widgets/main_screen_widgets/todo_list.dart';
 
@@ -44,7 +45,9 @@ class _Core extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ref.watch(filteredTodoListProvider).maybeWhen(
           success: (content) => TodoListWidget(todoList: content),
-          error: (e) => Container(),
+          error: (e) => ErrorMessageWidget(
+            message: e.toString(),
+          ),
           orElse: () => const ProgressIndicatorWidget(),
         );
   }
