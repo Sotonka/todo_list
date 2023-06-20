@@ -30,7 +30,9 @@ class DeadlineFormWidget extends ConsumerWidget {
                 ? Padding(
                     padding: const EdgeInsets.only(top: 4),
                     child: Text(
-                      DateFormat.yMMMMd().format(state.deadline!),
+                      DateFormat.yMMMMd(
+                              Localizations.localeOf(context).toString())
+                          .format(state.deadline!),
                       style: theme.primaryTextTheme.bodySmall!
                           .copyWith(color: themeColors.blue),
                     ),

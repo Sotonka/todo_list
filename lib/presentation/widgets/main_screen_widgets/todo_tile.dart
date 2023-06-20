@@ -118,7 +118,10 @@ class TodoTile extends ConsumerWidget {
                               ),
                               todo.deadline != null
                                   ? Text(
-                                      DateFormat.yMMMMd().format(
+                                      DateFormat.yMMMMd(
+                                              Localizations.localeOf(context)
+                                                  .toString())
+                                          .format(
                                         todo.deadline!,
                                       ),
                                       style: theme.primaryTextTheme.bodySmall!
