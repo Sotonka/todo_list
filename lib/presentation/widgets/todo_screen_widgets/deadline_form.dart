@@ -1,9 +1,6 @@
-// ignore_for_file: depend_on_referenced_packages, unused_import
-
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yandex_flutter_task/core/localization/l10n/all_locale.dart';
 import 'package:yandex_flutter_task/presentation/providers/edit_todo_provider.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
 import 'package:intl/intl.dart';
@@ -26,7 +23,7 @@ class DeadlineFormWidget extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              AppStrings.todoFormDeadline,
+              AllLocale.of(context).todoFormDeadline,
               style: theme.primaryTextTheme.bodyMedium!
                   .copyWith(color: themeColors.labelPrimary),
             ),
@@ -34,8 +31,10 @@ class DeadlineFormWidget extends ConsumerWidget {
                 ? Padding(
                     padding: const EdgeInsets.only(top: 4),
                     child: Text(
-                      DateFormat.yMMMMd(Platform.localeName).format(
-                          DateTime.fromMillisecondsSinceEpoch(state.deadline!)),
+                      DateFormat.yMMMMd(
+                              Localizations.localeOf(context).toString())
+                          .format(DateTime.fromMillisecondsSinceEpoch(
+                              state.deadline!)),
                       style: theme.primaryTextTheme.bodySmall!
                           .copyWith(color: themeColors.blue),
                     ),
@@ -64,7 +63,7 @@ Future<void> _showCalendar(BuildContext context, WidgetRef ref) async {
   final theme = Theme.of(context);
   final themeColors = theme.extension<AppThemeColors>()!;
   DateTime? deadline = await showDatePicker(
-    locale: const Locale('ru', 'RU'),
+    locale: Localizations.localeOf(context),
     builder: (context, child) {
       return Theme(
         data: theme.copyWith(
@@ -78,8 +77,8 @@ Future<void> _showCalendar(BuildContext context, WidgetRef ref) async {
         child: child!,
       );
     },
-    cancelText: AppStrings.todoCalendarCancel.toUpperCase(),
-    confirmText: AppStrings.todoCalendarDone.toUpperCase(),
+    cancelText: AllLocale.of(context).todoCalendarCancel.toUpperCase(),
+    confirmText: AllLocale.of(context).todoCalendarDone.toUpperCase(),
     context: context,
     initialDate: DateTime.now(),
     firstDate: DateTime.now(),

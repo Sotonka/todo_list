@@ -1,0 +1,16 @@
+{
+    "mainTitleTodos": "할일",
+    "mainTitleDone": "완료",
+    "mainListNew": "새로운",
+    "todoSave": "저장",
+    "todoDelete": "삭제",
+    "todoCalendarCancel": "취소",
+    "todoCalendarDone": "좋아요",
+    "todoFormHint": "쓰다...",
+    "todoFormImportance": "중요성",
+    "todoFormDeadline": "할 때까지",
+    "todoImportanceNo": "중요성 없음",
+    "todoImportanceLow": "중요도 낮음",
+    "todoImportanceHigh": "높은 중요도"
+  
+  }

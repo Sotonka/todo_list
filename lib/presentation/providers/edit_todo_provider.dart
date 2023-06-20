@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/presentation/providers/todo_list_provider.dart';
-import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
 
 class TodoEditNotifier extends StateNotifier<Todo> {
   TodoEditNotifier(this.ref)
@@ -58,20 +57,25 @@ class TodoEditNotifier extends StateNotifier<Todo> {
     state = state.copyWith(deadline: deadline);
   }
 
-  void updateImportance(String importance) {
-    switch (importance) {
-      case AppStrings.todoImportanceNo:
-        state = state.copyWith(importance: 'basic');
-
-      case AppStrings.todoImportanceLow:
-        state = state.copyWith(importance: 'low');
-
-      case AppStrings.todoImportanceHigh:
-        state = state.copyWith(importance: 'important');
-
-      default:
-        state = state.copyWith(importance: 'basic');
+  void updateImportance(
+    String importance,
+    String importanceNo,
+    String importanceImportant,
+    String importanceLow,
+  ) {
+    if (importance == importanceNo) {
+      state = state.copyWith(importance: 'basic');
+      return;
     }
+    if (importance == importanceLow) {
+      state = state.copyWith(importance: 'low');
+      return;
+    }
+    if (importance == importanceImportant) {
+      state = state.copyWith(importance: 'important');
+      return;
+    }
+    state = state.copyWith(importance: 'basic');
   }
 
   void saveTodo() {

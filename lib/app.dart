@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:yandex_flutter_task/app_router.dart';
+import 'package:yandex_flutter_task/core/localization/l10n/all_locale.dart';
 import 'package:yandex_flutter_task/presentation/screens/main_screen.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -28,6 +30,14 @@ class _AppState extends State<App> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Todos',
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AllLocale.supportedLocales,
+      locale: const Locale('ru', 'RU'),
       initialRoute: AppRouter.root,
       onGenerateRoute: AppRouter.generateRoute,
       theme: AppTheme.lightTheme.copyWith(
@@ -40,13 +50,6 @@ class _AppState extends State<App> {
           AppThemeColors.dark,
         ],
       ),
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ru'),
-      ],
       themeMode: ThemeMode.system,
       home: const MainScreen(),
     );

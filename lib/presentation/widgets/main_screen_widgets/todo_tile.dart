@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:yandex_flutter_task/app_router.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/presentation/providers/edit_todo_provider.dart';
@@ -198,11 +199,12 @@ class TodoTile extends ConsumerWidget {
                             ),
                             todo.deadline != null
                                 ? Text(
-                                    '111',
-                                    // TODO
-                                    /* DateFormat('dd MM yyy').format(
-                                      todo.deadline!,
-                                    ), */
+                                    DateFormat.yMMMMd(
+                                            Localizations.localeOf(context)
+                                                .toString())
+                                        .format(
+                                            DateTime.fromMillisecondsSinceEpoch(
+                                                todo.deadline!)),
                                     style: theme.primaryTextTheme.bodySmall!
                                         .copyWith(color: themeColors.blue),
                                   )

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yandex_flutter_task/core/localization/l10n/all_locale.dart';
 import 'package:yandex_flutter_task/presentation/providers/edit_todo_provider.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
 
@@ -17,7 +18,7 @@ class ImportanceFormWidget extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AppStrings.todoFormImportance,
+          AllLocale.of(context).todoFormImportance,
           style: theme.primaryTextTheme.bodyMedium!
               .copyWith(color: themeColors.labelPrimary),
         ),
@@ -32,19 +33,19 @@ class ImportanceFormWidget extends ConsumerWidget {
               iconEnabledColor: Colors.transparent,
               dropdownColor: themeColors.backElevated,
               value: state.importance == 'important'
-                  ? AppStrings.todoImportanceHigh
+                  ? AllLocale.of(context).todoImportanceHigh
                   : state.importance == 'low'
-                      ? AppStrings.todoImportanceLow
-                      : AppStrings.todoImportanceNo,
+                      ? AllLocale.of(context).todoImportanceLow
+                      : AllLocale.of(context).todoImportanceNo,
               items: [
-                AppStrings.todoImportanceNo,
-                AppStrings.todoImportanceLow,
-                AppStrings.todoImportanceHigh,
+                AllLocale.of(context).todoImportanceNo,
+                AllLocale.of(context).todoImportanceLow,
+                AllLocale.of(context).todoImportanceHigh,
               ]
                   .map(
                     (item) => DropdownMenuItem(
                       value: item,
-                      child: item == AppStrings.todoImportanceHigh
+                      child: item == AllLocale.of(context).todoImportanceHigh
                           ? RichText(
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
@@ -73,8 +74,12 @@ class ImportanceFormWidget extends ConsumerWidget {
                   )
                   .toList(),
               onChanged: (value) {
-                stateNotifier
-                    .updateImportance(value ?? AppStrings.todoImportanceNo);
+                stateNotifier.updateImportance(
+                  value ?? AllLocale.of(context).todoImportanceNo,
+                  AllLocale.of(context).todoImportanceNo,
+                  AllLocale.of(context).todoImportanceHigh,
+                  AllLocale.of(context).todoImportanceLow,
+                );
               },
               decoration: const InputDecoration(
                 border: InputBorder.none,
