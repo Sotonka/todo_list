@@ -115,7 +115,7 @@ class TodoTile extends ConsumerWidget {
                                     ),
                                   ),
                                 )
-                              : todo.importance == 'high'
+                              : todo.importance == 'important'
                                   ? Container(
                                       height: 18,
                                       width: 18,
@@ -153,7 +153,7 @@ class TodoTile extends ConsumerWidget {
                                 overflow: TextOverflow.ellipsis,
                                 text: TextSpan(
                                   children: [
-                                    todo.importance == 'high' &&
+                                    todo.importance == 'important' &&
                                             todo.done == false
                                         ? WidgetSpan(
                                             child: Padding(

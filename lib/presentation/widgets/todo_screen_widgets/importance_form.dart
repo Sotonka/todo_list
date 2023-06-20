@@ -31,11 +31,11 @@ class ImportanceFormWidget extends ConsumerWidget {
               iconDisabledColor: Colors.transparent,
               iconEnabledColor: Colors.transparent,
               dropdownColor: themeColors.backElevated,
-              value: state.importance == 'basic'
-                  ? AppStrings.todoImportanceNo
+              value: state.importance == 'important'
+                  ? AppStrings.todoImportanceHigh
                   : state.importance == 'low'
                       ? AppStrings.todoImportanceLow
-                      : AppStrings.todoImportanceHigh,
+                      : AppStrings.todoImportanceNo,
               items: [
                 AppStrings.todoImportanceNo,
                 AppStrings.todoImportanceLow,

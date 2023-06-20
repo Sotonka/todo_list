@@ -70,7 +70,7 @@ class TodoEditNotifier extends StateNotifier<Todo> {
       // CRASH
 
       case AppStrings.todoImportanceHigh:
-        state = state.copyWith(importance: 'high');
+        state = state.copyWith(importance: 'important');
 
       default:
         state = state.copyWith(importance: 'basic');
