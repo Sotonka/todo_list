@@ -17,4 +17,7 @@ class CacheException implements Exception {
   CacheException({
     required this.message,
   });
+
+  @override
+  String toString() => message;
 }
