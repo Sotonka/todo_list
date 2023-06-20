@@ -1,3 +1,6 @@
+// ignore_for_file: unused_field
+
+import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/domain/model/todo_list.dart';
@@ -8,9 +11,34 @@ import 'package:yandex_flutter_task/presentation/providers/state/state.dart';
 class TodoListViewModel extends StateNotifier<State<TodoList>> {
   TodoListViewModel(this.ref) : super(const State.init()) {
     getTodos();
+    _todoDeleteSubsciption = todoDeleteStream.listen((id) async {
+      state.whenOrNull(
+        success: (list) async {
+          await _deleteTodo(id);
+        },
+      );
+    });
+    _todoUpdateSubsciption = todoUpdateStream.listen((todo) async {
+      state.whenOrNull(
+        success: (list) {
+          _updateTodo(todo);
+        },
+      );
+    });
   }
 
   final Ref ref;
+  final StreamController<String> _todoDeleteStreamController =
+      StreamController.broadcast();
+  Stream<String> get todoDeleteStream => _todoDeleteStreamController.stream;
+
+  final StreamController<Todo> _todoUpdateStreamController =
+      StreamController.broadcast();
+  Stream<Todo> get todoUpdateStream => _todoUpdateStreamController.stream;
+
+  late final StreamSubscription<String> _todoDeleteSubsciption;
+
+  late final StreamSubscription<Todo> _todoUpdateSubsciption;
 
   getTodos() async {
     state = const State.loading();
@@ -44,22 +72,40 @@ class TodoListViewModel extends StateNotifier<State<TodoList>> {
   }
 
   updateTodo(Todo todo) async {
+    state = State.success(state.data!.updateTodo(todo));
+    _todoUpdateStreamController.add(todo);
+  }
+
+  _updateTodo(Todo todo) async {
+    final revision = state.data!.revision - 1;
+
     final stateOrException =
-        await ref.read(updateTodoProvider).call(todo, state.data!.revision);
+        await ref.read(updateTodoProvider).call(todo, revision);
     stateOrException.fold((error) {
       state = State.error(error);
     }, (newTodo) {
-      state = State.success(state.data!.updateTodo(newTodo));
+      // TODO
+      // log
     });
   }
 
   deleteTodo(String id) async {
-    final stateOrException =
-        await ref.read(deleteTodoProvider).call(id, state.data!.revision);
+    state = State.success(state.data!.deleteTodo(id));
+    _todoDeleteStreamController.add(id);
+  }
+
+  _deleteTodo(String id) async {
+    final revision = state.data!.revision - 1;
+    // state = State.success(state.data!.deleteTodo(id));
+    final stateOrException = await ref.read(deleteTodoProvider).call(
+          id,
+          revision,
+        );
     stateOrException.fold((error) {
       state = State.error(error);
     }, (newTodo) {
-      state = State.success(state.data!.deleteTodo(newTodo));
+      // TODO
+      // лог что туду рили удален
     });
   }
 

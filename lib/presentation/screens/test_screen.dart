@@ -1,86 +1,57 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
-import 'package:yandex_flutter_task/presentation/providers/todo_list_provider.dart';
 
 class TestScreen extends ConsumerWidget {
   const TestScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final StreamController<String> _todoUpdateStreamController =
+        StreamController.broadcast();
+    // Stream<Todo> get todoUpdateStream => _todoUpdateStreamController.stream;
+
+    final StreamController<int> _todoDeleteStreamController =
+        StreamController.broadcast();
+    // Stream<int> get todoDeleteStream => _todoDeleteStreamController.stream;
+
+    /* void dispose() {
+    _todoUpdateStreamController.close();
+    _todoDeleteStreamController.close();
+  } */
+
+    late final StreamSubscription<String> _todoUpdateSubsciption;
+    late final StreamSubscription<int> _todoDeleteSubsciption;
+
+    _todoUpdateSubsciption =
+        _todoUpdateStreamController.stream.listen((string) {
+      addLine(string);
+    });
+
+    _todoDeleteSubsciption =
+        _todoDeleteStreamController.stream.listen((todoId) {});
+
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          ref.watch(filteredTodoListProvider).maybeWhen(
-                success: (content) => Text(content.toString()),
-                error: (e) => Text(e.toString()),
-                orElse: () => Container(),
-              ),
-          InkWell(
-            onTap: () {
-              ref.read(todoListProvider.notifier).getTodos();
-            },
-            child: Container(
-              color: Colors.blue,
-              padding: const EdgeInsets.all(16),
-              height: 50,
-              width: double.infinity,
-              child: Text('getTodos'),
-            ),
-          ),
-          InkWell(
-            onTap: () {},
-            child: Container(
-              color: Colors.blue,
-              padding: const EdgeInsets.all(16),
-              height: 50,
-              width: double.infinity,
-              child: Text('patchTodos'),
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              ref.read(todoListProvider.notifier).createTodo(Todo(
-                    id: const Uuid().v4(),
-                    text: 'text',
-                    last_updated_by: 'last_updated_by',
-                    changed_at: DateTime.now().millisecondsSinceEpoch,
-                    created_at: DateTime.now().millisecondsSinceEpoch,
-                  ));
-            },
-            child: Container(
-              color: Colors.blue,
-              padding: const EdgeInsets.all(16),
-              height: 50,
-              width: double.infinity,
-              child: Text('createTodo'),
-            ),
-          ),
-          InkWell(
-            onTap: () {},
-            child: Container(
-              color: Colors.blue,
-              padding: const EdgeInsets.all(16),
-              height: 50,
-              width: double.infinity,
-              child: Text('updateTodo'),
-            ),
-          ),
-          InkWell(
-            onTap: () {},
-            child: Container(
-              color: Colors.blue,
-              padding: const EdgeInsets.all(16),
-              height: 50,
-              width: double.infinity,
-              child: Text('deleteTodo'),
-            ),
-          ),
-        ],
+        children: [],
+      ),
+      floatingActionButton: InkWell(
+        onTap: () {
+          print('added');
+          _todoUpdateStreamController.add('1');
+        },
+        child: Container(
+          height: 100,
+          width: 100,
+          color: Colors.pink,
+        ),
       ),
     );
   }
+}
+
+Future<void> addLine(String string) async {
+  await Future.delayed(const Duration(seconds: 3));
+  print('~~~FUTURE $string~~~');
 }

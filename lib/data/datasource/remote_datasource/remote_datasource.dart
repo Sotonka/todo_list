@@ -145,6 +145,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
       return Todo.fromJson(todoJson['element']);
     } on DioException catch (e) {
+      print(e.message.toString());
       throw ServerException(
         message: e.message.toString(),
       );

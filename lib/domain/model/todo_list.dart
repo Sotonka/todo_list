@@ -33,9 +33,9 @@ class TodoList with _$TodoList {
       list:
           list.map((todo) => newTodo.id == todo.id ? newTodo : todo).toList());
 
-  TodoList deleteTodo(Todo newTodo) => copyWith(
+  TodoList deleteTodo(String id) => copyWith(
       revision: revision + 1,
-      list: list.where((todo) => todo.id != newTodo.id).toList());
+      list: list.where((todo) => todo.id != id).toList());
 
   TodoList getTodo(String id) =>
       copyWith(list: list.where((todo) => todo.id == id).toList());
