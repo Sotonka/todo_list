@@ -51,6 +51,7 @@ class _AppState extends State<App> {
         Locale('en'),
         Locale('ru'),
       ],
+      locale: const Locale('ru', 'RU'),
       themeMode: ThemeMode.system,
       home: const MainScreen(),
     );
