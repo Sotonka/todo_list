@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
+import 'package:yandex_flutter_task/core/device_info/device_id.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/presentation/providers/todo_list_provider.dart';
 
@@ -11,7 +12,7 @@ class TodoEditNotifier extends StateNotifier<Todo> {
       : super(Todo(
           id: const Uuid().v4(),
           text: '',
-          last_updated_by: 'last_updated_by',
+          last_updated_by: '',
           changed_at: DateTime.now().millisecondsSinceEpoch,
           created_at: DateTime.now().millisecondsSinceEpoch,
         ));
@@ -92,18 +93,19 @@ class TodoEditNotifier extends StateNotifier<Todo> {
     }
   }
 
-  void clearField() {
+  void clearField() async {
     _isNew = true;
     _bodyController.clear();
-    state = createNewTodo();
+    state = await createNewTodo();
   }
 
-  Todo createNewTodo() {
+  Future<Todo> createNewTodo() async {
+    final deviceId = await DeviceId().deviceId;
     _isNew = true;
     return (Todo(
       id: const Uuid().v4(),
       text: '',
-      last_updated_by: 'last_updated_by',
+      last_updated_by: deviceId,
       changed_at: DateTime.now().millisecondsSinceEpoch,
       created_at: DateTime.now().millisecondsSinceEpoch,
     ));
