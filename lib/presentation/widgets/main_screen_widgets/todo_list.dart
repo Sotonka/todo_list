@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yandex_flutter_task/app_router.dart';
 import 'package:yandex_flutter_task/core/localization/l10n/all_locale.dart';
 import 'package:yandex_flutter_task/domain/model/todo_list.dart';
+import 'package:yandex_flutter_task/presentation/providers/edit_todo_provider.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
 import 'package:yandex_flutter_task/presentation/widgets/main_screen_widgets/todo_tile.dart';
 
@@ -40,10 +42,27 @@ class TodoListWidget extends ConsumerWidget {
           alignment: Alignment.centerLeft,
           child: Padding(
             padding: const EdgeInsets.only(top: 14, bottom: 14, left: 52),
-            child: Text(
-              AllLocale.of(context).mainListNew,
-              style: theme.primaryTextTheme.bodyMedium!
-                  .copyWith(color: themeColors.labelTetriary),
+            child: InkWell(
+              onTap: () {
+                ref.read(todoEditProvider.notifier).initTodo(null);
+                ref.read(todoEditProvider.notifier).createNewTodo();
+                Navigator.of(context).pushNamed(AppRouter.todoScreen);
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.add,
+                    color: themeColors.labelTetriary,
+                  ),
+                  const SizedBox(width: 16),
+                  Text(
+                    AllLocale.of(context).mainListNew,
+                    style: theme.primaryTextTheme.bodyMedium!.copyWith(
+                      color: themeColors.labelTetriary,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

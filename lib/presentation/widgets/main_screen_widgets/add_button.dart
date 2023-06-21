@@ -21,7 +21,6 @@ class AddTodoButtonWidget extends ConsumerWidget {
         onPressed: () {
           ref.read(todoEditProvider.notifier).initTodo(null);
           ref.read(todoEditProvider.notifier).createNewTodo();
-          ref.read(todoEditProvider);
           Navigator.of(context).pushNamed(AppRouter.todoScreen);
         },
         child: Icon(

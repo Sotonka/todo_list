@@ -14,6 +14,10 @@ abstract class LocalDataSource {
   Future<void> deleteTodo(String id);
 
   Future<void> todosToCache(TodoList todos);
+
+  Future<int> getRevision();
+
+  Future<void> clear();
 }
 
 // ignore: constant_identifier_names
@@ -35,28 +39,12 @@ class LocalDataSourceImpl implements LocalDataSource {
   @override
   Future<TodoList> getTodos() async {
     final sharedPreferences = await _sharedPreferences;
-    // TODO
-    // await sharedPreferences.clear();
-    var jsonTodoList = sharedPreferences.getStringList(TODOS_LIST);
-    var revision = sharedPreferences.getInt(TODOS_LIST_REV);
+    var jsonTodoListString = sharedPreferences.getString(TODOS_LIST);
 
-    if (jsonTodoList == null) {
-      sharedPreferences.setStringList(TODOS_LIST, []);
-      sharedPreferences.setInt(TODOS_LIST_REV, 0);
-      jsonTodoList = sharedPreferences.getStringList(TODOS_LIST);
-      revision = sharedPreferences.getInt(TODOS_LIST_REV);
-    }
-
-    if (jsonTodoList != null) {
-      final todoList =
-          jsonTodoList.map((todo) => Todo.fromJson(json.decode(todo))).toList();
-
-      return TodoList(
-        revision: revision ?? 0,
-        status: 'ok',
-        list: todoList,
-      );
-    } else {
+    try {
+      final todoList = TodoList.fromJson(jsonDecode(jsonTodoListString!));
+      return todoList;
+    } on Exception {
       throw CacheException(message: 'Error getting data from cache');
     }
   }
@@ -78,11 +66,24 @@ class LocalDataSourceImpl implements LocalDataSource {
   @override
   Future<void> todosToCache(TodoList todos) async {
     final sharedPreferences = await _sharedPreferences;
+    final jsonTodosListString = jsonEncode(todos.toJson()).toString();
 
-    final List<String> jsonTodosList =
-        todos.list.map((todo) => json.encode(todos.toJson())).toList();
-
-    sharedPreferences.setStringList(TODOS_LIST, jsonTodosList);
+    sharedPreferences.setString(TODOS_LIST, jsonTodosListString);
     sharedPreferences.setInt(TODOS_LIST_REV, todos.revision);
+  }
+
+  @override
+  Future<int> getRevision() async {
+    final sharedPreferences = await _sharedPreferences;
+    final revision = sharedPreferences.getInt(TODOS_LIST_REV);
+
+    return revision ?? -1;
+  }
+
+  @override
+  Future<void> clear() async {
+    final sharedPreferences = await _sharedPreferences;
+
+    await sharedPreferences.clear();
   }
 }

@@ -15,11 +15,25 @@ class TodosRepositoryImpl implements TodosRepository {
   @override
   Future<Either<Exception, TodoList>> getTodos() async {
     try {
-      return Right(
-        await remoteDataSource.getTodos(),
+      final data = await remoteDataSource.getTodos();
+      final localRev = await localDataSource.getRevision();
+
+      // TODO
+      //localDataSource.clear();
+
+      if (data.revision > localRev) {
+        localDataSource.todosToCache(data);
+      } else if (data.revision > localRev) {
+        final localData = await localDataSource.getTodos();
+        remoteDataSource.patchTodos(localData, localData.revision);
+      }
+      return Right(data);
+    } on Exception catch (e) {
+      return Left(
+        ServerException(
+          message: e.toString(),
+        ),
       );
-    } on Exception {
-      return Left(ServerException(message: 'ServerException'));
     }
   }
 
@@ -28,19 +42,23 @@ class TodosRepositoryImpl implements TodosRepository {
       TodoList todos, int revision) async {
     try {
       return Right(
-        await remoteDataSource.getTodos(),
+        await remoteDataSource.patchTodos(todos, revision),
       );
-    } on Exception {
-      return Left(ServerException(message: 'ServerException'));
+    } on Exception catch (e) {
+      return Left(
+        ServerException(
+          message: e.toString(),
+        ),
+      );
     }
   }
 
   @override
   Future<Either<Exception, Todo>> createTodo(Todo todo, int revision) async {
     try {
-      return Right(
-        await remoteDataSource.createTodo(todo, revision),
-      );
+      final data = await remoteDataSource.createTodo(todo, revision);
+      await localDataSource.saveTodo(todo);
+      return Right(data);
     } on Exception catch (e) {
       return Left(
         ServerException(
@@ -53,22 +71,31 @@ class TodosRepositoryImpl implements TodosRepository {
   @override
   Future<Either<Exception, Todo>> updateTodo(Todo todo, int revision) async {
     try {
-      return Right(
-        await remoteDataSource.updateTodo(todo, revision),
+      final data = await remoteDataSource.updateTodo(todo, revision);
+      await localDataSource.updateTodo(todo);
+
+      return Right(data);
+    } on Exception catch (e) {
+      return Left(
+        ServerException(
+          message: e.toString(),
+        ),
       );
-    } on Exception {
-      return Left(ServerException(message: 'ServerException'));
     }
   }
 
   @override
   Future<Either<Exception, Todo>> deleteTodo(String id, int revision) async {
     try {
-      return Right(
-        await remoteDataSource.deleteTodo(id, revision),
+      final data = await remoteDataSource.deleteTodo(id, revision);
+      await localDataSource.deleteTodo(id);
+      return Right(data);
+    } on Exception catch (e) {
+      return Left(
+        ServerException(
+          message: e.toString(),
+        ),
       );
-    } on ServerException {
-      return Left(ServerException(message: 'ServerException'));
     }
   }
 }

@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_annotation_target
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 
@@ -42,6 +40,7 @@ class TodoList with _$TodoList {
 
   TodoList filterByCompleted() =>
       copyWith(list: list.where((todo) => todo.done).toList());
+
   TodoList filterByIncompleted() =>
       copyWith(list: list.where((todo) => !todo.done).toList());
 }
