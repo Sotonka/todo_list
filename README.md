@@ -17,9 +17,9 @@
 <img src="https://github.com/Sotonka/yandex_flutter_task/blob/2-Jason-Statham/INFO/images/4.png">
 
 ## Packages Used
-- flutter_riverpod + riverpod_annotation - state management and dependency injection
-- freezed - code generation
-- dio - HTTP
-- shared_preferences - local storage
+- **flutter_riverpod** + **riverpod_annotation** - state management and dependency injection
+- **freezed** - code generation
+- **dio** - HTTP
+- **shared_preferences** - local storage
   
  
