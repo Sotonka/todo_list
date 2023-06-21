@@ -14,7 +14,7 @@
 <img src="https://github.com/Sotonka/yandex_flutter_task/blob/2-Jason-Statham/INFO/images/3.png">
 
 #### Patch data log example
-<img src="https://github.com/Sotonka/yandex_flutter_task/blob/2-Jason-Statham/INFO/images/1.png">
+<img src="https://github.com/Sotonka/yandex_flutter_task/blob/2-Jason-Statham/INFO/images/4.png">
 
 ## Packages Used
  
