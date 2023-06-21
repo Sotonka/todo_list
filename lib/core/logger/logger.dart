@@ -1,11 +1,10 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:logger/logger.dart';
 
-part 'logger.g.dart';
-
-@riverpod
-Logger appLogger(AppLoggerRef ref) {
-  return Logger(
-    printer: PrettyPrinter(),
-  );
-}
+final logger = Logger(
+  filter: null,
+  printer: PrettyPrinter(
+    methodCount: 0,
+    errorMethodCount: 0,
+  ),
+  output: null,
+);

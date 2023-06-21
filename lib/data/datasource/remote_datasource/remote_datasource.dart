@@ -3,16 +3,14 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:yandex_flutter_task/core/constants.dart';
 import 'dart:io';
 import 'package:yandex_flutter_task/core/error/exception.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/domain/model/todo_list.dart';
 
-const _url = 'https://beta.mrdekk.ru/todobackend';
-const _token = 'chlorophyllase';
-
 BaseOptions baseOptions = BaseOptions(
-  baseUrl: _url,
+  baseUrl: Api.baseUrl,
   receiveDataWhenStatusError: true,
   connectTimeout: const Duration(seconds: 5),
   receiveTimeout: const Duration(seconds: 5),
@@ -20,7 +18,7 @@ BaseOptions baseOptions = BaseOptions(
   // ignore: avoid_redundant_argument_values
   responseType: ResponseType.json,
   headers: {
-    "Authorization": "Bearer $_token",
+    Api.headerAuth: Api.headerAuthValue,
   },
 );
 
@@ -59,7 +57,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<TodoList> patchTodos(TodoList todos, int revision) async {
     _init(_dio);
     try {
-      _dio.options.headers['X-Last-Known-Revision'] = '$revision';
+      _dio.options.headers[Api.headerRevision] = '$revision';
       final response = await _dio.patch<String>(
         '/list',
         data: jsonEncode(
@@ -82,7 +80,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     _init(_dio);
 
     try {
-      _dio.options.headers['X-Last-Known-Revision'] = '$revision';
+      _dio.options.headers[Api.headerRevision] = '$revision';
       final response = await _dio.post<String>(
         '/list',
         data: jsonEncode({
@@ -105,7 +103,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<Todo> updateTodo(Todo todo, int revision) async {
     _init(_dio);
     try {
-      _dio.options.headers['X-Last-Known-Revision'] = '$revision';
+      _dio.options.headers[Api.headerRevision] = '$revision';
 
       final response = await _dio.put<String>(
         '/list/${todo.id}',
@@ -130,7 +128,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     _init(_dio);
 
     try {
-      _dio.options.headers['X-Last-Known-Revision'] = '$revision';
+      _dio.options.headers[Api.headerRevision] = '$revision';
       final response = await _dio.delete<String>(
         '/list/$id',
       );
