@@ -11,7 +11,7 @@ abstract class LocalDataSource {
 
   Future<void> updateTodo(Todo todo);
 
-  Future<void> deleteTodo(String id);
+  Future<Todo> deleteTodo(String id);
 
   Future<void> todosToCache(TodoList todos);
 
@@ -30,10 +30,14 @@ class LocalDataSourceImpl implements LocalDataSource {
       SharedPreferences.getInstance();
 
   @override
-  Future<void> deleteTodo(String id) async {
+  Future<Todo> deleteTodo(String id) async {
     final TodoList todos = await getTodos();
 
+    final todo = todos.getTodo(id);
+
     todosToCache(todos.deleteTodo(id));
+
+    return todo[0];
   }
 
   @override

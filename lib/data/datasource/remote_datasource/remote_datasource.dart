@@ -62,10 +62,9 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       _dio.options.headers['X-Last-Known-Revision'] = '$revision';
       final response = await _dio.patch<String>(
         '/list',
-        data: jsonEncode({
-          "status": "ok",
-          "list": todos.toJson(),
-        }),
+        data: jsonEncode(
+          todos.toJson(),
+        ),
       );
 
       final dynamic todoListJson = jsonDecode(response.data ?? '');

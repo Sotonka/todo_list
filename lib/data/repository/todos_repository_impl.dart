@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:yandex_flutter_task/core/error/exception.dart';
 import 'package:yandex_flutter_task/data/datasource/local_datasource/local_datasource.dart';
@@ -14,26 +16,44 @@ class TodosRepositoryImpl implements TodosRepository {
 
   @override
   Future<Either<Exception, TodoList>> getTodos() async {
-    try {
-      final data = await remoteDataSource.getTodos();
-      final localRev = await localDataSource.getRevision();
+    final hasNetwork = await networkChecker();
 
-      // TODO
-      //localDataSource.clear();
+    if (hasNetwork) {
+      try {
+        var data = await remoteDataSource.getTodos();
+        final localRev = await localDataSource.getRevision();
 
-      if (data.revision > localRev) {
-        localDataSource.todosToCache(data);
-      } else if (data.revision > localRev) {
-        final localData = await localDataSource.getTodos();
-        remoteDataSource.patchTodos(localData, localData.revision);
+        // TODO
+        // localDataSource.clear();
+
+        if (data.revision > localRev) {
+          localDataSource.todosToCache(data);
+        } else if (data.revision < localRev) {
+          final localData = await localDataSource.getTodos();
+
+          data =
+              await remoteDataSource.patchTodos(localData, localData.revision);
+        }
+        return Right(data);
+      } on Exception catch (e) {
+        return Left(
+          ServerException(
+            message: e.toString(),
+          ),
+        );
       }
-      return Right(data);
-    } on Exception catch (e) {
-      return Left(
-        ServerException(
-          message: e.toString(),
-        ),
-      );
+    } else {
+      try {
+        final localData = await localDataSource.getTodos();
+
+        return Right(localData);
+      } on Exception catch (e) {
+        return Left(
+          CacheException(
+            message: e.toString(),
+          ),
+        );
+      }
     }
   }
 
@@ -55,47 +75,104 @@ class TodosRepositoryImpl implements TodosRepository {
 
   @override
   Future<Either<Exception, Todo>> createTodo(Todo todo, int revision) async {
-    try {
-      final data = await remoteDataSource.createTodo(todo, revision);
-      await localDataSource.saveTodo(todo);
-      return Right(data);
-    } on Exception catch (e) {
-      return Left(
-        ServerException(
-          message: e.toString(),
-        ),
-      );
+    final hasNetwork = await networkChecker();
+
+    if (hasNetwork) {
+      try {
+        final data = await remoteDataSource.createTodo(todo, revision);
+        await localDataSource.saveTodo(todo);
+        return Right(data);
+      } on Exception catch (e) {
+        return Left(
+          ServerException(
+            message: e.toString(),
+          ),
+        );
+      }
+    } else {
+      try {
+        await localDataSource.saveTodo(todo);
+
+        return Right(todo);
+      } on Exception catch (e) {
+        return Left(
+          CacheException(
+            message: e.toString(),
+          ),
+        );
+      }
     }
   }
 
   @override
   Future<Either<Exception, Todo>> updateTodo(Todo todo, int revision) async {
-    try {
-      final data = await remoteDataSource.updateTodo(todo, revision);
-      await localDataSource.updateTodo(todo);
+    final hasNetwork = await networkChecker();
 
-      return Right(data);
-    } on Exception catch (e) {
-      return Left(
-        ServerException(
-          message: e.toString(),
-        ),
-      );
+    if (hasNetwork) {
+      try {
+        final data = await remoteDataSource.updateTodo(todo, revision);
+        await localDataSource.updateTodo(todo);
+
+        return Right(data);
+      } on Exception catch (e) {
+        return Left(
+          ServerException(
+            message: e.toString(),
+          ),
+        );
+      }
+    } else {
+      try {
+        await localDataSource.updateTodo(todo);
+
+        return Right(todo);
+      } on Exception catch (e) {
+        return Left(
+          CacheException(
+            message: e.toString(),
+          ),
+        );
+      }
     }
   }
 
   @override
   Future<Either<Exception, Todo>> deleteTodo(String id, int revision) async {
-    try {
-      final data = await remoteDataSource.deleteTodo(id, revision);
-      await localDataSource.deleteTodo(id);
-      return Right(data);
-    } on Exception catch (e) {
-      return Left(
-        ServerException(
-          message: e.toString(),
-        ),
-      );
+    final hasNetwork = await networkChecker();
+
+    if (hasNetwork) {
+      try {
+        final data = await remoteDataSource.deleteTodo(id, revision);
+        await localDataSource.deleteTodo(id);
+        return Right(data);
+      } on Exception catch (e) {
+        return Left(
+          ServerException(
+            message: e.toString(),
+          ),
+        );
+      }
+    } else {
+      try {
+        final todo = await localDataSource.deleteTodo(id);
+
+        return Right(todo);
+      } on Exception catch (e) {
+        return Left(
+          CacheException(
+            message: e.toString(),
+          ),
+        );
+      }
     }
+  }
+}
+
+Future<bool> networkChecker() async {
+  try {
+    final result = await InternetAddress.lookup('beta.mrdekk.ru');
+    return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+  } on SocketException catch (_) {
+    return false;
   }
 }
