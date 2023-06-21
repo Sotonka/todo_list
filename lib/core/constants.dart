@@ -5,9 +5,6 @@ class Api {
   static const headerAuth = "Authorization";
   static const headerAuthValue = "Bearer $_token";
   static const headerRevision = 'X-Last-Known-Revision';
-  static const qq = '';
-  static const qqq = '';
-  static const qqqq = '';
 
   const Api._();
 }

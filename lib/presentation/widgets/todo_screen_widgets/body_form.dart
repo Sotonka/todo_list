@@ -30,6 +30,7 @@ class BodyFormWidget extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: TextFormField(
+                keyboardType: TextInputType.text,
                 onChanged: (value) {
                   stateNotifier.updateBody(value);
                 },

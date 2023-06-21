@@ -60,6 +60,7 @@ class TodosRepositoryImpl implements TodosRepository {
       try {
         final localData = await localDataSource.getTodos();
         logger.i('TodosRepositoryImpl: getTodos(): local data recieved');
+        logger.v('END TodosRepositoryImpl: getTodos()');
 
         return Right(localData);
       } on Exception catch (e) {
