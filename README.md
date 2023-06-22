@@ -1,4 +1,4 @@
-# Todo App
+# Todo App <img src="https://github.com/Sotonka/yandex_flutter_task/blob/2-Jason-Statham/INFO/images/0.png" width="25" />
 <img src="https://github.com/Sotonka/yandex_flutter_task/blob/2-Jason-Statham/INFO/images/1.png">
 
 ## Features
@@ -17,10 +17,10 @@
 - [x] multi language support
 - [x] light/ dark theme
 - [x] logging
-- [x] android icon
+- [x] android icon <img src="https://github.com/Sotonka/yandex_flutter_task/blob/2-Jason-Statham/INFO/images/0.png" width="25" />
 
 ## APK
-- [Download]()
+- [Download](https://github.com/Sotonka/yandex_flutter_task/raw/2-Jason-Statham/INFO/app-release.apk)
 
 ## Screenshots
 <img src="https://github.com/Sotonka/yandex_flutter_task/blob/2-Jason-Statham/INFO/images/2.png">
