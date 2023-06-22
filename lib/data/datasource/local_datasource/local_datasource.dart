@@ -47,6 +47,7 @@ class LocalDataSourceImpl implements LocalDataSource {
 
     try {
       final todoList = TodoList.fromJson(jsonDecode(jsonTodoListString!));
+
       return todoList;
     } on Exception {
       throw CacheException(message: 'Error getting data from cache');
