@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yandex_flutter_task/core/constants.dart';
 import 'package:yandex_flutter_task/core/localization/l10n/all_locale.dart';
 import 'package:yandex_flutter_task/presentation/providers/edit_todo_provider.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
@@ -32,9 +33,9 @@ class ImportanceFormWidget extends ConsumerWidget {
               iconDisabledColor: Colors.transparent,
               iconEnabledColor: Colors.transparent,
               dropdownColor: themeColors.backElevated,
-              value: state.importance == 'important'
+              value: state.importance == Api.importanceImportant
                   ? AllLocale.of(context).todoImportanceHigh
-                  : state.importance == 'low'
+                  : state.importance == Api.importanceLow
                       ? AllLocale.of(context).todoImportanceLow
                       : AllLocale.of(context).todoImportanceNo,
               items: [

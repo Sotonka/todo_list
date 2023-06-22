@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:yandex_flutter_task/app_router.dart';
+import 'package:yandex_flutter_task/core/constants.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/presentation/providers/edit_todo_provider.dart';
 import 'package:yandex_flutter_task/presentation/providers/todo_list_provider.dart';
@@ -116,7 +117,7 @@ class TodoTile extends ConsumerWidget {
                                     ),
                                   ),
                                 )
-                              : todo.importance == 'important'
+                              : todo.importance == Api.importanceImportant
                                   ? Container(
                                       height: 18,
                                       width: 18,
@@ -154,7 +155,8 @@ class TodoTile extends ConsumerWidget {
                                 overflow: TextOverflow.ellipsis,
                                 text: TextSpan(
                                   children: [
-                                    todo.importance == 'important' &&
+                                    todo.importance ==
+                                                Api.importanceImportant &&
                                             todo.done == false
                                         ? WidgetSpan(
                                             child: Padding(
@@ -163,7 +165,8 @@ class TodoTile extends ConsumerWidget {
                                               child: AppIcons.alert(),
                                             ),
                                           )
-                                        : todo.importance == 'low' &&
+                                        : todo.importance ==
+                                                    Api.importanceLow &&
                                                 todo.done == false
                                             ? WidgetSpan(
                                                 child: Padding(

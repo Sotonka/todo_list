@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
+import 'package:yandex_flutter_task/core/constants.dart';
 import 'package:yandex_flutter_task/core/device_info/device_id.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/presentation/providers/todo_list_provider.dart';
@@ -65,18 +66,18 @@ class TodoEditNotifier extends StateNotifier<Todo> {
     String importanceLow,
   ) {
     if (importance == importanceNo) {
-      state = state.copyWith(importance: 'basic');
+      state = state.copyWith(importance: Api.importanceBasic);
       return;
     }
     if (importance == importanceLow) {
-      state = state.copyWith(importance: 'low');
+      state = state.copyWith(importance: Api.importanceLow);
       return;
     }
     if (importance == importanceImportant) {
-      state = state.copyWith(importance: 'important');
+      state = state.copyWith(importance: Api.importanceImportant);
       return;
     }
-    state = state.copyWith(importance: 'basic');
+    state = state.copyWith(importance: Api.importanceBasic);
   }
 
   void saveTodo() {
