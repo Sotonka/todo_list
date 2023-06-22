@@ -1,0 +1,15 @@
+{
+  "mainTitleTodos": "Мои дела",
+  "mainTitleDone": "Выполнено",
+  "mainListNew": "Новое",
+  "todoSave": "Сохранить",
+  "todoDelete": "Удалить",
+  "todoCalendarCancel": "Отмена",
+  "todoCalendarDone": "Готово",
+  "todoFormHint": "Что надо сделать...",
+  "todoFormImportance": "Важность",
+  "todoFormDeadline": "Сделать до",
+  "todoImportanceNo": "Нет",
+  "todoImportanceLow": "Низкий",
+  "todoImportanceHigh": "Высокий"
+}

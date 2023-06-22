@@ -1,0 +1,16 @@
+{
+  "mainTitleTodos": "Todos",
+  "mainTitleDone": "Done",
+  "mainListNew": "New",
+  "todoSave": "Save",
+  "todoDelete": "Delete",
+  "todoCalendarCancel": "Cancel",
+  "todoCalendarDone": "Ok",
+  "todoFormHint": "Write todo...",
+  "todoFormImportance": "Importance",
+  "todoFormDeadline": "Do until",
+  "todoImportanceNo": "No",
+  "todoImportanceLow": "Low",
+  "todoImportanceHigh": "High"
+
+}
