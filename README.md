@@ -35,7 +35,7 @@
 - [x] android icon <img src="https://github.com/Sotonka/yandex_flutter_task/blob/2-Jason-Statham/INFO/images/0.png" width="25" />
 
 ## APK
-- [Download](https://github.com/Sotonka/yandex_flutter_task/raw/2-Jason-Statham/INFO/app-release.apk)
+- [Download](https://github.com/Sotonka/yandex_flutter_task/raw/main/INFO/app-release.apk)
 
 ## Screenshots
 <img src="https://github.com/Sotonka/yandex_flutter_task/blob/2-Jason-Statham/INFO/images/2.png">
