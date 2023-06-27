@@ -156,45 +156,81 @@ void main() {
         },
       );
 
-      group(
-        'filterByCompleted',
-        () {
-          test(
-            'should return todoList of todos with done = true',
-            () {
-              TodoList actual = TodoList(
-                list: [
-                  _buildTodo('0').copyWith(done: false),
-                  _buildTodo('1').copyWith(done: true),
-                  _buildTodo('2').copyWith(done: false),
-                  _buildTodo('3').copyWith(done: true),
-                  _buildTodo('4').copyWith(done: false),
-                ],
-                revision: 0,
-                status: 'ok',
-              );
-              actual = actual.filterByCompleted();
+      group('completion filters', () {
+        group(
+          'filterByCompleted',
+          () {
+            test(
+              'should return todoList of todos with done = true',
+              () {
+                TodoList actual = TodoList(
+                  list: [
+                    _buildTodo('0').copyWith(done: false),
+                    _buildTodo('1').copyWith(done: true),
+                    _buildTodo('2').copyWith(done: false),
+                    _buildTodo('3').copyWith(done: true),
+                    _buildTodo('4').copyWith(done: false),
+                  ],
+                  revision: 0,
+                  status: 'ok',
+                );
+                actual = actual.filterByCompleted();
 
-              final expected = TodoList(
-                list: [
-                  _buildTodo('1').copyWith(done: true),
-                  _buildTodo('3').copyWith(done: true),
-                ],
-                revision: 0,
-                status: 'ok',
-              );
-              expect(actual, expected);
-            },
-          );
-        },
-      );
+                final expected = TodoList(
+                  list: [
+                    _buildTodo('1').copyWith(done: true),
+                    _buildTodo('3').copyWith(done: true),
+                  ],
+                  revision: 0,
+                  status: 'ok',
+                );
+                expect(actual, expected);
+              },
+            );
+          },
+        );
+
+        group(
+          'filterByIncompleted',
+          () {
+            test(
+              'should return todoList of todos with done = false',
+              () {
+                TodoList actual = TodoList(
+                  list: [
+                    _buildTodo('0').copyWith(done: false),
+                    _buildTodo('1').copyWith(done: true),
+                    _buildTodo('2').copyWith(done: false),
+                    _buildTodo('3').copyWith(done: true),
+                    _buildTodo('4').copyWith(done: false),
+                  ],
+                  revision: 0,
+                  status: 'ok',
+                );
+                actual = actual.filterByIncompleted();
+
+                final expected = TodoList(
+                  list: [
+                    _buildTodo('0'),
+                    _buildTodo('2'),
+                    _buildTodo('4'),
+                  ],
+                  revision: 0,
+                  status: 'ok',
+                );
+                expect(actual, expected);
+              },
+            );
+          },
+        );
+      });
     },
   );
   group(
     '[] operator',
     () {
       group(
-        'when index value is valid',
+        'index value is valid',
         () {
           test(
             'should return todo',

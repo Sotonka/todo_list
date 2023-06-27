@@ -68,7 +68,7 @@ class TodoTile extends ConsumerWidget {
       dismissThresholds: const {
         DismissDirection.endToStart: 0.2,
       },
-      key: UniqueKey(),
+      key: ValueKey(todo.id.toString()),
       child: ConstrainedBox(
         constraints: const BoxConstraints(
           maxHeight: 150,

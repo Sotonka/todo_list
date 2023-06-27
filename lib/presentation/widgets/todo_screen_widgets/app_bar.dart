@@ -33,6 +33,7 @@ class TodoAppBarWidget extends ConsumerWidget {
       ),
       actions: [
         InkWell(
+          key: const ValueKey('save'),
           onTap: () {
             stateNotifier.saveTodo();
             stateNotifier.clearField();

@@ -33,7 +33,9 @@ class TodoListWidget extends ConsumerWidget {
               shrinkWrap: true,
               itemCount: todoList.length,
               itemBuilder: (_, final int index) {
-                return TodoTile(todo: todoList[index]);
+                return TodoTile(
+                  todo: todoList[index],
+                );
               },
             ),
           ),
