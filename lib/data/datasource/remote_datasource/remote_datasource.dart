@@ -60,9 +60,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       _dio.options.headers[Api.headerRevision] = '$revision';
       final response = await _dio.patch<String>(
         '/list',
-        data: jsonEncode(
-          todos.toJson(),
-        ),
+        data: todos.toJson(),
       );
 
       final dynamic todoListJson = jsonDecode(response.data ?? '');
@@ -83,10 +81,10 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       _dio.options.headers[Api.headerRevision] = '$revision';
       final response = await _dio.post<String>(
         '/list',
-        data: jsonEncode({
+        data: {
           "status": "ok",
           "element": todo.toJson(),
-        }),
+        },
       );
 
       final dynamic todoJson = jsonDecode(response.data ?? '');
@@ -107,10 +105,10 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
       final response = await _dio.put<String>(
         '/list/${todo.id}',
-        data: jsonEncode({
+        data: {
           "status": "ok",
           "element": todo.toJson(),
-        }),
+        },
       );
 
       final dynamic todoJson = jsonDecode(response.data ?? '');

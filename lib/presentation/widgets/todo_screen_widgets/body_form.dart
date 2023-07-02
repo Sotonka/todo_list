@@ -31,12 +31,8 @@ class BodyFormWidget extends ConsumerWidget {
               padding: const EdgeInsets.all(16),
               child: TextFormField(
                 keyboardType: TextInputType.text,
-                onChanged: (value) {
-                  stateNotifier.updateBody(value);
-                },
-                onFieldSubmitted: (value) {
-                  stateNotifier.updateBody(value);
-                },
+                onChanged: stateNotifier.updateBody,
+                onFieldSubmitted: stateNotifier.updateBody,
                 controller: stateNotifier.bodyController,
                 style: theme.primaryTextTheme.bodyMedium!
                     .copyWith(color: themeColors.labelPrimary),

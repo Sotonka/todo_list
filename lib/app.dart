@@ -21,8 +21,7 @@ class _AppState extends State<App> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness:
-          // ignore: deprecated_member_use
-          SchedulerBinding.instance.window.platformBrightness == Brightness.dark
+          MediaQuery.of(context).platformBrightness == Brightness.dark
               ? Brightness.light
               : Brightness.dark,
     ));
