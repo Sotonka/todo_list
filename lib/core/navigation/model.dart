@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 
 typedef JsonMap = Map<String, dynamic>;
@@ -20,7 +19,13 @@ abstract mixin class TypedSegment {
   JsonMap toJson() => <String, dynamic>{'path': runtimeType.toString()};
 
   @override
-  String toString() => jsonEncode(toJson());
+  String toString() {
+    if (toJson()['path'] == 'EditTodoSegment' && toJson()['todo'] != null) {
+      return toJson()['path'] + toJson()['todo'];
+    }
+
+    return toJson()['path'];
+  }
 }
 
 typedef TypedPath = List<TypedSegment>;
