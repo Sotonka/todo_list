@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yandex_flutter_task/core/localization/l10n/all_locale.dart';
+import 'package:yandex_flutter_task/core/navigation/model.dart';
+import 'package:yandex_flutter_task/core/navigation/provider.dart';
 import 'package:yandex_flutter_task/presentation/providers/edit_todo_provider.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
 
@@ -23,7 +25,11 @@ class TodoAppBarWidget extends ConsumerWidget {
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
           stateNotifier.clearField();
-          Navigator.pop(context);
+          ref.read(routerDelegateProvider).navigate(
+            [
+              TodoListSegment(),
+            ],
+          );
         },
         child: Center(
           child: AppIcons.close(
@@ -38,7 +44,11 @@ class TodoAppBarWidget extends ConsumerWidget {
             stateNotifier.saveTodo();
             stateNotifier.clearField();
             FocusManager.instance.primaryFocus?.unfocus();
-            Navigator.pop(context);
+            ref.read(routerDelegateProvider).navigate(
+              [
+                TodoListSegment(),
+              ],
+            );
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),

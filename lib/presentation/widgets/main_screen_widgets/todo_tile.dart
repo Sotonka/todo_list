@@ -1,8 +1,9 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:yandex_flutter_task/app_router.dart';
 import 'package:yandex_flutter_task/core/constants.dart';
+import 'package:yandex_flutter_task/core/navigation/model.dart';
+import 'package:yandex_flutter_task/core/navigation/provider.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/presentation/providers/edit_todo_provider.dart';
 import 'package:yandex_flutter_task/presentation/providers/todo_list_provider.dart';
@@ -222,7 +223,12 @@ class TodoTile extends ConsumerWidget {
                 InkWell(
                   onTap: () {
                     ref.read(todoEditProvider.notifier).initTodo(todo);
-                    Navigator.of(context).pushNamed(AppRouter.todoScreen);
+                    ref.read(routerDelegateProvider).navigate(
+                      [
+                        TodoListSegment(),
+                        EditTodoSegment(todo: todo),
+                      ],
+                    );
                   },
                   child: AppIcons.infoOutline(
                     color: themeColors.labelTetriary,

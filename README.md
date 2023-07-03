@@ -27,6 +27,10 @@
 - [x] error handling in different layers of application
       
 - [x] multi language support
+
+- [x] navigator 2.0
+
+- [x] deep links
       
 - [x] light/ dark theme
       
@@ -36,6 +40,17 @@
 
 ## APK
 - [Download](https://github.com/Sotonka/yandex_flutter_task/raw/2-Jason-Statham/INFO/app-release.apk)
+
+supports android only
+
+## For Devs
+
+файл .env 
+
+BASE_URL=<url>
+AUTH_TOKEN=<token>
+
+dart run build_runner build
 
 ## Screenshots
 <img src="https://github.com/Sotonka/yandex_flutter_task/blob/2-Jason-Statham/INFO/images/2.png">
