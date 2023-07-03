@@ -8,9 +8,10 @@ import 'dart:io';
 import 'package:yandex_flutter_task/core/error/exception.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/domain/model/todo_list.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 BaseOptions baseOptions = BaseOptions(
-  baseUrl: Api.baseUrl,
+  baseUrl: dotenv.env['BASE_URL'].toString(),
   receiveDataWhenStatusError: true,
   connectTimeout: const Duration(seconds: 5),
   receiveTimeout: const Duration(seconds: 5),
@@ -18,7 +19,7 @@ BaseOptions baseOptions = BaseOptions(
   // ignore: avoid_redundant_argument_values
   responseType: ResponseType.json,
   headers: {
-    Api.headerAuth: Api.headerAuthValue,
+    Api.headerAuth: "Bearer ${dotenv.env['AUTH_TOKEN'].toString()}",
   },
 );
 
