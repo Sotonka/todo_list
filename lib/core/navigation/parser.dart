@@ -13,9 +13,7 @@ class RouteInformationParserImpl implements RouteInformationParser<TypedPath> {
       RouteInformation(location: typedPathToPath(configuration));
 
   static String typedPathToPath(TypedPath typedPath) {
-    logger.wtf(
-      typedPath.map((s) => s.toString()).join('/'),
-    );
+    logger.wtf(typedPath.map((s) => jsonEncode(s.toJson())).join('/'));
 
     return typedPath
         .map((s) => Uri.encodeComponent(jsonEncode(s.toJson())))
@@ -24,14 +22,16 @@ class RouteInformationParserImpl implements RouteInformationParser<TypedPath> {
 
   static TypedPath pathToTypedPath(String? path) {
     logger.wtf(path);
+
     if (path == null || path.isEmpty) return [];
     logger.wtf([
       for (final s in path.split('/'))
-        if (s.isNotEmpty) TypedSegment.fromJson(jsonDecode(Uri.decodeFull(s)))
+        if (s.isNotEmpty) TypedSegment.fromString(s)
     ]);
+
     return [
       for (final s in path.split('/'))
-        if (s.isNotEmpty) TypedSegment.fromJson(jsonDecode(Uri.decodeFull(s)))
+        if (s.isNotEmpty) TypedSegment.fromString(s)
     ];
   }
 

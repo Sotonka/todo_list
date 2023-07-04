@@ -226,7 +226,7 @@ class TodoTile extends ConsumerWidget {
                     ref.read(routerDelegateProvider).navigate(
                       [
                         TodoListSegment(),
-                        EditTodoSegment(todo: todo),
+                        EditTodoSegment(id: todo.id),
                       ],
                     );
                   },
