@@ -14,6 +14,7 @@ class RouteInformationParserImpl implements RouteInformationParser<TypedPath> {
 
   static String typedPathToPath(TypedPath typedPath) {
     logger.wtf(typedPath.map((s) => jsonEncode(s.toJson())).join('/'));
+    logger.wtf(typedPath.map((s) => s.toString()).join('/'));
 
     return typedPath
         .map((s) => Uri.encodeComponent(jsonEncode(s.toJson())))

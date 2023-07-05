@@ -32,11 +32,18 @@ abstract mixin class TypedSegment {
 
   @override
   String toString() {
-    if (toJson()['path'] == 'EditTodoSegment' && toJson()['todo'] != null) {
-      return toJson()['path'] + toJson()['todo'];
+    if (toJson()['path'] == 'EditTodoSegment' && toJson()['id'] != null) {
+      return 'edit${toJson()['id']}';
     }
 
-    return toJson()['path'];
+    if (toJson()['path'] == 'CreateTodoSegment') {
+      return 'create';
+    }
+    if (toJson()['path'] == 'TodoListSegment') {
+      return 'list';
+    }
+
+    return 'list';
   }
 }
 
