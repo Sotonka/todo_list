@@ -40,7 +40,7 @@
 
 ## APK
 - [Download](https://github.com/Sotonka/todo_list/raw/main/INFO/app3.apk)
-- 
+  
 supports android only
 
 ## For Devs
