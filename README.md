@@ -45,10 +45,11 @@ supports android only
 
 ## For Devs
 
-файл .env 
+to build and run app:
 
-BASE_URL=<url>
-AUTH_TOKEN=<token>
+in root, change template.env to .env
+
+then run
 
 dart run build_runner build
 
