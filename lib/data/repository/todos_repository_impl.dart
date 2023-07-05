@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:yandex_flutter_task/core/constants.dart';
 import 'package:yandex_flutter_task/core/error/exception.dart';
 import 'package:yandex_flutter_task/core/logger/logger.dart';
@@ -17,7 +18,7 @@ class TodosRepositoryImpl implements TodosRepository {
 
   @override
   Future<Either<Exception, TodoList>> getTodos() async {
-    final hasNetwork = await networkChecker();
+    final hasNetwork = await networkChecker(remoteDataSource);
     logger.v('START TodosRepositoryImpl: getTodos()');
 
     if (hasNetwork) {
@@ -93,7 +94,7 @@ class TodosRepositoryImpl implements TodosRepository {
 
   @override
   Future<Either<Exception, Todo>> createTodo(Todo todo, int revision) async {
-    final hasNetwork = await networkChecker();
+    final hasNetwork = await networkChecker(remoteDataSource);
     logger.v(
         'START TodosRepositoryImpl: createTodo()\n${todo.id} rev. $revision');
 
@@ -144,7 +145,7 @@ class TodosRepositoryImpl implements TodosRepository {
 
   @override
   Future<Either<Exception, Todo>> updateTodo(Todo todo, int revision) async {
-    final hasNetwork = await networkChecker();
+    final hasNetwork = await networkChecker(remoteDataSource);
     logger.v(
         'START TodosRepositoryImpl: updateTodo()\n${todo.id} rev. $revision');
 
@@ -197,7 +198,7 @@ class TodosRepositoryImpl implements TodosRepository {
 
   @override
   Future<Either<Exception, Todo>> deleteTodo(String id, int revision) async {
-    final hasNetwork = await networkChecker();
+    final hasNetwork = await networkChecker(remoteDataSource);
     logger.v('START TodosRepositoryImpl: deleteTodo()\n$id rev. $revision');
 
     if (hasNetwork) {
@@ -242,9 +243,17 @@ class TodosRepositoryImpl implements TodosRepository {
   }
 }
 
-Future<bool> networkChecker() async {
+Future<bool> networkChecker(RemoteDataSource remoteDataSource) async {
   try {
     final result = await InternetAddress.lookup(Api.host);
+
+    try {
+      await remoteDataSource.getTodos();
+    } on DioException catch (e) {
+      logger.w('!!!\nOFFLINE MODE: error is: ${e.message}\n!!!');
+      return false;
+    }
+
     return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
   } on SocketException catch (_) {
     logger.w('networkChecker : no connection');

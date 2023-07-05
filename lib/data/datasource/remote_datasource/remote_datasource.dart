@@ -47,10 +47,8 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       final dynamic todoListJson = jsonDecode(response.data ?? '');
 
       return TodoList.fromJson(todoListJson);
-    } on DioException catch (e) {
-      throw ServerException(
-        message: e.message.toString(),
-      );
+    } on DioException catch (_) {
+      rethrow;
     }
   }
 
