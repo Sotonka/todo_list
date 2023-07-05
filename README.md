@@ -27,6 +27,10 @@
 - [x] error handling in different layers of application
       
 - [x] multi language support
+
+- [x] navigator 2.0
+
+- [x] deep links
       
 - [x] light/ dark theme
       
@@ -35,7 +39,19 @@
 - [x] android icon <img src="https://github.com/Sotonka/yandex_flutter_task/blob/2-Jason-Statham/INFO/images/0.png" width="25" />
 
 ## APK
-- [Download](https://github.com/Sotonka/yandex_flutter_task/raw/main/INFO/app-release.apk)
+- [Download](https://github.com/Sotonka/yandex_flutter_task/raw/3-Felix-Arvid-Ulf-Kjellberg/INFO/app-release.apk)
+
+supports android only
+
+## For Devs
+
+to build and run app:
+
+in root, change template.env to .env
+
+then run
+
+dart run build_runner build
 
 ## Screenshots
 <img src="https://github.com/Sotonka/yandex_flutter_task/blob/2-Jason-Statham/INFO/images/2.png">

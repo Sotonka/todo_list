@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yandex_flutter_task/app_router.dart';
 import 'package:yandex_flutter_task/core/localization/l10n/all_locale.dart';
+import 'package:yandex_flutter_task/core/navigation/model.dart';
+import 'package:yandex_flutter_task/core/navigation/provider.dart';
 import 'package:yandex_flutter_task/domain/model/todo_list.dart';
 import 'package:yandex_flutter_task/presentation/providers/edit_todo_provider.dart';
 import 'package:yandex_flutter_task/presentation/ui_kit/ui_kit.dart';
@@ -33,7 +34,9 @@ class TodoListWidget extends ConsumerWidget {
               shrinkWrap: true,
               itemCount: todoList.length,
               itemBuilder: (_, final int index) {
-                return TodoTile(todo: todoList[index]);
+                return TodoTile(
+                  todo: todoList[index],
+                );
               },
             ),
           ),
@@ -46,7 +49,12 @@ class TodoListWidget extends ConsumerWidget {
               onTap: () {
                 ref.read(todoEditProvider.notifier).initTodo(null);
                 ref.read(todoEditProvider.notifier).createNewTodo();
-                Navigator.of(context).pushNamed(AppRouter.todoScreen);
+                ref.read(routerDelegateProvider).navigate(
+                  [
+                    TodoListSegment(),
+                    CreateTodoSegment(),
+                  ],
+                );
               },
               child: Row(
                 children: [
