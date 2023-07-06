@@ -28,7 +28,7 @@ abstract class RemoteDataSource {
 
   Future<TodoList> patchTodos(TodoList todos, int revision);
 
-  Future<Todo> createTodo(Todo todo, int revision);
+  Future<Todo> createTodo(Todo? todo, int revision);
 
   Future<Todo> updateTodo(Todo todo, int revision);
 
@@ -73,7 +73,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
-  Future<Todo> createTodo(Todo todo, int revision) async {
+  Future<Todo> createTodo(Todo? todo, int revision) async {
     _init(_dio);
 
     try {
@@ -82,7 +82,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         '/list',
         data: {
           "status": "ok",
-          "element": todo.toJson(),
+          "element": todo!.toJson(),
         },
       );
 

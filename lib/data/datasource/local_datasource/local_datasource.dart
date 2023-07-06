@@ -7,7 +7,7 @@ import 'package:yandex_flutter_task/domain/model/todo_list.dart';
 abstract class LocalDataSource {
   Future<TodoList> getTodos();
 
-  Future<void> saveTodo(Todo todo);
+  Future<void> saveTodo(Todo? todo);
 
   Future<void> updateTodo(Todo todo);
 
@@ -55,10 +55,10 @@ class LocalDataSourceImpl implements LocalDataSource {
   }
 
   @override
-  Future<void> saveTodo(Todo newTodo) async {
+  Future<void> saveTodo(Todo? newTodo) async {
     final todos = await getTodos();
 
-    todosToCache(todos.addTodo(newTodo));
+    todosToCache(todos.addTodo(newTodo!));
   }
 
   @override

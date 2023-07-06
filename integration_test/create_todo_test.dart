@@ -1,8 +1,17 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
+import 'package:mockito/mockito.dart';
 import 'package:uuid/uuid.dart';
+import 'package:yandex_flutter_task/app.dart';
+import 'package:yandex_flutter_task/data/datasource/local_datasource/local_datasource.dart';
+import 'package:yandex_flutter_task/data/datasource/remote_datasource/remote_datasource.dart';
+import 'package:yandex_flutter_task/data/repository/provider.dart';
+import 'package:yandex_flutter_task/data/repository/todos_repository_impl.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
+import 'package:yandex_flutter_task/domain/model/todo_list.dart';
 import 'package:yandex_flutter_task/presentation/widgets/main_screen_widgets/add_button.dart';
 import 'package:yandex_flutter_task/presentation/widgets/main_screen_widgets/todo_list.dart';
 import 'package:yandex_flutter_task/presentation/widgets/main_screen_widgets/todo_tile.dart';
@@ -10,10 +19,82 @@ import 'package:yandex_flutter_task/presentation/widgets/todo_screen_widgets/bod
 import 'package:yandex_flutter_task/presentation/widgets/todo_screen_widgets/deadline_form.dart';
 import 'package:yandex_flutter_task/presentation/widgets/todo_screen_widgets/importance_form.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:yandex_flutter_task/main.dart' as app;
+
+import '../test/mocks/local_datasource.mocks.dart';
+import '../test/mocks/remote_datasource.mocks.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  late Todo todo;
+  late RemoteDataSource remoteDataSource;
+  late LocalDataSource localDataSource;
+
+  Future<void> getApp() async {
+    runZonedGuarded(
+      () {
+        runApp(
+          ProviderScope(
+            overrides: [
+              todosRepositoryProvider.overrideWith(
+                (ref) {
+                  return TodosRepositoryImpl(
+                    localDataSource,
+                    remoteDataSource,
+                  );
+                },
+              ),
+            ],
+            child: const App(),
+          ),
+        );
+      },
+      (_, __) {},
+    );
+  }
+
+  setUp(() {
+    remoteDataSource = MockRemoteDataSource();
+    localDataSource = MockLocalDataSource();
+    final id = const Uuid().v4().toString();
+    final date = DateTime.now();
+    todo = Todo(
+      id: id,
+      text: 'test$id',
+      created_at: date.millisecondsSinceEpoch,
+      changed_at: date.millisecondsSinceEpoch,
+      last_updated_by: 'device_id',
+      importance: 'low',
+      deadline: date.millisecondsSinceEpoch,
+      done: false,
+    );
+    const revision = 0;
+
+    when(remoteDataSource.createTodo(any, 0)).thenAnswer((_) async {
+      return todo;
+    });
+    when(localDataSource.saveTodo(any)).thenAnswer((_) async => todo);
+
+    when(remoteDataSource.getTodos()).thenAnswer(
+      (_) async => const TodoList(
+        revision: revision,
+        status: 'ok',
+        list: [],
+      ),
+    );
+    when(localDataSource.getTodos()).thenAnswer(
+      (_) async => const TodoList(
+        revision: revision,
+        status: 'ok',
+        list: [],
+      ),
+    );
+
+    when(localDataSource.getRevision()).thenAnswer(
+      (_) async => revision,
+    );
+  });
 
   group(
     'create todo test',
@@ -21,20 +102,8 @@ void main() {
       testWidgets(
         'tap on add button, create todo, check todo on home page',
         (tester) async {
-          app.main();
+          await getApp();
 
-          final id = const Uuid().v4().toString();
-          final date = DateTime.now();
-          final todo = Todo(
-            id: id,
-            text: 'test$id',
-            created_at: date.millisecondsSinceEpoch,
-            changed_at: date.millisecondsSinceEpoch,
-            last_updated_by: 'device_id',
-            importance: 'basic',
-            deadline: date.millisecondsSinceEpoch,
-            done: false,
-          );
           final Finder targetFinder = find.byWidgetPredicate(
               (widget) => widget is TodoTile && widget.todo.text == todo.text);
 
