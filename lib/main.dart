@@ -17,7 +17,6 @@ void main() {
     );
     runApp(const ProviderScope(child: App()));
   }, (error, stack) {
-    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
   });
 }
