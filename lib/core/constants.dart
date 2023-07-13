@@ -8,3 +8,12 @@ class Api {
 
   const Api._();
 }
+
+class Firebase {
+  static const deleteLog = 'delete_todo';
+  static const addLog = 'add_todo';
+  static const updateLog = 'update_todo';
+  static const routeLog = 'path';
+
+  const Firebase._();
+}
