@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:yandex_flutter_task/core/logger/logger.dart';
 import 'package:yandex_flutter_task/core/navigation/model.dart';
@@ -13,6 +14,9 @@ class RouteInformationParserImpl implements RouteInformationParser<TypedPath> {
       RouteInformation(location: typedPathToPath(configuration));
 
   static String typedPathToPath(TypedPath typedPath) {
+    FirebaseAnalytics.instance.logEvent(
+      name: 'route_${typedPath.map((s) => s.toJson()['path']).join('_')}',
+    );
     logger.wtf(typedPath.map((s) => jsonEncode(s.toJson())).join('/'));
     logger.wtf(typedPath.map((s) => s.toString()).join('/'));
 

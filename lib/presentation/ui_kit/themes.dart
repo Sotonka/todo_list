@@ -47,6 +47,12 @@ class AppTheme {
     splashFactory: InkRipple.splashFactory,
     useMaterial3: false,
     primaryTextTheme: _lightTextTheme,
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+        TargetPlatform.iOS: OpenUpwardsPageTransitionsBuilder(),
+      },
+    ),
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -57,6 +63,12 @@ class AppTheme {
     hoverColor: Colors.transparent,
     useMaterial3: false,
     primaryTextTheme: _darkTextTheme,
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+        TargetPlatform.iOS: OpenUpwardsPageTransitionsBuilder(),
+      },
+    ),
   );
 
   AppTheme();

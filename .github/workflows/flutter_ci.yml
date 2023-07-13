@@ -1,0 +1,7 @@
+name: Flutter CI
+on: [push]
+jobs:
+  myjob:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."

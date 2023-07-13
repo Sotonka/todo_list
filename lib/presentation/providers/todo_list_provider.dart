@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yandex_flutter_task/core/logger/firebase_logger.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/domain/model/todo_list.dart';
 import 'package:yandex_flutter_task/domain/usecases/provider.dart';
@@ -68,6 +69,7 @@ class TodoListViewModel extends StateNotifier<State<TodoList>> {
       state = State.error(error);
     }, (newTodo) {
       state = State.success(state.data!.addTodo(newTodo));
+      firebaseLogger('addLog', todo.id);
     });
   }
 
@@ -99,7 +101,9 @@ class TodoListViewModel extends StateNotifier<State<TodoList>> {
         );
     stateOrException.fold((error) {
       state = State.error(error);
-    }, (newTodo) {});
+    }, (newTodo) {
+      firebaseLogger('deleteLog', newTodo.id);
+    });
   }
 
   completeToggleTodo(Todo todo) {
@@ -108,6 +112,7 @@ class TodoListViewModel extends StateNotifier<State<TodoList>> {
       changed_at: DateTime.now().millisecondsSinceEpoch,
     );
     updateTodo(newTodo);
+    firebaseLogger('completeLog', newTodo.id);
   }
 
   getCompleteCount() {
