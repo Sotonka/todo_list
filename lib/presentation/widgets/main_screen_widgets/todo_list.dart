@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:yandex_flutter_task/core/localization/l10n/all_locale.dart';
 import 'package:yandex_flutter_task/core/navigation/model.dart';
 import 'package:yandex_flutter_task/core/navigation/provider.dart';
@@ -28,16 +29,28 @@ class TodoListWidget extends ConsumerWidget {
           borderRadius: BorderRadius.circular(8),
           child: Container(
             color: themeColors.backSecondary,
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              controller: ScrollController(),
-              shrinkWrap: true,
-              itemCount: todoList.length,
-              itemBuilder: (_, final int index) {
-                return TodoTile(
-                  todo: todoList[index],
-                );
-              },
+            child: AnimationLimiter(
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                controller: ScrollController(),
+                shrinkWrap: true,
+                itemCount: todoList.length,
+                itemBuilder: (_, final int index) {
+                  return AnimationConfiguration.staggeredList(
+                    position: index,
+                    duration: const Duration(milliseconds: 750),
+                    child: SlideAnimation(
+                      verticalOffset: 100,
+                      child: FadeInAnimation(
+                        duration: const Duration(seconds: 1),
+                        child: TodoTile(
+                          todo: todoList[index],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ),

@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/widgets.dart';
+import 'package:yandex_flutter_task/core/constants.dart';
 import 'package:yandex_flutter_task/core/logger/logger.dart';
 import 'package:yandex_flutter_task/core/navigation/model.dart';
+
+import '../logger/firebase_logger.dart';
 
 class RouteInformationParserImpl implements RouteInformationParser<TypedPath> {
   @override
@@ -13,6 +16,10 @@ class RouteInformationParserImpl implements RouteInformationParser<TypedPath> {
       RouteInformation(location: typedPathToPath(configuration));
 
   static String typedPathToPath(TypedPath typedPath) {
+    firebaseLogger(
+      Firebase.routeLog,
+      'route_${typedPath.map((s) => s.toJson()['path']).join('_')}',
+    );
     logger.wtf(typedPath.map((s) => jsonEncode(s.toJson())).join('/'));
     logger.wtf(typedPath.map((s) => s.toString()).join('/'));
 
