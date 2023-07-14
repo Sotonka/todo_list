@@ -4,14 +4,15 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:yandex_flutter_task/core/constants.dart';
+import 'package:yandex_flutter_task/core/env/env.dart';
 import 'dart:io';
 import 'package:yandex_flutter_task/core/error/exception.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/domain/model/todo_list.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+//import 'package:yandex_flutter_task/core/env/env.dart';
 
 BaseOptions baseOptions = BaseOptions(
-  baseUrl: dotenv.env['BASE_URL'].toString(),
+  baseUrl: Env.baseUrl,
   receiveDataWhenStatusError: true,
   connectTimeout: const Duration(seconds: 5),
   receiveTimeout: const Duration(seconds: 5),
@@ -19,7 +20,7 @@ BaseOptions baseOptions = BaseOptions(
   // ignore: avoid_redundant_argument_values
   responseType: ResponseType.json,
   headers: {
-    Api.headerAuth: "Bearer ${dotenv.env['AUTH_TOKEN'].toString()}",
+    Api.headerAuth: "Bearer ${Env.token}",
   },
 );
 
