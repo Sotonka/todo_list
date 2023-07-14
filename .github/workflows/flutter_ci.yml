@@ -23,8 +23,8 @@ jobs:
         with:
           channel: 'stable'
         
-      - run: echo "TASKS_HOST=${{ secrets.URL }}" >> $GITHUB_ENV
-      - run: echo "TOKEN=${{ secrets.TOKEN }}" >> $GITHUB_ENV
+      - run: echo "BASE_URL=${{ secrets.URL }}" >> $GITHUB_ENV
+      - run: echo "AUTH_TOKEN=${{ secrets.TOKEN }}" >> $GITHUB_ENV
       - run: flutter clean
       - run: flutter pub get
       - run: dart format
@@ -54,8 +54,8 @@ jobs:
         with:
           channel: 'stable'
 
-      - run: echo "TASKS_HOST=${{ secrets.URL }}" >> $GITHUB_ENV
-      - run: echo "TOKEN=${{ secrets.TOKEN }}" >> $GITHUB_ENV
+      - run: echo "BASE_URL=${{ secrets.URL }}" >> $GITHUB_ENV
+      - run: echo "AUTH_TOKEN=${{ secrets.TOKEN }}" >> $GITHUB_ENV
       - run: flutter pub get
       - run: dart pub run build_runner build --delete-conflicting-outputs  
       - name: Test
@@ -82,8 +82,8 @@ jobs:
         with:
           channel: 'stable'
 
-      - run: echo "TASKS_HOST=${{ secrets.URL }}" >> $GITHUB_ENV
-      - run: echo "TOKEN=${{ secrets.TOKEN }}" >> $GITHUB_ENV
+      - run: echo "BASE_URL=${{ secrets.URL }}" >> $GITHUB_ENV
+      - run: echo "AUTH_TOKEN=${{ secrets.TOKEN }}" >> $GITHUB_ENV
       - run: flutter pub get
       - run: dart pub run build_runner build --delete-conflicting-outputs
 
