@@ -59,9 +59,7 @@ android {
 
     buildTypes {
         release {
-            firebaseAppDistribution {
-              artifactType="APK"
-          }
+          
             signingConfig signingConfigs.debug
         }
     }
