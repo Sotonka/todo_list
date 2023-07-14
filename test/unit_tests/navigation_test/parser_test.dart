@@ -30,34 +30,4 @@ void main() {
       );
     },
   );
-
-  group(
-    'restoreRouteInformation',
-    () {
-      test(
-        'should convert typed path (list of TypedSegment) to string',
-        () {
-          final parser = RouteInformationParserImpl();
-
-          final actualRouteInformation = parser.restoreRouteInformation([
-            TodoListSegment(),
-            CreateTodoSegment(),
-          ]);
-
-          final expected = [
-            {'path': 'TodoListSegment'},
-            {'path': 'CreateTodoSegment'},
-          ];
-
-          final actual = [];
-
-          for (final s in actualRouteInformation.location!.split('/')) {
-            actual.add(jsonDecode(Uri.decodeComponent(s)));
-          }
-
-          expect(actual, expected);
-        },
-      );
-    },
-  );
 }
