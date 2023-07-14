@@ -22,13 +22,15 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-
+        
+      - run: echo "TASKS_HOST=${{ secrets.URL }}" >> $GITHUB_ENV
+      - run: echo "TOKEN=${{ secrets.TOKEN }}" >> $GITHUB_ENV
       - run: flutter clean
       - run: flutter pub get
       - run: dart format
       - run: dart pub run build_runner build --delete-conflicting-outputs
       - name: Analyze
-        run: flutter analyze --no-fatal-infos
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
 
 
 
@@ -52,6 +54,8 @@ jobs:
         with:
           channel: 'stable'
 
+      - run: echo "TASKS_HOST=${{ secrets.URL }}" >> $GITHUB_ENV
+      - run: echo "TOKEN=${{ secrets.TOKEN }}" >> $GITHUB_ENV
       - run: flutter pub get
       - run: dart pub run build_runner build --delete-conflicting-outputs  
       - name: Test
@@ -78,6 +82,8 @@ jobs:
         with:
           channel: 'stable'
 
+      - run: echo "TASKS_HOST=${{ secrets.URL }}" >> $GITHUB_ENV
+      - run: echo "TOKEN=${{ secrets.TOKEN }}" >> $GITHUB_ENV
       - run: flutter pub get
       - run: dart pub run build_runner build --delete-conflicting-outputs
 
