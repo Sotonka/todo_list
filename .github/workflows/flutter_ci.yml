@@ -25,8 +25,8 @@ jobs:
 
       - run: flutter clean
       - run: flutter pub get
-      - run: flutter format --no-fatal-infos
-      - run: flutter pub run build_runner build --delete-conflicting-outputs
+      - run: dart format --no-fatal-infos
+      - run: dart pub run build_runner build --delete-conflicting-outputs
       - name: Analyze
         run: flutter analyze --no-fatal-infos
 
@@ -53,7 +53,7 @@ jobs:
           channel: 'stable'
 
       - run: flutter pub get
-      - run: flutter pub run build_runner build --delete-conflicting-outputs  
+      - run: dart pub run build_runner build --delete-conflicting-outputs  
       - name: Test
         run: flutter test
 
@@ -79,7 +79,7 @@ jobs:
           channel: 'stable'
 
       - run: flutter pub get
-      - run: flutter pub run build_runner build --delete-conflicting-outputs
+      - run: dart pub run build_runner build --delete-conflicting-outputs
 
       - name: Build APK
         run: flutter build apk --release
