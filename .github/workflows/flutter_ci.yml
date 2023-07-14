@@ -14,7 +14,7 @@ jobs:
 
   analyze:
     timeout-minutes: 10
-    name: Build APK    
+    name: 'Analyze before build and deploy'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
