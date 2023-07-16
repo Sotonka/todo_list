@@ -58,9 +58,16 @@ android {
     }
 
     buildTypes {
-        release {         
+        debug {         
             signingConfig signingConfigs.debug
-        }        
+        }
+        release {
+        applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = "app-${variant.getName()}.apk"
+            }
+        }
+    }        
     }
 
     flavorDimensions "default"
