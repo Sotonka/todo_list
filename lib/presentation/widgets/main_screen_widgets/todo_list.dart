@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:yandex_flutter_task/core/localization/l10n/all_locale.dart';
-import 'package:yandex_flutter_task/core/navigation/model.dart';
 import 'package:yandex_flutter_task/core/navigation/provider.dart';
 import 'package:yandex_flutter_task/domain/model/todo_list.dart';
 import 'package:yandex_flutter_task/presentation/providers/edit_todo_provider.dart';

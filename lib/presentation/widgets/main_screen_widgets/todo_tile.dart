@@ -1,8 +1,7 @@
-// ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:yandex_flutter_task/core/constants.dart';
-import 'package:yandex_flutter_task/core/navigation/model.dart';
+import 'package:yandex_flutter_task/core/firebase_remote_config/event_repository.dart';
 import 'package:yandex_flutter_task/core/navigation/provider.dart';
 import 'package:yandex_flutter_task/domain/model/todo.dart';
 import 'package:yandex_flutter_task/presentation/providers/edit_todo_provider.dart';
@@ -23,6 +22,7 @@ class TodoTile extends ConsumerWidget {
     final theme = Theme.of(context);
     final themeColors = theme.extension<AppThemeColors>()!;
     final todoListNotifier = ref.read(todoListProvider.notifier);
+    final eventInfo = ref.watch(eventInfoProvider);
 
     return Dismissible(
       confirmDismiss: (direction) async {
@@ -119,15 +119,37 @@ class TodoTile extends ConsumerWidget {
                                   ),
                                 )
                               : todo.importance == Api.importanceImportant
-                                  ? Container(
-                                      height: 18,
-                                      width: 18,
-                                      decoration: BoxDecoration(
-                                        color:
-                                            themeColors.red!.withOpacity(0.14),
-                                        borderRadius: BorderRadius.circular(3),
-                                        border: Border.all(
-                                            color: themeColors.red!, width: 2),
+                                  ? eventInfo.maybeWhen(
+                                      data: (color) => Container(
+                                        height: 18,
+                                        width: 18,
+                                        decoration: BoxDecoration(
+                                          color: color == null
+                                              ? themeColors.importance!
+                                                  .withOpacity(0.14)
+                                              : HexColor.fromHex(color)
+                                                  .withOpacity(0.14),
+                                          borderRadius:
+                                              BorderRadius.circular(3),
+                                          border: Border.all(
+                                              color: color == null
+                                                  ? themeColors.importance!
+                                                  : HexColor.fromHex(color),
+                                              width: 2),
+                                        ),
+                                      ),
+                                      orElse: () => Container(
+                                        height: 18,
+                                        width: 18,
+                                        decoration: BoxDecoration(
+                                          color: themeColors.importance!
+                                              .withOpacity(0.14),
+                                          borderRadius:
+                                              BorderRadius.circular(3),
+                                          border: Border.all(
+                                              color: themeColors.importance!,
+                                              width: 2),
+                                        ),
                                       ),
                                     )
                                   : Container(
@@ -161,10 +183,21 @@ class TodoTile extends ConsumerWidget {
                                             todo.done == false
                                         ? WidgetSpan(
                                             child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 6),
-                                              child: AppIcons.alert(),
-                                            ),
+                                                padding: const EdgeInsets.only(
+                                                    right: 6),
+                                                child: eventInfo.maybeWhen(
+                                                  data: (color) =>
+                                                      AppIcons.alert(
+                                                    color: color == null
+                                                        ? themeColors.importance
+                                                        : HexColor.fromHex(
+                                                            color),
+                                                  ),
+                                                  orElse: () => AppIcons.alert(
+                                                    color:
+                                                        themeColors.importance,
+                                                  ),
+                                                )),
                                           )
                                         : todo.importance ==
                                                     Api.importanceLow &&

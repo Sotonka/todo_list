@@ -48,6 +48,7 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
     labelTetriary: Color(0x4D000000),
     labelDisable: Color(0x26000000),
     red: Color(0xFFFF3B30),
+    importance: Color(0xFFFF3B30),
     green: Color(0xFF34C759),
     blue: Color(0xFF007AFF),
     gray: Color(0xFF8E8E93),
@@ -66,6 +67,7 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
     labelTetriary: Color(0x66FFFFFF),
     labelDisable: Color(0x26FFFFFF),
     red: Color(0xFFFF453A),
+    importance: Color(0xFFFF453A),
     green: Color(0xFF32D74B),
     blue: Color(0xFF0A84FF),
     gray: Color(0xFF8E8E93),
@@ -83,6 +85,7 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
   final Color? labelTetriary;
   final Color? labelDisable;
   final Color? red;
+  final Color? importance;
   final Color? green;
   final Color? blue;
   final Color? gray;
@@ -100,6 +103,7 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
     required this.labelTetriary,
     required this.labelDisable,
     required this.red,
+    required this.importance,
     required this.green,
     required this.blue,
     required this.gray,
@@ -119,6 +123,7 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
     Color? labelTetriary,
     Color? labelDisable,
     Color? red,
+    Color? importance,
     Color? green,
     Color? blue,
     Color? gray,
@@ -136,6 +141,7 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
       labelTetriary: labelTetriary ?? this.labelTetriary,
       labelDisable: labelDisable ?? this.labelDisable,
       red: red ?? this.red,
+      importance: importance ?? this.importance,
       green: green ?? this.green,
       blue: blue ?? this.blue,
       gray: gray ?? this.gray,
@@ -161,6 +167,7 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
       labelTetriary: Color.lerp(labelTetriary, other.labelTetriary, t),
       labelDisable: Color.lerp(labelDisable, other.labelDisable, t),
       red: Color.lerp(red, other.red, t),
+      importance: Color.lerp(importance, other.importance, t),
       green: Color.lerp(green, other.green, t),
       blue: Color.lerp(blue, other.blue, t),
       gray: Color.lerp(gray, other.gray, t),
@@ -171,4 +178,19 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
       backElevated: Color.lerp(backElevated, other.backElevated, t),
     );
   }
+}
+
+extension HexColor on Color {
+  static Color fromHex(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
+  }
+
+  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
+      '${alpha.toRadixString(16).padLeft(2, '0')}'
+      '${red.toRadixString(16).padLeft(2, '0')}'
+      '${green.toRadixString(16).padLeft(2, '0')}'
+      '${blue.toRadixString(16).padLeft(2, '0')}';
 }
