@@ -24,7 +24,7 @@ class App extends ConsumerWidget {
     );
 
     return MaterialApp.router(
-      routerDelegate: ref.read(routerDelegateProvider),
+      routerDelegate: ref.read(todoRouterDelegateProvider),
       routeInformationParser: RouteInformationParserImpl(),
       debugShowCheckedModeBanner: false,
       title: 'Todos',
@@ -34,7 +34,7 @@ class App extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: AllLocale.supportedLocales, 
+      supportedLocales: AllLocale.supportedLocales,
       locale: const Locale('ru', 'RU'),
       theme: AppTheme.lightTheme.copyWith(
         extensions: [

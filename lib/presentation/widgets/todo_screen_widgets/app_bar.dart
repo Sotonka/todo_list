@@ -25,11 +25,7 @@ class TodoAppBarWidget extends ConsumerWidget {
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
           stateNotifier.clearField();
-          ref.read(routerDelegateProvider).navigate(
-            [
-              TodoListSegment(),
-            ],
-          );
+          ref.read(appNavigatorProvider).goToList();
         },
         child: Center(
           child: AppIcons.close(
@@ -44,11 +40,7 @@ class TodoAppBarWidget extends ConsumerWidget {
             stateNotifier.saveTodo();
             stateNotifier.clearField();
             FocusManager.instance.primaryFocus?.unfocus();
-            ref.read(routerDelegateProvider).navigate(
-              [
-                TodoListSegment(),
-              ],
-            );
+            ref.read(appNavigatorProvider).goToList();
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),

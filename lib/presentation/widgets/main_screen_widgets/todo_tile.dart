@@ -223,12 +223,7 @@ class TodoTile extends ConsumerWidget {
                 InkWell(
                   onTap: () {
                     ref.read(todoEditProvider.notifier).initTodo(todo);
-                    ref.read(routerDelegateProvider).navigate(
-                      [
-                        TodoListSegment(),
-                        EditTodoSegment(id: todo.id),
-                      ],
-                    );
+                    ref.read(appNavigatorProvider).goToEditTask(todo.id);
                   },
                   child: AppIcons.infoOutline(
                     color: themeColors.labelTetriary,
