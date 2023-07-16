@@ -3,24 +3,24 @@ import 'package:yandex_flutter_task/core/constants.dart';
 
 void firebaseLogger(String event, String title) {
   switch (event) {
-    case Firebase.addLog:
+    case FirebaseLog.addLog:
       FirebaseAnalytics.instance
           .logEvent(name: 'add_todo', parameters: {'full_text': title});
       break;
-    case Firebase.deleteLog:
+    case FirebaseLog.deleteLog:
       FirebaseAnalytics.instance.logEvent(
         name: 'delete_todo',
         parameters: {'full_text': title},
       );
       break;
-    case Firebase.updateLog:
+    case FirebaseLog.updateLog:
       FirebaseAnalytics.instance.logEvent(
         name: 'update_todo',
         parameters: {'full_text': title},
       );
       break;
 
-    case Firebase.routeLog:
+    case FirebaseLog.routeLog:
       FirebaseAnalytics.instance.logEvent(
         name: 'route',
         parameters: {'route': title},

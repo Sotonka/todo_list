@@ -17,7 +17,7 @@ class RouteInformationParserImpl implements RouteInformationParser<TypedPath> {
 
   static String typedPathToPath(TypedPath typedPath) {
     firebaseLogger(
-      Firebase.routeLog,
+      FirebaseLog.routeLog,
       'route_${typedPath.map((s) => s.toJson()['path']).join('_')}',
     );
     logger.wtf(typedPath.map((s) => jsonEncode(s.toJson())).join('/'));

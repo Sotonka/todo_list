@@ -70,7 +70,7 @@ class TodoListViewModel extends StateNotifier<State<TodoList>> {
       state = State.error(error);
     }, (newTodo) {
       state = State.success(state.data!.addTodo(newTodo));
-      firebaseLogger(Firebase.addLog, todo.id);
+      firebaseLogger(FirebaseLog.addLog, todo.id);
     });
   }
 
@@ -87,7 +87,7 @@ class TodoListViewModel extends StateNotifier<State<TodoList>> {
     stateOrException.fold((error) {
       state = State.error(error);
     }, (newTodo) {
-      firebaseLogger(Firebase.updateLog, newTodo.id);
+      firebaseLogger(FirebaseLog.updateLog, newTodo.id);
     });
   }
 
@@ -105,7 +105,7 @@ class TodoListViewModel extends StateNotifier<State<TodoList>> {
     stateOrException.fold((error) {
       state = State.error(error);
     }, (newTodo) {
-      firebaseLogger(Firebase.deleteLog, newTodo.id);
+      firebaseLogger(FirebaseLog.deleteLog, newTodo.id);
     });
   }
 

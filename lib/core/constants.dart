@@ -9,11 +9,11 @@ class Api {
   const Api._();
 }
 
-class Firebase {
+class FirebaseLog {
   static const deleteLog = 'delete_todo';
   static const addLog = 'add_todo';
   static const updateLog = 'update_todo';
   static const routeLog = 'path';
 
-  const Firebase._();
+  const FirebaseLog._();
 }
