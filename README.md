@@ -25,7 +25,9 @@
 - [x] fully functional while no network connection
       
 - [x] error handling in different layers of application
-      
+
+- [x] firebase services implemented: Firebase Analytics, Firebase Crashlytics, Firebase Remote Config
+
 - [x] multi language support
 
 - [x] navigator 2.0
