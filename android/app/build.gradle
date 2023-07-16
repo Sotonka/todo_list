@@ -58,12 +58,12 @@ android {
     }
 
     buildTypes {
-        release {
-          
+        release {         
             signingConfig signingConfigs.debug
-        }
+        }        
     }
- flavorDimensions "default"
+
+    flavorDimensions "default"
     productFlavors {
         production {
             dimension "default"
