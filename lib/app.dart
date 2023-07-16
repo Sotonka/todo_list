@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yandex_flutter_task/core/enums.dart';
 import 'package:yandex_flutter_task/core/localization/l10n/all_locale.dart';
 import 'package:yandex_flutter_task/core/navigation/parser.dart';
 import 'package:yandex_flutter_task/core/navigation/provider.dart';
@@ -9,7 +10,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class App extends ConsumerWidget {
-  const App({super.key});
+  const App({
+    super.key,
+    required this.flavour,
+  });
+  final Flavour flavour;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,7 +31,7 @@ class App extends ConsumerWidget {
     return MaterialApp.router(
       routerDelegate: ref.read(todoRouterDelegateProvider),
       routeInformationParser: RouteInformationParserImpl(),
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: flavour == Flavour.dev ? true : false,
       title: 'Todos',
       localizationsDelegates: const [
         AppLocalizations.delegate,

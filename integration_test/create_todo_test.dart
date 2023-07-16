@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:mockito/mockito.dart';
 import 'package:uuid/uuid.dart';
 import 'package:yandex_flutter_task/app.dart';
+import 'package:yandex_flutter_task/core/enums.dart';
 import 'package:yandex_flutter_task/data/datasource/local_datasource/local_datasource.dart';
 import 'package:yandex_flutter_task/data/datasource/remote_datasource/remote_datasource.dart';
 import 'package:yandex_flutter_task/data/repository/provider.dart';
@@ -46,7 +47,9 @@ void main() {
                 },
               ),
             ],
-            child: const App(),
+            child: const App(
+              flavour: Flavour.dev,
+            ),
           ),
         );
       },

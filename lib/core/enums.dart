@@ -1,1 +1,1 @@
-enum Env { prod, dev }
+enum Flavour { prod, dev }
