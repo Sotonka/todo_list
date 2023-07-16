@@ -88,7 +88,7 @@ jobs:
       - run: dart pub run build_runner build --delete-conflicting-outputs
 
       - name: Build APK
-        run: flutter build apk -t lib/main_prod.dart
+        run: flutter build apk lib/main_production.dart --flavor production
 
       - name: Deploy APK
         uses: actions/upload-artifact@v3 
@@ -102,7 +102,7 @@ jobs:
           appId: ${{ secrets.FIREBASE_ANDROID_APPID }}
           token: ${{ secrets.FIREBASE_TOKEN }}
           groups: testers
-          file: build/app/outputs/flutter-apk/app-prod-debug.apk
+          file: build/app/outputs/flutter-apk/app-production-release.apk
 
 
 

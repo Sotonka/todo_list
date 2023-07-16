@@ -58,21 +58,28 @@ android {
     }
 
     buildTypes {
-        release {
-          
+        debug {         
             signingConfig signingConfigs.debug
         }
+        release {
+        applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = "app-${variant.getName()}.apk"
+            }
+        }
+    }        
     }
- flavorDimensions "default"
+
+    flavorDimensions "default"
     productFlavors {
-        prod {
+        production {
             dimension "default"
             resValue "string", "app_name", "yandex_flutter_task"
             applicationIdSuffix ""
         }
-        dev {
+        development {
             dimension "default"
-            resValue "string", "app_name", "yandex_flutter_task"
+            resValue "string", "app_name", "yandex_flutter_task_dev"
             applicationIdSuffix ""
         }
     }
