@@ -26,7 +26,7 @@
       
 - [x] error handling in different layers of application
 
-- [x] firebase services implemented: Firebase Analytics, Firebase Crashlytics, Firebase Remote Config
+- [x] firebase services implemented: Firebase Analytics, Firebase Crashlytics, Firebase Remote Config(runime)
 
 - [x] multi language support
 
