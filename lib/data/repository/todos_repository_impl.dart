@@ -29,9 +29,6 @@ class TodosRepositoryImpl implements TodosRepository {
         logger.i(
             'TodosRepositoryImpl: getTodos() current revision: local: $localRev remote: ${data.revision}');
 
-        // TODO
-        // localDataSource.clear();
-
         if (data.revision > localRev) {
           logger.i('TodosRepositoryImpl: getTodos() caching data to local');
           localDataSource.todosToCache(data);
